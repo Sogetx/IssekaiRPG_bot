@@ -15,7 +15,8 @@ def bot_fight(user_id, user, enemys, bot, menu):
 
     if user.hp > 0:     # Пока моб и пользователь жив
         if enemy.hp > 0:
-            bot.send_message(user_id, "У врага осталось: " + repr(enemy) + "\n\n\nУ тебя осталось: " + repr(user))
+            bot.send_message(user_id, "Враг ударил: " + str(enemy.to_damage()) + " Ты нанес: " + str(user.to_damage()) +"\n\n\nУ врага осталось: " + repr(enemy)  + "\n\n\nУ тебя осталось: " + repr(user))
+
         else: # Смерть моба
             user_reward = enemy.reward()
             user.money += user_reward
