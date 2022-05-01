@@ -37,4 +37,4 @@ def enemy_create(user_id, enemys):
             enemys[user_id] = GiantCockroach.GiantCockroach()
         elif enm == 2:
             enemys[user_id] = Rat.Rat()
-    return enemys[user_id].description
+    return enemys[user_id].description + "\n\nУ врага осталось:\n" + repr(enemys[user_id])

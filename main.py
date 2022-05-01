@@ -8,15 +8,15 @@ from fight_system import enemy_create, bot_fight
 
 bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 users = {}  # словарь(масив ключ-значение) пользователей
-enemys = {}
+enemys = {}  # словарь мобов
 
 
 @bot.message_handler(commands=['start'])
 def start(msg):  # обработчик команды /start
-    if msg.chat.id in enemys.keys():  # удаление моба, если игрок ввел /start в процессе боя
+    # удаление моба, если игрок ввел /start в процессе боя, иначе будет продолжатся прерваный бой
+    if msg.chat.id in enemys.keys():
         enemys.pop(msg.chat.id)
     users[msg.chat.id] = User.User(msg.chat.id)  # добавление пользователя в словарь при начале игры
-
     bot.send_message(msg.chat.id, 'Привет, сталкер /start')
     bot.send_sticker(msg.chat.id, HELLO_STICKER)  # приветственный стикер
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)  # Главное меню
@@ -24,10 +24,9 @@ def start(msg):  # обработчик команды /start
     item1 = types.KeyboardButton(START_NEW_GAME)
     item2 = types.KeyboardButton(SUPPORT)  # написать разрабам(виведется почта и телеграм)
     markup.add(item1, item2)
-
     bot.send_message(msg.chat.id, "Добро пожаловать, {0.first_name}!\n"
                                   "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
-                                  "созданому по больной фантазии авторов, постапокалиптическом мире".
+                                  "созданому по больной фантазии авторов, фэнтези мире".
                      format(msg.from_user, bot.get_me()), reply_markup=markup)
 
 
@@ -55,8 +54,6 @@ def bot_message(msg):  # обработчик текста
             to_damage = types.KeyboardButton(TO_DAMAGE)
             markup.add(run, to_damage)
             bot.send_message(msg.chat.id, "Ты встретил моба\n\n" + enemy_create(msg.chat.id, enemys), reply_markup=markup)
-            # if msg.chat.id not in enemys.keys():
-            #     enemy_create(msg.chat.id)
         elif msg.text == MAIN_MENU:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             item1 = types.KeyboardButton(CONTINUE_GAME)  # продолжить игру
