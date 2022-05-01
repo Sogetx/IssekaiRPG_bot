@@ -10,20 +10,19 @@ def bot_fight(user_id, user, enemys, bot, menu):
         enemy_create(user_id, enemys)
     enemy = enemys[user_id]
 
-    user.take_damage(enemy.to_damage())
-    enemy.take_damage(user.to_damage())
-
-    if user.hp > 0:     # Пока моб и пользователь жив
-        if enemy.hp > 0:
-            bot.send_message(user_id, "Враг ударил: " + str(enemy.to_damage()) + " Ты нанес: " + str(user.to_damage()) +"\n\n\nУ врага осталось: " + repr(enemy)  + "\n\n\nУ тебя осталось: " + repr(user))
-
-        else: # Смерть моба
+    if user.hp > 0:  # если пользователь жив
+        if enemy.hp > 0:  # если враг жив
+            bot.send_message(user_id, "Ты нанес: " + str(enemy.take_damage(user.to_damage())) +
+                                      " 💥\nУ врага осталось:" + str(enemy.hp) +
+                                      " ❤\n\nВраг ударил: " + str(user.take_damage(enemy.to_damage())) +
+                                      " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
+        else:  # если умрет моб
             user_reward = enemy.reward()
             user.money += user_reward
             bot.send_message(user_id, enemy.death + "\n\n" + "ты получил {0}💵".format(user_reward))
             enemys.pop(user_id)
             menu(user_id)
-    else: # Если умрет пользователь
+    else:  # Если умрет пользователь
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         restart = types.KeyboardButton('/start')
         markup.add(restart)
@@ -38,4 +37,5 @@ def enemy_create(user_id, enemys):  # Генерация мобов
             enemys[user_id] = GiantCockroach.GiantCockroach()
         elif enm == 2:
             enemys[user_id] = Rat.Rat()
-    return enemys[user_id].description + "\n\nХарактеристики врага:\n" + repr(enemys[user_id]) # Описание моба при первой встерече
+    # Описание моба при первой встерече
+    return enemys[user_id].description + "\n\nХарактеристики врага:\n" + repr(enemys[user_id])

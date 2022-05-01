@@ -16,8 +16,7 @@ def start(msg):  # обработчик команды /start
     # удаление моба, если игрок ввел /start в процессе боя, иначе будет продолжатся прерваный бой
     if msg.chat.id in enemys.keys():
         enemys.pop(msg.chat.id)
-    users[msg.chat.id] = User.User(msg.chat.id)  # добавление пользователя в словарь при начале игры
-    bot.send_message(msg.chat.id, 'Привет, сталкер /start')
+    users[msg.chat.id] = User.User()  # добавление пользователя в словарь при начале игры
     bot.send_sticker(msg.chat.id, HELLO_STICKER)  # приветственный стикер
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)  # Главное меню
 
@@ -37,40 +36,43 @@ def settings(message):  # обработчик команды /help
 
 @bot.message_handler(content_types=['text'])
 def bot_message(msg):  # обработчик текста
+    uid = msg.chat.id
     try:  # возможна ошибка KeyError
         if msg.text == START_NEW_GAME or msg.text == CONTINUE_GAME:
-            game_menu(msg.chat.id)
+            game_menu(uid)
         elif msg.text == RUN:
-            if msg.chat.id in enemys.keys():
-                enemys.pop(msg.chat.id)
-            game_menu(msg.chat.id)
-            bot.send_message(msg.chat.id, 'Ты сбежал')
+            if uid in enemys.keys():
+                enemys.pop(uid)
+            game_menu(uid)
+            bot.send_message(uid, 'Ты сбежал')
         elif msg.text == SHOP:
-            bot.send_sticker(msg.chat.id, SHOP_STICKER)
-            bot.send_message(msg.chat.id, 'Тут должен был быть магаз, но он еще в разработке, сарян')
+            bot.send_sticker(uid, SHOP_STICKER)
+            bot.send_message(uid, 'Тут должен был быть магаз, но он еще в разработке, сарян')
         elif msg.text == GO_AHEAD:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             run = types.KeyboardButton(RUN)
             to_damage = types.KeyboardButton(TO_DAMAGE)
             markup.add(run, to_damage)
-            bot.send_message(msg.chat.id, "Ты встретил моба\n\n" + enemy_create(msg.chat.id, enemys), reply_markup=markup)
+            bot.send_message(uid, "Ты встретил моба\n\n" + enemy_create(uid, enemys), reply_markup=markup)
         elif msg.text == MAIN_MENU:
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
             item1 = types.KeyboardButton(CONTINUE_GAME)  # продолжить игру
             item2 = types.KeyboardButton(SUPPORT)  # написать разрабам(виведется телеграм и почта)
             markup.add(item1, item2)
-            bot.send_message(msg.chat.id, " {0}".format(repr(users[msg.chat.id])), reply_markup=markup)
+            bot.send_message(uid, "Ты вернулся в главное меню", reply_markup=markup)
         elif msg.text == SUPPORT:
-            bot.send_message(msg.chat.id, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - gmail Лев")
-        elif msg.text == TO_DAMAGE: # Урон
-            bot_fight(msg.chat.id, users[msg.chat.id], enemys, bot, game_menu)
+            bot.send_message(uid, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - gmail Лев")
+        elif msg.text == TO_DAMAGE:  # Урон
+            bot_fight(uid, users[uid], enemys, bot, game_menu)
+        elif msg.text == STATISTICS:
+            bot.send_message(uid, "Твоя статистика:\n" + repr(users[uid]))
         else:
-            bot.send_message(msg.chat.id, 'Я не знаю что ответить 😢😢😢')
+            bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
     except KeyError:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         restart = types.KeyboardButton('/start')
         markup.add(restart)
-        bot.send_message(msg.chat.id, 'Произошли какие-то траблы, нужно перезапустить бота', reply_markup=markup)
+        bot.send_message(uid, 'Произошли какие-то траблы, нужно перезапустить бота', reply_markup=markup)
 
 
 def game_menu(msg_id):
@@ -78,8 +80,9 @@ def game_menu(msg_id):
     item5 = types.KeyboardButton(SHOP)
     item6 = types.KeyboardButton(GO_AHEAD)
     back = types.KeyboardButton(MAIN_MENU)
-    markup.add(item5, item6, back)
-    bot.send_message(msg_id, " {0}".format(repr(users[msg_id])), reply_markup=markup)
+    statistics = types.KeyboardButton(STATISTICS)
+    markup.add(item5, item6, statistics, back)
+    bot.send_message(msg_id, "{0}❤ {1}💵".format(users[msg_id].hp, users[msg_id].money), reply_markup=markup)
 
 
 bot.polling()
