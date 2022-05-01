@@ -1,14 +1,9 @@
 import types
-import random
-#import telebot
 from telebot import *
-#import Enemys
-from Enemys import *
-#import fight_system
 from constants import *
 import User
 import config
-#from fight_system import enemy_create, bot_fight
+from fight_system import enemy_create, bot_fight
 
 
 bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
@@ -23,7 +18,7 @@ with open('users_id.txt', 'r') as f:  # читка из файла(ключи) �
 
 
 @bot.message_handler(commands=['start'])
-def start(msg):
+def start(msg):  # обработчик команды /start
     if msg.chat.id in enemys.keys():  # удаление моба, если игрок ввел /start в процессе боя
         enemys.pop(msg.chat.id)
     users[msg.chat.id] = User.User(msg.chat.id)  # добавление пользователя в словарь при начале игры
@@ -53,12 +48,12 @@ def start(msg):
 
 
 @bot.message_handler(commands=['help'])
-def settings(message):
+def settings(message):  # обработчик команды /help
     bot.send_message(message.chat.id, 'Вот мой список команд:\n /start \n /help')
 
 
 @bot.message_handler(content_types=['text'])
-def bot_message(msg):
+def bot_message(msg):  # обработчик текста
     if msg.text == START_NEW_GAME or msg.text == CONTINUE_GAME:
         game_menu(msg.chat.id)
     elif msg.text == RUN:
@@ -74,7 +69,7 @@ def bot_message(msg):
         run = types.KeyboardButton(RUN)
         to_damage = types.KeyboardButton(TO_DAMAGE)
         markup.add(run, to_damage)
-        bot.send_message(msg.chat.id, "Ты встретил моба\n\n" + enemy_create(msg.chat.id), reply_markup=markup)
+        bot.send_message(msg.chat.id, "Ты встретил моба\n\n" + enemy_create(msg.chat.id, enemys), reply_markup=markup)
         # if msg.chat.id not in enemys.keys():
         #     enemy_create(msg.chat.id)
     elif msg.text == MAIN_MENU:
@@ -86,7 +81,7 @@ def bot_message(msg):
     elif msg.text == SUPPORT:
         bot.send_message(msg.chat.id, "@Dimasik333 - Telegram Дима \n levstepanenko@gmail.com - gmail Лев")
     elif msg.text == TO_DAMAGE:
-        bot_fight(msg.chat.id)
+        bot_fight(msg.chat.id, users[msg.chat.id], enemys, bot, game_menu)
     else:
         bot.send_message(msg.chat.id, 'Я не знаю что ответить 😢😢😢')
 
@@ -98,46 +93,6 @@ def game_menu(msg_id):
     back = types.KeyboardButton(MAIN_MENU)
     markup.add(item5, item6, back)
     bot.send_message(msg_id, " {0}".format(repr(users[msg_id])), reply_markup=markup)
-
-
-# @bot.message_handler(content_types=['stop'])
-# def bot_message(message):
-#     bot.stop_bot()
-
-
-def bot_fight(user_id):
-    if user_id not in enemys.keys():  # создание нового моба, если бот крашнулся посреди боя
-        enemy_create(user_id)
-    user = users[user_id]
-    enemy = enemys[user_id]
-
-    user.take_damage(enemy.to_damage())
-    enemy.take_damage(user.to_damage())
-    if user.hp <= 0:
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        restart = types.KeyboardButton('/start')
-        markup.add(restart)
-        bot.send_sticker(user_id, DEATH_STICKER)
-        bot.send_message(user_id, "Ты вмэр", reply_markup=markup)
-    else:
-        if enemy.hp > 0:
-            bot.send_message(user_id, "У врага осталось: " + repr(enemy) + "\n\n\nУ тебя осталось: " + repr(user))
-        else:
-            user_reward = enemy.reward()
-            user.money += user_reward
-            bot.send_message(user_id, enemy.death + "\n\n" + "ты получил {0}💵".format(user_reward))
-            enemys.pop(user_id)
-            game_menu(user_id)
-
-
-def enemy_create(user_id):
-    if user_id not in enemys.keys():
-        enm = random.randint(1, 2)
-        if enm == 1:
-            enemys[user_id] = GiantCockroach.GiantCockroach()
-        elif enm == 2:
-            enemys[user_id] = Rat.Rat()
-    return enemys[user_id].description
 
 
 bot.polling()

@@ -10,9 +10,6 @@ class User:
         self.damage1 = 1
         self.damage2 = 10
 
-    # def addmoney(self):  # для тестов
-    #     self.money += 50
-
     def __repr__(self):
         return "{0}💵  {1}❤, урон: {2} - {3}💥".format(self.money, self.hp, self.damage1, self.damage2)
 
@@ -21,3 +18,6 @@ class User:
 
     def take_damage(self, received_damage):
         self.hp -= received_damage
+
+    def death(self):
+        return "Ты вмэр 💀"  # + статистика
