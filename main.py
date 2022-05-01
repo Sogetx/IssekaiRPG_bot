@@ -62,7 +62,7 @@ def bot_message(msg):  # обработчик текста
             bot.send_message(msg.chat.id, " {0}".format(repr(users[msg.chat.id])), reply_markup=markup)
         elif msg.text == SUPPORT:
             bot.send_message(msg.chat.id, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - gmail Лев")
-        elif msg.text == TO_DAMAGE:
+        elif msg.text == TO_DAMAGE: # Урон
             bot_fight(msg.chat.id, users[msg.chat.id], enemys, bot, game_menu)
         else:
             bot.send_message(msg.chat.id, 'Я не знаю что ответить 😢😢😢')

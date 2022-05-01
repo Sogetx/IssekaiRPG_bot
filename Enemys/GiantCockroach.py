@@ -10,4 +10,4 @@ class GiantCockroach(Enemy):
         self.money1 = 0
         self.money2 = 10
         self.description = "ТАРАКАН ААААААААА"
-        self.death = "Ты раздавил его"
+        self.death = "Ты раздавил его, маленького, бедного таракашку. Что ж ты за человек?"
