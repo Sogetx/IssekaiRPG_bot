@@ -1,0 +1,143 @@
+import types
+import random
+#import telebot
+from telebot import *
+#import Enemys
+from Enemys import *
+#import fight_system
+from constants import *
+import User
+import config
+#from fight_system import enemy_create, bot_fight
+
+
+bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
+users = {}  # словарь(масив ключ-значение) пользователей
+enemys = {}
+
+with open('users_id.txt', 'r') as f:  # читка из файла(ключи) в словарь
+    if len(open('users_id.txt', 'r').read()) > 0:  # чтоб небыло ошибки, если файл пустой
+        for line in f.read().split('\n'):
+            line = int(line)
+            users[line] = User.User(line)
+
+
+@bot.message_handler(commands=['start'])
+def start(msg):
+    if msg.chat.id in enemys.keys():  # удаление моба, если игрок ввел /start в процессе боя
+        enemys.pop(msg.chat.id)
+    users[msg.chat.id] = User.User(msg.chat.id)  # добавление пользователя в словарь при начале игры
+
+    with open('users_id.txt', 'w') as file:  # получение всех id из файла
+        i = 0
+        for usr in users.keys():
+            i += 1
+            if i < len(users):  # иначе будет последняя пустая строка, и изза нее в процесе читки файла возникает ошибка
+                file.write(str(usr) + '\n')
+            else:
+                file.write(str(usr))
+
+    bot.send_message(msg.chat.id, 'Привет, сталкер /start')
+    bot.send_sticker(msg.chat.id, HELLO_STICKER)  # приветственный стикер
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)  # Главное меню
+
+    item1 = types.KeyboardButton(START_NEW_GAME)
+    item2 = types.KeyboardButton(SUPPORT)  # написать разрабам(виведется почта и телеграм)
+    markup.add(item1, item2)
+
+    bot.send_message(msg.chat.id, "Добро пожаловать, {0.first_name}!\n"
+                                  "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
+                                  "созданому по больной фантазии авторов, постапокалиптическом мире".
+                     format(msg.from_user, bot.get_me()), reply_markup=markup)
+    # bot.send_message(msg.chat.id, "{0}".format(repr(users[msg.chat.id])))
+
+
+@bot.message_handler(commands=['help'])
+def settings(message):
+    bot.send_message(message.chat.id, 'Вот мой список команд:\n /start \n /help')
+
+
+@bot.message_handler(content_types=['text'])
+def bot_message(msg):
+    if msg.text == START_NEW_GAME or msg.text == CONTINUE_GAME:
+        game_menu(msg.chat.id)
+    elif msg.text == RUN:
+        if msg.chat.id in enemys.keys():
+            enemys.pop(msg.chat.id)
+        game_menu(msg.chat.id)
+        bot.send_message(msg.chat.id, 'Ты сбежал')
+    elif msg.text == SHOP:
+        bot.send_sticker(msg.chat.id, SHOP_STICKER)
+        bot.send_message(msg.chat.id, 'Тут должен был быть магаз, но он еще в разработке, сарян')
+    elif msg.text == GO_AHEAD:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        run = types.KeyboardButton(RUN)
+        to_damage = types.KeyboardButton(TO_DAMAGE)
+        markup.add(run, to_damage)
+        bot.send_message(msg.chat.id, "Ты встретил моба\n\n" + enemy_create(msg.chat.id), reply_markup=markup)
+        # if msg.chat.id not in enemys.keys():
+        #     enemy_create(msg.chat.id)
+    elif msg.text == MAIN_MENU:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        item1 = types.KeyboardButton(CONTINUE_GAME)  # продолжить игру
+        item2 = types.KeyboardButton(SUPPORT)  # написать разрабам(виведется телеграм и почта)
+        markup.add(item1, item2)
+        bot.send_message(msg.chat.id, " {0}".format(repr(users[msg.chat.id])), reply_markup=markup)
+    elif msg.text == SUPPORT:
+        bot.send_message(msg.chat.id, "@Dimasik333 - Telegram Дима \n levstepanenko@gmail.com - gmail Лев")
+    elif msg.text == TO_DAMAGE:
+        bot_fight(msg.chat.id)
+    else:
+        bot.send_message(msg.chat.id, 'Я не знаю что ответить 😢😢😢')
+
+
+def game_menu(msg_id):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    item5 = types.KeyboardButton(SHOP)
+    item6 = types.KeyboardButton(GO_AHEAD)
+    back = types.KeyboardButton(MAIN_MENU)
+    markup.add(item5, item6, back)
+    bot.send_message(msg_id, " {0}".format(repr(users[msg_id])), reply_markup=markup)
+
+
+# @bot.message_handler(content_types=['stop'])
+# def bot_message(message):
+#     bot.stop_bot()
+
+
+def bot_fight(user_id):
+    if user_id not in enemys.keys():  # создание нового моба, если бот крашнулся посреди боя
+        enemy_create(user_id)
+    user = users[user_id]
+    enemy = enemys[user_id]
+
+    user.take_damage(enemy.to_damage())
+    enemy.take_damage(user.to_damage())
+    if user.hp <= 0:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        restart = types.KeyboardButton('/start')
+        markup.add(restart)
+        bot.send_sticker(user_id, DEATH_STICKER)
+        bot.send_message(user_id, "Ты вмэр", reply_markup=markup)
+    else:
+        if enemy.hp > 0:
+            bot.send_message(user_id, "У врага осталось: " + repr(enemy) + "\n\n\nУ тебя осталось: " + repr(user))
+        else:
+            user_reward = enemy.reward()
+            user.money += user_reward
+            bot.send_message(user_id, enemy.death + "\n\n" + "ты получил {0}💵".format(user_reward))
+            enemys.pop(user_id)
+            game_menu(user_id)
+
+
+def enemy_create(user_id):
+    if user_id not in enemys.keys():
+        enm = random.randint(1, 2)
+        if enm == 1:
+            enemys[user_id] = GiantCockroach.GiantCockroach()
+        elif enm == 2:
+            enemys[user_id] = Rat.Rat()
+    return enemys[user_id].description
+
+
+bot.polling()
