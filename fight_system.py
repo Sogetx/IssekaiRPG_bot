@@ -9,10 +9,10 @@ def bot_fight(user_id, user, enemys, bot, menu):
     if user_id not in enemys.keys():  # создание нового моба, если бот крашнулся посреди боя
         enemy_create(user_id, enemys)
     enemy = enemys[user_id]
-
     if user.hp > 0:  # если пользователь жив
+        dmg_to_enemy = str(enemy.take_damage(user.to_damage()))
         if enemy.hp > 0:  # если враг жив
-            bot.send_message(user_id, "Ты нанес: " + str(enemy.take_damage(user.to_damage())) +
+            bot.send_message(user_id, "Ты нанес: " + dmg_to_enemy +
                                       " 💥\nУ врага осталось:" + str(enemy.hp) +
                                       " ❤\n\nВраг ударил: " + str(user.take_damage(enemy.to_damage())) +
                                       " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")

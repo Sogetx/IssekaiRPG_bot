@@ -9,7 +9,7 @@ class User:
         self.damage1 = 1
         self.damage2 = 10
 
-    def __repr__(self): # Вывод данных после хода
+    def __repr__(self):  # Статистика пользователя
         return "{0} 💵\n{1} ❤\n{2}-{3} 💥\n".format(self.money, self.hp, self.damage1, self.damage2)
 
     def to_damage(self):  # Нанесение урона
