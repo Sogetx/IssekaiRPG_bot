@@ -40,3 +40,4 @@ def enemy_create(user_id, enemys):  # Генерация мобов
             enemys[user_id] = Rat.Rat()
     # Описание моба при первой встерече
     return enemys[user_id].description + "\n\nХарактеристики врага:\n" + repr(enemys[user_id])
+
