@@ -5,7 +5,7 @@ class User:
 
     def __init__(self):
         self.money = 200
-        self.hp = 100
+        self.hp = 20
         self.damage1 = 1
         self.damage2 = 10
 

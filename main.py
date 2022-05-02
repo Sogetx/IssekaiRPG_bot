@@ -41,8 +41,7 @@ def bot_message(msg):  # обработчик текста
         if msg.text == START_NEW_GAME or msg.text == CONTINUE_GAME:
             game_menu(uid)
         elif msg.text == RUN:
-            if uid in enemys.keys():
-                enemys.pop(uid)
+            enemys.pop(uid)
             game_menu(uid)
             bot.send_message(uid, 'Ты сбежал')
         elif msg.text == SHOP:
@@ -61,7 +60,7 @@ def bot_message(msg):  # обработчик текста
             markup.add(item1, item2)
             bot.send_message(uid, "Ты вернулся в главное меню", reply_markup=markup)
         elif msg.text == SUPPORT:
-            bot.send_message(uid, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - gmail Лев")
+            bot.send_message(uid, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - Gmail Лев")
         elif msg.text == TO_DAMAGE:  # Урон
             bot_fight(uid, users[uid], enemys, bot, game_menu)
         elif msg.text == STATISTICS:
