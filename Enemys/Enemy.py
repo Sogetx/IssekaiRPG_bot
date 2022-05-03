@@ -3,11 +3,11 @@ import random
 
 class Enemy:
     def __init__(self):
-        self.hp = 0
-        self.damage1 = 0
-        self.damage2 = 0
-        self.money = 0
-        self.xp = 0
+        self.hp = 0 #хп противника
+        self.damage1 = 0 # минимальная атака
+        self.damage2 = 0 # максимальная атака
+        self.money = 0 # деньги с моба
+        self.xp = 0 # опыт с моба
         self.description = "описание моба"
         self.death = "описание смерти моба"
 

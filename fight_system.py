@@ -40,11 +40,15 @@ def bot_fight(user_id, user, enemys, bot, menu, newlvl):
 
 def enemy_create(user_id, enemys):  # Генерация мобов
     if user_id not in enemys.keys(): # если игрок не дерется с мобом
-        enm = random.randint(1, 2) # генерируем определенного моба на условии того какое число выпадет
+        enm = random.randint(1, 4) # генерируем определенного моба на условии того какое число выпадет
         if enm == 1:
             enemys[user_id] = GiantCockroach.GiantCockroach()
         elif enm == 2:
             enemys[user_id] = Rat.Rat()
+        elif enm == 3:
+            enemys[user_id] = Slime.Slime()
+        elif enm == 4:
+            enemys[user_id] = Goblin.Goblin()
     # Описание моба при первой встерече
     return enemys[user_id].description + "\n\nХарактеристики врага:\n" + repr(enemys[user_id])
 
