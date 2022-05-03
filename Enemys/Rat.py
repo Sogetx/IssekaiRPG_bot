@@ -7,8 +7,8 @@ class Rat(Enemy):
         self.hp = 25
         self.damage1 = 1
         self.damage2 = 3
-        self.money1 = 0
-        self.money2 = 5
+        self.money = 5
+        self.xp = 5
         self.description = "Крыса 🐀"
         self.death = "Ты добил крысу"
 

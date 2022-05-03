@@ -7,7 +7,7 @@ class GiantCockroach(Enemy):
         self.hp = 50
         self.damage1 = 2
         self.damage2 = 5
-        self.money1 = 0
-        self.money2 = 10
+        self.money = 5
+        self.xp = 15
         self.description = "ТАРАКАН ААААААААА"
         self.death = "Ты раздавил его, маленького, бедного таракашку. Что ж ты за человек?"

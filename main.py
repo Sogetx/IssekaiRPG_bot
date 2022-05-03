@@ -42,9 +42,12 @@ def bot_message(msg):  # обработчик текста
             fight_menu(uid, msg.text)
         elif users[uid].menu == MAIN_MENU:
             main_menu(uid, msg.text)
-        elif users[uid].menu == DEATH:
-            bot.send_message(uid, 'Ты же уже мертв, куда тебе идти то?\n\nЕсли непонял - то нажми сюда --> /start <--')
-
+        elif users[uid].menu == NEW_LVL:
+            new_level(uid, msg.text)
+        elif users[uid].menu == DEATH:  # если пользователь пишет сообщение боту, но он уже мертв
+            bot.send_message(uid, 'Ты же уже мертв, куда тебе идти то?\n\n'
+                                  '         --> /start <--')
+            bot.send_message(uid, "⚰️")
     except KeyError:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         restart = types.KeyboardButton('/start')
@@ -59,13 +62,14 @@ def fight_menu(uid, msg):
         to_damage = types.KeyboardButton(TO_DAMAGE)
         markup.add(run, to_damage)
         bot.send_message(uid, "Ты встретил моба\n\n" + enemy_create(uid, enemys), reply_markup=markup)
+        users[uid].enemy_met_count += 1
         users[uid].menu = FIGHT_MENU
     elif msg == RUN:  # сбежать
         enemys.pop(uid)
         game_menu(uid, GAME_MENU)  # переход в игровое меню
         bot.send_message(uid, 'Ты сбежал')
     elif msg == TO_DAMAGE:  # Ударить врага
-        bot_fight(uid, users[uid], enemys, bot, game_menu)
+        bot_fight(uid, users[uid], enemys, bot, game_menu, new_level)
     else:
         bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
 
@@ -79,7 +83,7 @@ def main_menu(uid, msg):
         bot.send_message(uid, "Ты вернулся в главное меню", reply_markup=markup)
         users[uid].menu = MAIN_MENU
     elif msg == START_NEW_GAME or msg == CONTINUE_GAME:
-        game_menu(uid, GAME_MENU)   # переход в игровое меню
+        game_menu(uid, GAME_MENU)  # переход в игровое меню
     elif msg == SUPPORT:
         bot.send_message(uid, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - Gmail Лев")
     else:
@@ -94,7 +98,8 @@ def game_menu(uid, msg):
         back = types.KeyboardButton(MAIN_MENU)
         statistics = types.KeyboardButton(STATISTICS)
         markup.add(item5, item6, statistics, back)
-        bot.send_message(uid, "{0}❤ {1}💵".format(users[uid].hp, users[uid].money), reply_markup=markup)
+        bot.send_message(uid, "У тебя:\n{0}❤ {1}💵\n\nЧе дальше будеш делать?".
+                         format(users[uid].hp, users[uid].money), reply_markup=markup)
         users[uid].menu = GAME_MENU
     elif msg == SHOP:
         # # # переход в меню магазина # # #
@@ -106,6 +111,56 @@ def game_menu(uid, msg):
         main_menu(uid, MAIN_MENU)
     elif msg == STATISTICS:
         bot.send_message(uid, "Твоя статистика:\n" + repr(users[uid]))
+    else:
+        bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
+
+
+def new_level(uid, msg):
+    if msg == NEW_LVL:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        hp = types.KeyboardButton("Макс. ХП ❤ +10")
+        power = types.KeyboardButton("Сила 💪 +1")
+        defence = types.KeyboardButton("Защита 🛡 +1")
+        markup.add(hp, power, defence)
+        bot.send_message(uid, "🎉Ты получил новый уровень🎉"
+                              "\n\nТвои характеристики:"
+                              "\n\nМаксимальное ХП: {0}❤\nСила: {1} 💪\nЗащита: {2} 🛡"
+                              "\n\nВыбери какую хар-ку ты хочешь увеличить:".
+                         format(users[uid].max_hp, users[uid].power, users[uid].defence), reply_markup=markup)
+        users[uid].menu = NEW_LVL
+    elif msg == "Макс. ХП ❤ +10":
+        users[uid].max_hp += 10
+        users[uid].hp = users[uid].max_hp
+        if users[uid].next_lvl():
+            bot.send_message(uid, "🎉Ты получил новый уровень🎉"
+                                  "\n\nТвои характеристики:"
+                                  "\n\nМаксимальное ХП: {0}❤\nСила: {1} 💪\nЗащита: {2} 🛡"
+                                  "\n\nВыбери какую хар-ку ты хочешь увеличить:".
+                             format(users[uid].max_hp, users[uid].power, users[uid].defence))
+        else:
+            game_menu(uid, GAME_MENU)  # переход в игровое меню
+    elif msg == "Сила 💪 +1":
+        users[uid].addpower(1)
+        users[uid].hp = users[uid].max_hp
+        if users[uid].next_lvl():
+            bot.send_message(uid, "🎉Ты получил новый уровень🎉"
+                                  "\n\nТвои характеристики:"
+                                  "\n\nМаксимальное ХП: {0}❤\nСила: {1} 💪\nЗащита: {2} 🛡"
+                                  "\n\nВыбери какую хар-ку ты хочешь увеличить:".
+                             format(users[uid].max_hp, users[uid].power, users[uid].defence))
+        else:
+            game_menu(uid, GAME_MENU)  # переход в игровое меню
+    elif msg == "Защита 🛡 +1":
+        users[uid].defence += 1
+        users[uid].hp = users[uid].max_hp
+        if users[uid].next_lvl():
+            bot.send_message(uid, "🎉Ты получил новый уровень🎉"
+                                  "\n\nТвои характеристики:"
+                                  "\n\nМаксимальное ХП: {0}❤\nСила: {1} 💪\nЗащита: {2} 🛡"
+                                  "\n\nВыбери какую хар-ку ты хочешь увеличить:".
+                             format(users[uid].max_hp, users[uid].power, users[uid].defence))
+        else:
+            game_menu(uid, GAME_MENU)  # переход в игровое меню
     else:
         bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
 
