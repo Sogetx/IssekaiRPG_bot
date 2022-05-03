@@ -6,10 +6,12 @@ DEATH_STICKER = "CAACAgIAAxkBAAEEms1ibridDAOemzBFkVXyS8LUmExOVgACRxcAAvuxcEvbmQy
 RUN = "Сбежать 🏃‍♂"
 START_NEW_GAME = "Начать свое приключение"
 SUPPORT = "Поддержка ☎"
-MAIN_MENU = "В главное меню"
 SHOP = "Магазин 🏪"
 GO_AHEAD = "Пойти вперед 🚶‍♂"
 TO_DAMAGE = "Нанести урон 💥"
 CONTINUE_GAME = "Продолжить приключение"
 STATISTICS = "Статистика 👤"
+MAIN_MENU = "В главное меню"
+GAME_MENU = "Игровое меню"
+FIGHT_MENU = "Меню боя"
 

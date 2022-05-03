@@ -10,25 +10,28 @@ def bot_fight(user_id, user, enemys, bot, menu):
         enemy_create(user_id, enemys)
     enemy = enemys[user_id]
     dmg_to_enemy = enemy.take_damage(user.to_damage())
-    dmg_to_user = user.take_damage(enemy.to_damage())
-    if user.hp > 0:  # если пользователь жив
-        if enemy.hp > 0:  # если враг жив
+    if enemy.hp > 0:  # если враг жив
+        dmg_to_user = user.take_damage(enemy.to_damage())
+        if user.hp > 0:  # если пользователь жив
             bot.send_message(user_id, "Ты нанес: " + str(dmg_to_enemy) +
-                                      " 💥\nУ врага осталось:" + str(enemy.hp) +
-                                      " ❤\n\nВраг ударил: " + str(dmg_to_user) +
-                                      " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
-        else:  # если умрет моб
-            user_reward_money = enemy.reward_money()
+                             " 💥\nУ врага осталось:" + str(enemy.hp) +
+                             " ❤\n\nВраг ударил: " + str(dmg_to_user) +
+                             " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
+        else:  # Если умрет пользователь
+            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+            restart = types.KeyboardButton('/start')
+            markup.add(restart)
+            bot.send_message(user_id, user.death_msg(), reply_markup=markup)
+            bot.send_sticker(user_id, DEATH_STICKER)
+    else:  # если умрет враг
+        user_reward_money = enemy.reward_money()
+        if user_reward_money > 0:
             user.money += user_reward_money
-            bot.send_message(user_id, enemy.death + "\n\n" + "ты получил {0}💵".format(user_reward_money))
-            enemys.pop(user_id)
-            menu(user_id)  # показывается игровое меню
-    else:  # Если умрет пользователь
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        restart = types.KeyboardButton('/start')
-        markup.add(restart)
-        bot.send_message(user_id, user.death(), reply_markup=markup)
-        bot.send_sticker(user_id, DEATH_STICKER)
+            bot.send_message(user_id, enemy.death + "\n\n" + "У врага ты нашел {0}💵".format(user_reward_money))
+        else:
+            bot.send_message(user_id, enemy.death + "\n\n" + "У врага ты ничего не нашел")
+        enemys.pop(user_id)
+        menu(user_id, GAME_MENU)  # показывается игровое меню
 
 
 def enemy_create(user_id, enemys):  # Генерация мобов

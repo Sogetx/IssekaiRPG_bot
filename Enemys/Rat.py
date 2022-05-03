@@ -10,5 +10,5 @@ class Rat(Enemy):
         self.money1 = 0
         self.money2 = 5
         self.description = "Крыса 🐀"
-        self.death = "Ты убил крысу"
+        self.death = "Ты добил крысу"
 
