@@ -55,14 +55,14 @@ def bot_message(msg):  # обработчик текста
         bot.send_message(uid, 'Произошли какие-то траблы, нужно перезапустить бота', reply_markup=markup)
 
 
-def fight_menu(uid, msg):
+def fight_menu(uid, msg):  # Все что связано с взаимодействием в бою
     if msg == GO_AHEAD:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         run = types.KeyboardButton(RUN)
         to_damage = types.KeyboardButton(TO_DAMAGE)
         markup.add(run, to_damage)
         bot.send_message(uid, "Ты встретил моба\n\n" + enemy_create(uid, enemys), reply_markup=markup)
-        users[uid].enemy_met_count += 1
+        users[uid].enemy_met_count += 1  # счетчик встреченых мобов будет выводиться потом в статистике
         users[uid].menu = FIGHT_MENU
     elif msg == RUN:  # сбежать
         enemys.pop(uid)
@@ -75,7 +75,7 @@ def fight_menu(uid, msg):
 
 
 def main_menu(uid, msg):
-    if msg == MAIN_MENU:
+    if msg == MAIN_MENU:  # Если было выбрано главное меню
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         item1 = types.KeyboardButton(CONTINUE_GAME)  # продолжить игру
         item2 = types.KeyboardButton(SUPPORT)  # написать разрабам(виведется телеграм и почта)
@@ -90,7 +90,7 @@ def main_menu(uid, msg):
         bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
 
 
-def game_menu(uid, msg):
+def game_menu(uid, msg): # игровое меню: статистика, магазин, пойти в бой и возврат в главное меню
     if msg == GAME_MENU:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         item5 = types.KeyboardButton(SHOP)
@@ -115,7 +115,7 @@ def game_menu(uid, msg):
         bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
 
 
-def new_level(uid, msg):
+def new_level(uid, msg): # получение нового уровня( условия, кнопки выбора характеристик повышение параметров героя)
     if msg == NEW_LVL:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         hp = types.KeyboardButton("Макс. ХП ❤ +10")
@@ -128,9 +128,9 @@ def new_level(uid, msg):
                               "\n\nВыбери какую хар-ку ты хочешь увеличить:".
                          format(users[uid].max_hp, users[uid].power, users[uid].defence), reply_markup=markup)
         users[uid].menu = NEW_LVL
-    elif msg == "Макс. ХП ❤ +10":
-        users[uid].max_hp += 10
-        users[uid].hp = users[uid].max_hp
+    elif msg == "Макс. ХП ❤ +10":  # если игрок выбрал поднять макс хп на 10
+        users[uid].max_hp += 10  # увеличение макс хп на 10
+        users[uid].hp = users[uid].max_hp  # Установление параметра хп на уровень текущего максимума
         if users[uid].next_lvl():
             bot.send_message(uid, "🎉Ты получил новый уровень🎉"
                                   "\n\nТвои характеристики:"
@@ -139,9 +139,9 @@ def new_level(uid, msg):
                              format(users[uid].max_hp, users[uid].power, users[uid].defence))
         else:
             game_menu(uid, GAME_MENU)  # переход в игровое меню
-    elif msg == "Сила 💪 +1":
-        users[uid].addpower(1)
-        users[uid].hp = users[uid].max_hp
+    elif msg == "Сила 💪 +1": # если выбран параметр Сила +1
+        users[uid].addpower(1) # повышение силы на 1
+        users[uid].hp = users[uid].max_hp # полное востановление хп игрока 
         if users[uid].next_lvl():
             bot.send_message(uid, "🎉Ты получил новый уровень🎉"
                                   "\n\nТвои характеристики:"
@@ -150,9 +150,9 @@ def new_level(uid, msg):
                              format(users[uid].max_hp, users[uid].power, users[uid].defence))
         else:
             game_menu(uid, GAME_MENU)  # переход в игровое меню
-    elif msg == "Защита 🛡 +1":
-        users[uid].defence += 1
-        users[uid].hp = users[uid].max_hp
+    elif msg == "Защита 🛡 +1": # если выбран параметр Защита +1
+        users[uid].defence += 1 # повышение защиты персонажа на 1
+        users[uid].hp = users[uid].max_hp # полное востановление хп игрока  
         if users[uid].next_lvl():
             bot.send_message(uid, "🎉Ты получил новый уровень🎉"
                                   "\n\nТвои характеристики:"
