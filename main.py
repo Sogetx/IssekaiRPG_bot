@@ -42,6 +42,9 @@ def bot_message(msg):  # обработчик текста
             fight_menu(uid, msg.text)
         elif users[uid].menu == MAIN_MENU:
             main_menu(uid, msg.text)
+        elif users[uid].menu == DEATH:
+            bot.send_message(uid, 'Ты же уже мертв, куда тебе идти то?\n\nЕсли непонял - то нажми сюда --> /start <--')
+
     except KeyError:
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         restart = types.KeyboardButton('/start')

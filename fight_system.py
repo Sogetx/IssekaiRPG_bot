@@ -23,6 +23,7 @@ def bot_fight(user_id, user, enemys, bot, menu):
             markup.add(restart)
             bot.send_message(user_id, user.death_msg(), reply_markup=markup)
             bot.send_sticker(user_id, DEATH_STICKER)
+            user.menu = DEATH
     else:  # если умрет враг
         user_reward_money = enemy.reward_money()
         if user_reward_money > 0:
