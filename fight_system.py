@@ -8,10 +8,11 @@ from telebot import *
 def bot_fight(user_id, user, enemys, bot, menu):
     if user_id not in enemys.keys():  # создание нового моба, если бот крашнулся посреди боя
         enemy_create(user_id, enemys)
+        user.enemy_met_count += 1
     enemy = enemys[user_id]
     dmg_to_enemy = enemy.take_damage(user.to_damage())
     if enemy.hp > 0:  # если враг жив
-        dmg_to_user = user.take_damage(enemy.to_damage())
+        dmg_to_user = user.take_damage(enemy.to_damage()) - user.defence//2
         if user.hp > 0:  # если пользователь жив
             bot.send_message(user_id, "Ты нанес: " + str(dmg_to_enemy) +
                              " 💥\nУ врага осталось:" + str(enemy.hp) +
@@ -31,6 +32,7 @@ def bot_fight(user_id, user, enemys, bot, menu):
             bot.send_message(user_id, enemy.death + "\n\n" + "У врага ты нашел {0}💵".format(user_reward_money))
         else:
             bot.send_message(user_id, enemy.death + "\n\n" + "У врага ты ничего не нашел")
+        user.enemy_count += 1
         enemys.pop(user_id)
         menu(user_id, GAME_MENU)  # показывается игровое меню
 
