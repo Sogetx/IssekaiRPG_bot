@@ -12,7 +12,7 @@ class User:
         self.defence = 1  # защита
         self.enemy_count = 0  # кол-во убитых мобов
         self.go_ahead_count = 0  # кол-во совершеных походов
-        self.xp = 500  # опыт
+        self.xp = 0  # опыт
         self.xp_to_lvl = 100  # сколько опыта до след. уровня
         self.lvl = 1  # уровень
         self.menu = MAIN_MENU  # в каком меню находится пользователь
