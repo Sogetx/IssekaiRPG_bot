@@ -4,7 +4,7 @@ from constants import *
 class User:
 
     def __init__(self):
-        self.money = 200  # деньги
+        self.money = 0  # деньги
         self.max_hp = 100  # максимальное здоровье
         self.hp = self.max_hp  # здоровье
         self.power = 10  # Сила (урон без предметов)
@@ -55,3 +55,6 @@ class User:
 
     def minusmoney(self, minus):
         self.money = max(self.money-minus, 0)
+
+    def minushp(self, minus):
+        self.hp = self.hp-minus
