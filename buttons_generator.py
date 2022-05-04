@@ -13,10 +13,7 @@ def buttons_generator(buttons):  # генератор кнопок
             z += 3
         elif y < len(buttons):
             markup.add(buttons[x], buttons[y])
-            x += 2
-            y += 2
         else:
             markup.add(buttons[x])
-            x += 1
         i += 3
     return markup
