@@ -16,4 +16,4 @@ GAME_MENU = "Игровое меню"
 FIGHT_MENU = "Меню боя"
 DEATH = "мертв"
 NEW_LVL = "новый уровень"
-
+EVENTS_MENU = "Меню ивента"

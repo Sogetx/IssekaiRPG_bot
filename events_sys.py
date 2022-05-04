@@ -1,14 +1,22 @@
-import types
 import random
-
-from telebot import *
 from Events import *
-def events_create(user_id, events):  # Генерация ивентов
 
-        evnt = random.randint(1, 2) # генерируем определенного моба на условии того какое число выпадет
-        if evnt == 1:
-            events[user_id] = test.test()
-        else:
-            return 0
-    # Описание ивента
-  #  return events[user_id].description + "\n\nХарактеристики врага:\n" + repr(enemys[user_id])
+
+def events_create(user_id, events, user):  # Генерация ивентов
+    # генерируем определенного моба на условии того какое число выпадет
+    evnt = random.randint(1, 2)
+    if evnt == 1:
+        events[user_id] = test.Test()
+        # user.heal(user.max_hp)  # полный отхил
+        user.minusmoney(5)  # - 5 денег
+    else:
+        events[user_id] = church.Church()
+        user.heal(user.max_hp)
+    return events[user_id].description
+
+# def events_traits(user_id,events):
+# event = events[user_id]
+# if evnt == 1:
+#     event.regenerate
+# else:
+#    event.regenerate

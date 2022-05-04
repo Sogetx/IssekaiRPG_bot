@@ -5,7 +5,7 @@ class User:
 
     def __init__(self):
         self.money = 200  # деньги
-        self.max_hp = 1  # максимальное здоровье
+        self.max_hp = 10  # максимальное здоровье
         self.hp = self.max_hp  # здоровье
         self.power = 10  # Сила (урон без предметов)
         self.damage = self.power  # урон
@@ -20,7 +20,7 @@ class User:
     def __repr__(self):  # Статистика пользователя
         return "Уровень: {10}\nТекущее ХП: {0} ❤\nМаксимальное ХП: {1} ❤\nДеньги: {2} 💵\n" \
                "Опыт: {3}/{4} ⭐\nУрон: {5} 💥\nСила: {6} 💪" \
-               "\nЗащита: {7} 🛡\nУбито мобов: {8} ⚔\nВстречено мобов: {9} 👹". \
+               "\nЗащита: {7} 🛡\nУбито мобов: {8} ⚔\nВстречено мобов и ивентов: {9} 👹". \
             format(self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power, self.defence,
                    self.enemy_count, self.enemy_met_count, self.lvl)
 
@@ -52,3 +52,6 @@ class User:
 
     def heal(self, heal_hp):
         self.hp = min(self.hp + heal_hp, self.max_hp)
+
+    def minusmoney(self, minus):
+        self.money = max(self.money-minus, 0)

@@ -3,12 +3,14 @@ from telebot import *
 from constants import *
 import User
 import config
+import random
 from fight_system import enemy_create, bot_fight
+from events_sys import events_create
 
 bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 users = {}  # словарь(масив ключ-значение) пользователей
 enemys = {}  # словарь мобов
-
+events = {}
 
 @bot.message_handler(commands=['start'])
 def start(msg):  # обработчик команды /start
@@ -74,6 +76,21 @@ def fight_menu(uid, msg):  # Все что связано с взаимодей�
         bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
 
 
+def events_menu(uid, msg):  # Все что связано с взаимодействием c ивентом
+    if msg == GO_AHEAD:
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        continue_game = types.KeyboardButton(CONTINUE_GAME)
+        markup.add(continue_game)
+        bot.send_message(uid, events_create(uid, events, users[uid]),
+                         reply_markup=markup)
+        # events_traits(users[uid], events)
+        # users[uid].go_ahead_count += 1
+        # users[uid].menu = FIGHT_MENU
+        bot.send_message(uid, 'Вы пережили еще одно событие')
+        game_menu(uid, GAME_MENU)
+    else:
+        bot.send_message(uid, 'Я не знаю что ответить 😢😢😢')
+
 def main_menu(uid, msg):
     if msg == MAIN_MENU:  # Если было выбрано главное меню
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -105,8 +122,7 @@ def game_menu(uid, msg): # игровое меню: статистика, маг
         # # # переход в меню магазина # # #
         bot.send_sticker(uid, SHOP_STICKER)
         bot.send_message(uid, 'Тут должен был быть магаз, но он еще в разработке, сарян')
-    elif msg == GO_AHEAD:
-        fight_menu(uid, msg)
+
     elif msg == MAIN_MENU:
         main_menu(uid, MAIN_MENU)
     elif msg == STATISTICS:
