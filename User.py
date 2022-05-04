@@ -11,7 +11,7 @@ class User:
         self.damage = self.power  # урон
         self.defence = 1  # защита
         self.enemy_count = 0  # кол-во убитых мобов
-        self.enemy_met_count = 0  # кол-во встреченых мобов
+        self.go_ahead_count = 0  # кол-во встреченых мобов
         self.xp = 0  # опыт
         self.xp_to_lvl = 100  # сколько опыта до след. уровня
         self.lvl = 1  # уровень
@@ -22,7 +22,7 @@ class User:
                "Опыт: {3}/{4} ⭐\nУрон: {5} 💥\nСила: {6} 💪" \
                "\nЗащита: {7} 🛡\nУбито мобов: {8} ⚔\nВстречено мобов и ивентов: {9} 👹". \
             format(self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power, self.defence,
-                   self.enemy_count, self.enemy_met_count, self.lvl)
+                   self.enemy_count, self.go_ahead_count, self.lvl)
 
     def to_damage(self):  # Нанесение урона
         return self.damage
