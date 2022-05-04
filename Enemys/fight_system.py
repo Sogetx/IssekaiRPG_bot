@@ -10,11 +10,18 @@ bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 
 def bot_fight(uid, user, menu, newlvl):
     enemy_create(user)
-    dmg_to_enemy = user.enemy.take_damage(user.to_damage())  # получение мобом урона от пользователя
+    is_crit = ""
+    # получение мобом урона от пользователя
+    if user.crit >= random.randint(1, 100):  # если критический
+        dmg_to_enemy = user.enemy.take_damage(user.to_damage()*2)
+        is_crit = "Критические "
+    else:
+        dmg_to_enemy = user.enemy.take_damage(user.to_damage())
+
     if user.enemy.hp > 0:  # если враг жив
         dmg_to_user = user.take_damage(user.enemy.to_damage())
         if user.hp > 0:  # если пользователь жив
-            bot.send_message(uid, "Ты нанес: " + str(dmg_to_enemy) +
+            bot.send_message(uid, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
                              " 💥\nУ врага осталось:" + str(user.enemy.hp) +
                              " ❤\n\nВраг ударил: " + str(dmg_to_user) +
                              " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
