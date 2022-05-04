@@ -12,25 +12,26 @@ class User:
         self.defence = 1  # защита
         self.enemy_count = 0  # кол-во убитых мобов
         self.go_ahead_count = 0  # кол-во совершеных походов
-        self.xp = 0  # опыт
+        self.xp = 500  # опыт
         self.xp_to_lvl = 100  # сколько опыта до след. уровня
         self.lvl = 1  # уровень
         self.menu = MAIN_MENU  # в каком меню находится пользователь
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
+        self.crit = 5  # шанс крит удара
 
     def __repr__(self):  # Статистика пользователя
         return "Уровень: {10}\nТекущее ХП: {0} ❤\nМаксимальное ХП: {1} ❤\nДеньги: {2} 💵\n" \
-               "Опыт: {3}/{4} ⭐\nУрон: {5} 💥\nСила: {6} 💪" \
-               "\nЗащита: {7} 🛡\nУбито мобов: {8} 👹\nСовершено походов: {9} 🚶‍♂". \
-            format(self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power, self.defence,
+               "Опыт: {3}/{4} ⭐\nУрон: {5} 💥\nСила: {6} 💪\nШанс крита: {7} 🎯" \
+               "\nЗащита: {8} 🛡\nУбито мобов: {9} 👹\nСовершено походов: {10} 🚶‍♂". \
+            format(self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power, self.crit, self.defence,
                    self.enemy_count, self.go_ahead_count, self.lvl)
 
     def to_damage(self):  # Нанесение урона
         return self.damage
 
     def take_damage(self, received_damage):  # Получение урона
-        self.hp -= received_damage - self.defence // 2
+        self.hp -= max(received_damage - self.defence // 2, 0)
         return received_damage
 
     def death_msg(self, enemy_name):
