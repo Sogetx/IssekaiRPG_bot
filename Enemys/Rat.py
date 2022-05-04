@@ -9,6 +9,6 @@ class Rat(Enemy):
         self.damage2 = 3
         self.money = 5
         self.xp = 5
+        self.name = "Крыса"
         self.description = "Крыса 🐀"
         self.death = "Ты добил крысу"
-

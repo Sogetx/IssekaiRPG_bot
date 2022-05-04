@@ -1,2 +1,2 @@
 from Events import test
-from Events import church
+from Events import Church
