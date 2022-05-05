@@ -1,5 +1,4 @@
 import random
-
 import config
 from buttons_generator import *
 from Enemys import *
@@ -9,51 +8,45 @@ bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 
 
 def bot_fight(uid, user, menu, newlvl):
-    enemy_create(user)
-    enemy_max_hp = user.enemy.hp
-    is_crit = ""
-    # получение мобом урона от пользователя
-    if user.crit >= random.randint(1, 100):  # если критический
-        dmg_to_enemy = user.enemy.take_damage(user.to_damage()*2)
-        is_crit = "Критические "
+    if user.enemy.hp < user.enemy.max_hp // 10 and user.enemy.run_att == 0:  # условие для побега моба
+        val = random.randint(1, 30)
+        user.enemy.run_att = 1
+        if val == 1:
+            bot.send_message(uid, user.enemy.name + " сбежал, ну не знаю мог бы его и догнать, "
+                                                    "но раз тебе лень то ладно")
+            user.enemy = None
+            menu(uid, GAME_MENU)
     else:
-        dmg_to_enemy = user.enemy.take_damage(user.to_damage())
-
-    if user.enemy.hp > 0:  # если враг жив
-        if user.enemy.hp < enemy_max_hp * 0.1 and user.hp > 0: # условие для побега моба
-            val = random.randint(1, 20)
-            if val == 1:
-                user.enemy = None
-                bot.send_message(uid, "Враг сбежал, ну не знаю мог бы его и догнать, но раз тебе лень то ладно")
-                menu(uid, GAME_MENU)
-            else:
-                dmg_to_user = user.take_damage(user.enemy.to_damage())
-                bot.send_message(uid, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
-                                     " 💥\nУ врага осталось:" + str(user.enemy.hp) +
-                                     " ❤\n\nВраг ударил: " + str(dmg_to_user) +
-                                     " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
+        is_crit = ""
+        # получение мобом урона от пользователя
+        if user.crit >= random.randint(1, 100):  # если критический
+            dmg_to_enemy = user.enemy.take_damage(user.to_damage() * 2)
+            is_crit = "Критические "
         else:
+            dmg_to_enemy = user.enemy.take_damage(user.to_damage())
+
+        if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив
                 bot.send_message(uid, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
-                             " 💥\nУ врага осталось:" + str(user.enemy.hp) +
-                             " ❤\n\nВраг ударил: " + str(dmg_to_user) +
-                             " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
+                                 " 💥\nУ врага осталось:" + str(user.enemy.hp) +
+                                 " ❤\n\nВраг ударил: " + str(dmg_to_user) +
+                                 " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
             else:  # Если умрет пользователь
                 bot.send_message(uid, user.death_msg(user.enemy.name), reply_markup=buttons_generator(['/start']))
                 bot.send_sticker(uid, DEATH_STICKER)
                 user.menu = DEATH
-    else:  # если умрет враг
-        user.money += user.enemy.money  # получение денег с моба
-        bot.send_message(uid, user.enemy.death + "\n\n" +
-                         "За победу над врагом ты получил {0}⭐ и {1}💵".format(user.enemy.xp, user.enemy.money))
-        user.enemy_count += 1  # счетчик мобов
-        user.xp += user.enemy.xp  # получение хр от моба
-        user.enemy = None
-        if user.next_lvl():  # проверка условия достиг ли игрок нового уровня
-            newlvl(uid, NEW_LVL)  # выдача нового уровня
-        else:
-            menu(uid, GAME_MENU)  # показывается игровое меню
+        else:  # если умрет враг
+            user.money += user.enemy.money  # получение денег с моба
+            bot.send_message(uid, user.enemy.death + "\n\n" +
+                             "За победу над врагом ты получил {0}⭐ и {1}💵".format(user.enemy.xp, user.enemy.money))
+            user.enemy_count += 1  # счетчик мобов
+            user.xp += user.enemy.xp  # получение хр от моба
+            user.enemy = None
+            if user.next_lvl():  # проверка условия достиг ли игрок нового уровня
+                newlvl(uid, NEW_LVL)  # выдача нового уровня
+            else:
+                menu(uid, GAME_MENU)  # показывается игровое меню
 
 
 def enemy_create(user):  # Генерация мобов

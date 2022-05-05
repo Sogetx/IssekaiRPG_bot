@@ -21,27 +21,28 @@ class User:
         self.crit = 5  # шанс крит удара
 
     def __repr__(self):  # Статистика пользователя
-        return "Уровень: {10}\nТекущее ХП: {0} ❤\nМаксимальное ХП: {1} ❤\nДеньги: {2} 💵\n" \
-               "Опыт: {3}/{4} ⭐\nУрон: {5} 💥\nСила: {6} 💪\nШанс крита: {7} 🎯" \
-               "\nЗащита: {8} 🛡\nУбито мобов: {9} 👹\nСовершено походов: {10} 🚶‍♂". \
-            format(self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power, self.crit, self.defence,
-                   self.enemy_count, self.go_ahead_count, self.lvl)
+        return "Уровень: {0}\nТекущее ХП: {1} ❤\nМаксимальное ХП: {2} ❤\nДеньги: {3} 💵\n" \
+               "Опыт: {4}/{5} ⭐\nУрон: {6} 💥\nСила: {7} 💪\nШанс крита: {8} 🎯" \
+               "\nЗащита: {9} 🛡\nУбито мобов: {10} 👹\nСовершено походов: {11} 🚶‍♂". \
+            format(self.lvl, self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power,
+                   self.crit, self.defence, self.enemy_count, self.go_ahead_count)
 
     def to_damage(self):  # Нанесение урона
         return self.damage
 
     def take_damage(self, received_damage):  # Получение урона
-        self.hp -= max(received_damage - self.defence // 2, 0)
+        self.hp -= max(received_damage - (self.defence // 2), 0)
         return received_damage
 
     def death_msg(self, enemy_name):
         return "Ты вмэр 💀\n\nПричина смерти: {0}\n\nТвоя статистика:\n".format(enemy_name) + repr(self)  # + статистика
 
     def next_lvl(self):
-        if self.xp >= self.xp_to_lvl:
+        if self.xp >= self.xp_to_lvl and self.lvl < 25:
             self.xp -= self.xp_to_lvl
-            self.xp_to_lvl = int(self.xp_to_lvl * 1.5)
+            self.xp_to_lvl = int(self.xp_to_lvl * 1.3)
             self.lvl += 1
+            print(self.lvl)
             return True
 
     def addpower(self, plus_power):

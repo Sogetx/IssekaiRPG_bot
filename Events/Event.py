@@ -3,5 +3,5 @@ class Event:
         self.description = "описание ивента"
 
     def action(self, user):
-        #действия с user
+        # действия с user
         return "результат"
