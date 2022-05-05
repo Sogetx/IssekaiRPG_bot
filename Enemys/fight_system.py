@@ -10,6 +10,7 @@ bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 
 def bot_fight(uid, user, menu, newlvl):
     enemy_create(user)
+    enemy_max_hp = user.enemy.hp
     is_crit = ""
     # получение мобом урона от пользователя
     if user.crit >= random.randint(1, 100):  # если критический
@@ -19,16 +20,29 @@ def bot_fight(uid, user, menu, newlvl):
         dmg_to_enemy = user.enemy.take_damage(user.to_damage())
 
     if user.enemy.hp > 0:  # если враг жив
-        dmg_to_user = user.take_damage(user.enemy.to_damage())
-        if user.hp > 0:  # если пользователь жив
-            bot.send_message(uid, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
+        if user.enemy.hp < enemy_max_hp * 0.1 and user.hp > 0: # условие для побега моба
+            val = random.randint(1, 20)
+            if val == 1:
+                user.enemy = None
+                bot.send_message(uid, "Враг сбежал, ну не знаю мог бы его и догнать, но раз тебе лень то ладно")
+                menu(uid, GAME_MENU)
+            else:
+                dmg_to_user = user.take_damage(user.enemy.to_damage())
+                bot.send_message(uid, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
+                                     " 💥\nУ врага осталось:" + str(user.enemy.hp) +
+                                     " ❤\n\nВраг ударил: " + str(dmg_to_user) +
+                                     " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
+        else:
+            dmg_to_user = user.take_damage(user.enemy.to_damage())
+            if user.hp > 0:  # если пользователь жив
+                bot.send_message(uid, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
                              " 💥\nУ врага осталось:" + str(user.enemy.hp) +
                              " ❤\n\nВраг ударил: " + str(dmg_to_user) +
                              " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
-        else:  # Если умрет пользователь
-            bot.send_message(uid, user.death_msg(user.enemy.name), reply_markup=buttons_generator(['/start']))
-            bot.send_sticker(uid, DEATH_STICKER)
-            user.menu = DEATH
+            else:  # Если умрет пользователь
+                bot.send_message(uid, user.death_msg(user.enemy.name), reply_markup=buttons_generator(['/start']))
+                bot.send_sticker(uid, DEATH_STICKER)
+                user.menu = DEATH
     else:  # если умрет враг
         user.money += user.enemy.money  # получение денег с моба
         bot.send_message(uid, user.enemy.death + "\n\n" +
