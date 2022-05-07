@@ -19,7 +19,11 @@ class Item:
 
     def buy(self, user):  # покупка предмета
         if user.money >= self.price:  # если у пользователя хватает денег, то предмет можно купить
-            user.items.append(self)
+            user.money -= self.price
+            if self.name not in user.items.keys():
+                user.items[self.name] = self
+            else:
+                user.items[self.name].count += 1
         return "Ты успешно купил: " + self.name + "\n\nпо цене " + str(self.price)  # квитанция об оплате
 
     def sell(self, user):
@@ -44,4 +48,4 @@ class Item:
 
     def __repr__(self):
         return self.name + " (" + str(self.count) + "ценой " + \
-               str(self.count * self.price) + ") :\n" + self.description + "\n"
+               str(self.count * self.price) + ") :\n" + self.description + "\n\n"
