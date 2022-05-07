@@ -101,7 +101,6 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
     elif msg == SHOP:
         # # # переход в меню магазина # # #
         bot.send_sticker(user.id, SHOP_STICKER)
-        bot.send_message(user.id, 'Тут должен был быть магаз, но он еще в разработке, сарян')
         shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
