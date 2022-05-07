@@ -6,7 +6,7 @@ class Item:
     def __init__(self):
         self.name = ""  # название
         self.description = ""  # описание
-        self.count = 0  # количество
+        self.count = 1  # количество
         self.price = 0  # цена
         self.is_used = False  # можно ли использовать этот предмет
         self.heal = 0  # сколько хилит(если это хилящий предмет)
@@ -22,6 +22,12 @@ class Item:
             user.items.append(self)
         return "Ты успешно купил: " + self.name + "\n\nпо цене " + str(self.price)  # квитанция об оплате
 
+    def sell(self, user):
+        user.money += self.price
+        self.count -= 1
+        if user.items[self.name].count == 0:
+            user.items.pop(self.name)
+
     def use(self, user):
         if self.heal != 0:
             user.heal(self.heal)
@@ -32,6 +38,9 @@ class Item:
         elif self.addxp != 0:
             user.add_xp(self.addxp)
             main.new_level(user.id, NEW_LVL)
+        self.count -= 1
+        if user.items[self.name].count == 0:
+            user.items.pop(self.name)
 
     def __repr__(self):
         return self.name + " (" + str(self.count) + "ценой " + \
