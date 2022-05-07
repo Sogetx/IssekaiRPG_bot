@@ -1,11 +1,10 @@
-import main
 from constants import *
 
 
 class Item:
     def __init__(self):
-        self.name = ""  # название
-        self.description = ""  # описание
+        self.name = "item"  # название
+        self.description = "описание"  # описание
         self.count = 1  # количество
         self.price = 0  # цена
         self.is_used = False  # можно ли использовать этот предмет
@@ -14,8 +13,7 @@ class Item:
         self.adddefence = 0  # сколько добавляет защиты(если это предмет добавляющий защиту)
         self.addxp = 0  # сколько добавляет опыта(если это предмет добавляющий опыт)
         # если предмет можно использовать, то показывается соответствующая кнопка
-        self.buttons = [lambda x: (x and "Использовать " + self.name or "")(self.is_used),
-                        "💵 Продать " + self.name, ""]
+        self.buttons = ["💵 Продать " + self.name, ""]
 
     def buy(self, user):  # покупка предмета
         if user.money >= self.price:  # если у пользователя хватает денег, то предмет можно купить
@@ -32,7 +30,7 @@ class Item:
         if user.items[self.name].count == 0:
             user.items.pop(self.name)
 
-    def use(self, user):
+    def use(self, user,func):
         if self.heal != 0:
             user.heal(self.heal)
         elif self.addpower != 0:
@@ -41,7 +39,7 @@ class Item:
             user.defence += self.adddefence
         elif self.addxp != 0:
             user.add_xp(self.addxp)
-            main.new_level(user.id, NEW_LVL)
+            func(user.id, NEW_LVL)
         self.count -= 1
         if user.items[self.name].count == 0:
             user.items.pop(self.name)

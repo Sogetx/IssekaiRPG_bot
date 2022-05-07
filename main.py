@@ -1,12 +1,12 @@
 from buttons_generator import buttons_generator
 from telebot import *
 from constants import *
-import shop
+#import shop
 import User
 import config
 import random
 from Enemys.fight_system import enemy_create, bot_fight
-from Events.events_sys import events_create
+from Events.events_system import events_create
 
 bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 users = {}  # словарь(масив ключ-значение) пользователей
@@ -33,7 +33,6 @@ def settings(msg):  # обработчик команды /help
 
 @bot.message_handler(content_types=['text'])
 def bot_message(msg):  # обработчик текста
-    print(msg.text)
     try:  # возможна ошибка KeyError
         user = users[msg.chat.id]
         if user.menu == GAME_MENU:
@@ -41,7 +40,7 @@ def bot_message(msg):  # обработчик текста
         elif user.menu == FIGHT_MENU:
             fight_menu(user, msg.text)
         elif user.menu == INVENTORY_MENU:
-            inventory(user, msg.text)
+            inventory_menu(user, msg.text)
         elif user.menu == MAIN_MENU:
             main_menu(user, msg.text)
         elif user.menu == NEW_LVL:
@@ -66,7 +65,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         game_menu(user, GAME_MENU)  # переход в игровое меню
         bot.send_message(user.id, 'Ты сбежал')
     elif msg == TO_DAMAGE:  # Ударить врага
-        bot_fight(user.id, user, game_menu, new_level)
+        bot_fight(user, game_menu, new_level)
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 
@@ -93,7 +92,6 @@ def main_menu(user, msg):
 
 
 def game_menu(user, msg):  # игровое меню: статистика, магазин, пойти в бой и возврат в главное меню
-    print("222")
     if msg == GAME_MENU:
         bot.send_message(user.id, "У тебя:\n{0}❤ {1}💵\n\nЧе дальше будеш делать?".
                          format(user.hp, user.money), reply_markup=buttons_generator(GAME_MENU_BUTTONS))
@@ -112,7 +110,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
     elif msg == MAIN_MENU:
         main_menu(user, msg)
     elif msg == INVENTORY:
-        inventory(user, msg)
+        inventory_menu(user, msg)
     elif msg == STATISTICS:
         bot.send_message(user.id, "Твоя статистика:\n" + repr(user))
     else:
@@ -148,15 +146,21 @@ def new_level(user, msg):  # получение нового уровня( ус�
             game_menu(user, GAME_MENU)  # переход в игровое меню
 
 
-def inventory(user, msg):
+def inventory_menu(user, msg):
     if msg == INVENTORY:
-        buttons = []
-        message = ""
-        for i in user.items:
-            buttons += i.buttons
+        button = []
+        message = "У тебя в инвентаре есть:\n\n"
+        if len(user.items) == 0:
+            message += "Пусто 😐"
+        for i in user.items.values():
+            if i.is_used:
+                button += ["Использовать " + i.name]
+            else:
+                button += [""]
+            button += i.buttons
             message += repr(i)
-        buttons += BACK
-        bot.send_message(user.id, message, reply_markup=buttons_generator(buttons))
+        button += [BACK, '']
+        bot.send_message(user.id, message, reply_markup=buttons_generator(button))
         user.menu = INVENTORY_MENU
     elif msg.startswith("💵 Продать"):
         item = ""

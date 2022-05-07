@@ -7,15 +7,15 @@ from constants import *
 bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 
 
-def bot_fight(uid, user, menu, newlvl):
+def bot_fight(user, menu, newlvl):
     if user.enemy.hp < user.enemy.max_hp // 10 and user.enemy.run_att == 0:  # условие для побега моба
         val = random.randint(1, 30)
         user.enemy.run_att = 1
         if val == 1:
-            bot.send_message(uid, user.enemy.name + " сбежал, ну не знаю мог бы его и догнать, "
-                                                    "но раз тебе лень то ладно")
+            bot.send_message(user.id, user.enemy.name + " сбежал, ну не знаю мог бы его и догнать, "
+                                                        "но раз тебе лень то ладно")
             user.enemy = None
-            menu(uid, GAME_MENU)
+            menu(user.id, GAME_MENU)
     else:
         is_crit = ""
         # получение мобом урона от пользователя
@@ -28,25 +28,25 @@ def bot_fight(uid, user, menu, newlvl):
         if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив
-                bot.send_message(uid, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
+                bot.send_message(user.id, "Ты нанес: " + is_crit + str(dmg_to_enemy) +
                                  " 💥\nУ врага осталось:" + str(user.enemy.hp) +
                                  " ❤\n\nВраг ударил: " + str(dmg_to_user) +
                                  " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
             else:  # Если умрет пользователь
-                bot.send_message(uid, user.death_msg(user.enemy.name), reply_markup=buttons_generator(['/start']))
-                bot.send_sticker(uid, DEATH_STICKER)
+                bot.send_message(user.id, user.death_msg(user.enemy.name), reply_markup=buttons_generator(['/start']))
+                bot.send_sticker(user.id, DEATH_STICKER)
                 user.menu = DEATH
         else:  # если умрет враг
             user.money += user.enemy.money  # получение денег с моба
-            bot.send_message(uid, user.enemy.death + "\n\n" +
+            bot.send_message(user.id, user.enemy.death + "\n\n" +
                              "За победу над врагом ты получил {0}⭐ и {1}💵".format(user.enemy.xp, user.enemy.money))
             user.enemy_count += 1  # счетчик мобов
             if user.add_xp(user.enemy.xp):  # проверка условия достиг ли игрок нового уровня
                 user.enemy = None
-                newlvl(uid, NEW_LVL)  # выдача нового уровня
+                newlvl(user, NEW_LVL)  # выдача нового уровня
             else:
                 user.enemy = None
-                menu(uid, GAME_MENU)  # показывается игровое меню
+                menu(user, GAME_MENU)  # показывается игровое меню
 
 
 def enemy_create(user):  # Генерация мобов
