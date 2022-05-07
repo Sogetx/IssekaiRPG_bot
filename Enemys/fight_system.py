@@ -41,11 +41,11 @@ def bot_fight(uid, user, menu, newlvl):
             bot.send_message(uid, user.enemy.death + "\n\n" +
                              "За победу над врагом ты получил {0}⭐ и {1}💵".format(user.enemy.xp, user.enemy.money))
             user.enemy_count += 1  # счетчик мобов
-            user.xp += user.enemy.xp  # получение хр от моба
-            user.enemy = None
-            if user.next_lvl():  # проверка условия достиг ли игрок нового уровня
+            if user.add_xp(user.enemy.xp):  # проверка условия достиг ли игрок нового уровня
+                user.enemy = None
                 newlvl(uid, NEW_LVL)  # выдача нового уровня
             else:
+                user.enemy = None
                 menu(uid, GAME_MENU)  # показывается игровое меню
 
 

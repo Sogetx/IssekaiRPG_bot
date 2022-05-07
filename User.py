@@ -3,7 +3,8 @@ from constants import *
 
 class User:
 
-    def __init__(self):
+    def __init__(self, uid):
+        self.id = uid  # айди пользователя
         self.money = 200  # деньги
         self.max_hp = 100  # максимальное здоровье
         self.hp = self.max_hp  # здоровье
@@ -19,6 +20,7 @@ class User:
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
         self.crit = 5  # шанс крит удара
+        self.items = {}
 
     def __repr__(self):  # Статистика пользователя
         return "Уровень: {0}\nТекущее ХП: {1} ❤\nМаксимальное ХП: {2} ❤\nДеньги: {3} 💵\n" \
@@ -37,12 +39,12 @@ class User:
     def death_msg(self, enemy_name):
         return "Ты вмэр 💀\n\nПричина смерти: {0}\n\nТвоя статистика:\n".format(enemy_name) + repr(self)  # + статистика
 
-    def next_lvl(self):
+    def add_xp(self, add):
+        self.xp += add
         if self.xp >= self.xp_to_lvl and self.lvl < 25:
             self.xp -= self.xp_to_lvl
             self.xp_to_lvl = int(self.xp_to_lvl * 1.3)
             self.lvl += 1
-            print(self.lvl)
             return True
 
     def addpower(self, plus_power):
@@ -57,3 +59,9 @@ class User:
 
     def minusmoney(self, minus):
         self.money = max(self.money-minus, 0)
+
+    def add_item(self, item):
+        if item.name not in self.items.keys():
+            self.items[item.name] = item
+        else:
+            self.items[item.name].count += 1
