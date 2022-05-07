@@ -1,7 +1,7 @@
 from buttons_generator import buttons_generator
 from telebot import *
 from constants import *
-#import shop
+# import shop
 import User
 import config
 import random
@@ -21,8 +21,8 @@ def start(msg):  # обработчик команды /start
         user.enemy = None
     bot.send_sticker(user.id, HELLO_STICKER)  # приветственный стикер
     bot.send_message(user.id, "Добро пожаловать, {0.first_name}!\n"
-                          "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
-                          "созданому по больной фантазии авторов, фэнтези мире".
+                              "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
+                              "созданому по больной фантазии авторов, фэнтези мире".
                      format(msg.from_user, bot.get_me()), reply_markup=buttons_generator(MAIN_MENU_BUTTONS))
 
 
@@ -45,6 +45,8 @@ def bot_message(msg):  # обработчик текста
             main_menu(user, msg.text)
         elif user.menu == NEW_LVL:
             new_level(user, msg.text)
+        elif user.menu == SHOP_MENU:
+            shop_menu(user, msg.text)
         elif user.menu == DEATH:  # если пользователь пишет сообщение боту, но он уже мертв
             bot.send_message(user.id, 'Ты же уже мертв, куда тебе идти то?\n\n'
                                       '         --> /start <--')
@@ -100,6 +102,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
         # # # переход в меню магазина # # #
         bot.send_sticker(user.id, SHOP_STICKER)
         bot.send_message(user.id, 'Тут должен был быть магаз, но он еще в разработке, сарян')
+        shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
         go = random.randint(1, 5)
@@ -148,31 +151,64 @@ def new_level(user, msg):  # получение нового уровня( ус�
 
 def inventory_menu(user, msg):
     if msg == INVENTORY:
-        button = []
+        buttons = []
         message = "У тебя в инвентаре есть:\n\n"
         if len(user.items) == 0:
             message += "Пусто 😐"
-        for i in user.items.values():
-            if i.is_used:
-                button += ["Использовать " + i.name]
-            else:
-                button += [""]
-            button += i.buttons
-            message += repr(i)
-        button += [BACK, '']
-        bot.send_message(user.id, message, reply_markup=buttons_generator(button))
+        else:
+            for i in user.items.values():
+                if i.is_used:
+                    buttons += ["Использовать " + i.name]
+                else:
+                    buttons += [""]
+                buttons += i.buttons
+                message += repr(i)
+        buttons += [BACK]
+        bot.send_message(user.id, message, reply_markup=buttons_generator(buttons))
         user.menu = INVENTORY_MENU
     elif msg.startswith("💵 Продать"):
         item = ""
-        if len(msg.split(" ")) == 4:
-            item = (msg.split(" "))[2] + " " + (msg.split(" "))[3]
-        elif len(msg.split(" ")) == 3:
-            item = (msg.split(" "))[2]
-        user.items[item].sell(user)
+        i = 0
+        for itm in (msg.split()):
+            if 2 <= i < len(msg.split()) - 1:  # 2,3
+                item += itm + " "
+            elif i >= 2:
+                item += itm
+            i += 1
+        bot.send_message(user.id,user.items[item].sell(user))
+        inventory_menu(user, INVENTORY)
     elif msg in user.items.keys():
         user.items[msg].use(user)
     elif msg == BACK:
-        game_menu(user, MAIN_MENU)
+        game_menu(user, GAME_MENU)
+    else:
+        bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
+
+
+def shop_menu(user, msg):
+    if msg == SHOP:
+        shopitems = {}
+        buttons = []
+        message = ""
+        i = 0
+        while i <= 0:
+            val = random.choice(list(SHOP_ITEMS.keys()))
+            if val not in shopitems.keys():
+                shopitems[val] = SHOP_ITEMS[val]
+                i += 1
+        for indx in shopitems.values():
+            buttons += [indx.name]
+            message += indx.shop()
+        buttons += [BACK]
+        bot.send_message(user.id, "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя "
+                                  "достаточно рупий!?\n "
+                                  "У тебя есть {0} 💵\n\n".
+                         format(user.money) + message, reply_markup=buttons_generator(buttons))
+        user.menu = SHOP_MENU
+    elif msg in SHOP_ITEMS.keys():
+        bot.send_message(user.id, SHOP_ITEMS[msg].buy(user))
+    elif msg == BACK:
+        game_menu(user, GAME_MENU)
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 

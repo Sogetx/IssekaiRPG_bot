@@ -1,4 +1,6 @@
 # # # # # # # # # #   Стикеры   # # # # # # # # # #
+from Items import *
+
 HELLO_STICKER = "CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE"
 SHOP_STICKER = "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE"
 DEATH_STICKER = "CAACAgIAAxkBAAEEms1ibridDAOemzBFkVXyS8LUmExOVgACRxcAAvuxcEvbmQyQSCSazyQE"
@@ -35,3 +37,4 @@ FIGHT_MENU_BUTTONS = [RUN, TO_DAMAGE]
 NEW_LVL_BUTTONS = [ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]
 EVENTS_MENU_BUTTONS = []
 SHOP_MENU_BUTTONS = []
+SHOP_ITEMS = {'item': Item.Item()}

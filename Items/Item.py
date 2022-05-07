@@ -3,10 +3,10 @@ from constants import *
 
 class Item:
     def __init__(self):
-        self.name = "item"  # название
-        self.description = "описание"  # описание
+        self.name = "item"
+        self.description = "описание"
         self.count = 1  # количество
-        self.price = 0  # цена
+        self.price = 3  # цена
         self.is_used = False  # можно ли использовать этот предмет
         self.heal = 0  # сколько хилит(если это хилящий предмет)
         self.addpower = 0  # сколько добавляет силы(если это предмет добавляющий силу)
@@ -21,16 +21,22 @@ class Item:
             if self.name not in user.items.keys():
                 user.items[self.name] = self
             else:
+                # если у пользователя уже есть этот предмет, то его количество увеличивается на 1
                 user.items[self.name].count += 1
-        return "Ты успешно купил: " + self.name + "\n\nпо цене " + str(self.price)  # квитанция об оплате
+            return "Ты успешно купил: " + self.name + "\n\nпо цене " + str(self.price)  # квитанция об оплате
+        else:
+            return "Прости, Линк. Я не могу предоставить тебе кредит. Возвращайся, когда ты станешь… мммммм… побогаче!"
 
     def sell(self, user):
         user.money += self.price
         self.count -= 1
+        price = str(self.price)
+        name = self.name
         if user.items[self.name].count == 0:
             user.items.pop(self.name)
+        return "Ты продал {0} и получил {1} 💵".format(name, price)
 
-    def use(self, user,func):
+    def use(self, user, func):
         if self.heal != 0:
             user.heal(self.heal)
         elif self.addpower != 0:
@@ -44,6 +50,9 @@ class Item:
         if user.items[self.name].count == 0:
             user.items.pop(self.name)
 
-    def __repr__(self):
-        return self.name + " (" + str(self.count) + "ценой " + \
-               str(self.count * self.price) + ") :\n" + self.description + "\n\n"
+    def __repr__(self):  # для инвентаря
+        return self.name + " (" + str(self.count) + " общей ценой " + \
+               str(self.count * self.price) + "💵) :\n" + self.description + "\n\n"
+
+    def shop(self):  # для магазина
+        return self.name + "   цена: " + str(self.price) + " 💵 :\n" + self.description + "\n\n"
