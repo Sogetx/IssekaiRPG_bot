@@ -174,7 +174,7 @@ def inventory_menu(user, msg):
             elif i >= 2:
                 item += itm
             i += 1
-        bot.send_message(user.id,user.items[item].sell(user))
+        bot.send_message(user.id, user.items[item].sell(user))
         inventory_menu(user, INVENTORY)
     elif msg in user.items.keys():
         user.items[msg].use(user)
@@ -190,13 +190,13 @@ def shop_menu(user, msg):
         buttons = []
         message = ""
         i = 0
-        while i <= 0:
+        while i <= 0:  # поменять на 3 когда будет 4 или больше товаров в словаре SHOP_ITEMS
             val = random.choice(list(SHOP_ITEMS.keys()))
             if val not in shopitems.keys():
                 shopitems[val] = SHOP_ITEMS[val]
                 i += 1
         for indx in shopitems.values():
-            buttons += [indx.name]
+            buttons += [indx.name, "", ""]
             message += indx.shop()
         buttons += [BACK]
         bot.send_message(user.id, "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя "
