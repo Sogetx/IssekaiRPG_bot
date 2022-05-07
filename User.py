@@ -21,7 +21,9 @@ class User:
         self.event = None  # ивент
         self.crit = 5  # шанс крит удара
         self.items = {'item': Item.Item()}  # тестовые данные
-        #self.items = {}  # предметы в инвентаре
+        # self.items = {}  # предметы в инвентаре
+        # страничка инвентаря (если делать через отдельный аргумент в методе, то работает не так  как нужно почемуто)
+        self.inv_page = 1
 
     def __repr__(self):  # Статистика пользователя
         return "Уровень: {0}\nТекущее ХП: {1} ❤\nМаксимальное ХП: {2} ❤\nДеньги: {3} 💵\n" \
@@ -59,7 +61,7 @@ class User:
         self.hp = min(self.hp + heal_hp, self.max_hp)
 
     def minusmoney(self, minus):
-        self.money = max(self.money-minus, 0)
+        self.money = max(self.money - minus, 0)
 
     def add_item(self, item):
         if item.name not in self.items.keys():
