@@ -11,7 +11,6 @@ class Item:
         self.heal = 0  # сколько хилит(если это хилящий предмет)
         self.addpower = 0  # сколько добавляет силы(если это предмет добавляющий силу)
         self.adddefence = 0  # сколько добавляет защиты(если это предмет добавляющий защиту)
-        self.addxp = 0  # сколько добавляет опыта(если это предмет добавляющий опыт)
         # если предмет можно использовать, то показывается соответствующая кнопка
         self.buttons = ["💵 Продать " + self.name, ""]
 
@@ -36,19 +35,21 @@ class Item:
             user.items.pop(self.name)
         return "Ты продал {0} и получил {1} 💵".format(name, price)
 
-    def use(self, user, func):
+    def use(self, user):
+        message = ""
         if self.heal != 0:
             user.heal(self.heal)
+            message = "+" + str(self.heal) + " ❤\n"
         elif self.addpower != 0:
             user.addpower(self.addpower)
+            message = "+" + str(self.addpower) + " 💪\n"
         elif self.adddefence != 0:
             user.defence += self.adddefence
-        elif self.addxp != 0:
-            user.add_xp(self.addxp)
-            func(user.id, NEW_LVL)
+            message = "+" + str(self.adddefence) + " 🛡\n"
         self.count -= 1
         if user.items[self.name].count == 0:
             user.items.pop(self.name)
+        return message
 
     def __repr__(self):  # для инвентаря
         return self.name + " (" + str(self.count) + " общей ценой " + \

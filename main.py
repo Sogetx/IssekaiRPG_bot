@@ -159,7 +159,7 @@ def inventory_menu(user, msg):
             for i in user.items.values():
                 if ((user.inv_page-1)*5)+1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
                     if i.is_used:
-                        buttons += ["Использовать " + i.name]
+                        buttons += [i.name]
                     else:
                         buttons += [""]
                     buttons += i.buttons
@@ -184,7 +184,8 @@ def inventory_menu(user, msg):
         bot.send_message(user.id, user.items[item].sell(user))
         inventory_menu(user, INVENTORY)
     elif msg in user.items.keys():
-        user.items[msg].use(user)
+        bot.send_message(user.id, user.items[msg].use(user))
+        inventory_menu(user, INVENTORY)
     elif msg == NEXT_PAGE:
         user.inv_page += 1
         inventory_menu(user, INVENTORY)

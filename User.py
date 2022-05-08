@@ -6,7 +6,7 @@ class User:
     def __init__(self, uid):
         self.id = uid  # айди пользователя
         self.money = 200  # деньги
-        self.max_hp = 10  # максимальное здоровье
+        self.max_hp = 100  # максимальное здоровье
         self.hp = self.max_hp  # здоровье
         self.power = 10  # Сила (урон без предметов)
         self.damage = self.power  # урон
