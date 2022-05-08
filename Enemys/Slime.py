@@ -15,4 +15,4 @@ class Slime(Enemy):  # Параметры будут меняться
         self.description = 'Большого размера сгусток слизи получивший сознание'
         self.death = "Слайм растекся и мокрого места не осталось"
         self.sticker = "CAACAgIAAxkBAAEEonhidAX4km3ap7f0haUYzt5BSituTgACIxsAAm6RmEu0XLKlYU9AhCQE"
-        self.loot = {'item': Item.Item()}
+        self.loot = [Item.Item()]

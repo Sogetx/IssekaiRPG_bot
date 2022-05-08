@@ -15,4 +15,4 @@ class RadCockroach(Enemy):
         self.description = "ТАРАКАН ААААААААА"
         self.death = "Ты раздавил его, маленького, бедного таракашку. Что ж ты за человек?"
         self.sticker = "CAACAgIAAxkBAAEEon5idAYDWTUgJIt7qjJRJVpnIbnM-wACGxgAAr6MkEuPx1Y-cS-V9iQE"
-        self.loot = {'item': Item.Item()}
+        self.loot = []
