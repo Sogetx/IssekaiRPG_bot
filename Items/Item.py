@@ -36,16 +36,16 @@ class Item:
         return "Ты продал {0} и получил {1} 💵".format(name, price)
 
     def use(self, user):
-        message = ""
+        message = "Ты использовал " + self.name + " и получил: +"
         if self.heal != 0:
             user.heal(self.heal)
-            message = "+" + str(self.heal) + " ❤\n"
+            message = str(self.heal) + " ❤"
         elif self.addpower != 0:
             user.addpower(self.addpower)
-            message = "+" + str(self.addpower) + " 💪\n"
+            message = str(self.addpower) + " 💪"
         elif self.adddefence != 0:
             user.defence += self.adddefence
-            message = "+" + str(self.adddefence) + " 🛡\n"
+            message = str(self.adddefence) + " 🛡"
         self.count -= 1
         if user.items[self.name].count == 0:
             user.items.pop(self.name)
