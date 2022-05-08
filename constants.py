@@ -1,6 +1,8 @@
-# # # # # # # # # #   Стикеры   # # # # # # # # # #
 from Items import *
-
+from config import TELEGRAM_TOKEN
+from telebot import *
+bot = telebot.TeleBot(TELEGRAM_TOKEN)
+# # # # # # # # # #   Стикеры   # # # # # # # # # #
 HELLO_STICKER = "CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE"
 SHOP_STICKER = "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE"
 DEATH_STICKER = "CAACAgIAAxkBAAEEms1ibridDAOemzBFkVXyS8LUmExOVgACRxcAAvuxcEvbmQyQSCSazyQE"
@@ -34,7 +36,7 @@ INVENTORY_MENU = 7
 # # # # # # # # # #   меню кнопок   # # # # # # # # # #
 MAIN_MENU_BUTTONS = [START_NEW_GAME, SUPPORT]
 MAIN_MENU_BUTTONS2 = [CONTINUE_GAME, SUPPORT]
-GAME_MENU_BUTTONS = [SHOP, GO_AHEAD, INVENTORY,STATISTICS, MAIN_MENU]
+GAME_MENU_BUTTONS = [SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU]
 FIGHT_MENU_BUTTONS = [RUN, TO_DAMAGE]
 NEW_LVL_BUTTONS = [ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]
 EVENTS_MENU_BUTTONS = []

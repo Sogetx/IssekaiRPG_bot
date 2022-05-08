@@ -1,14 +1,10 @@
 from buttons_generator import buttons_generator
-from telebot import *
 from constants import *
-# import shop
 import User
-import config
 import random
 from Enemys.fight_system import enemy_create, bot_fight
 from Events.events_system import events_create
 
-bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 users = {}  # словарь(масив ключ-значение) пользователей
 
 

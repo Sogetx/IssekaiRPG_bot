@@ -7,13 +7,35 @@ class Enemy:
         self.hp = self.max_hp  # хп противника
         self.damage1 = 0  # минимальная атака
         self.damage2 = 0  # максимальная атака
-        # self.money = 0  # деньги с моба
-        # self.xp = 0  # опыт с моба
+        self.money = 0  # деньги с моба
+        self.xp = 0  # опыт с моба
         # self.name = "имя моба"
         # self.description = "описание моба"
-        # self.death = "описание смерти моба"
+        self.death = "описание смерти моба"
         # self.sticker = ""  # айди стикера моба
         self.run_att = 0  # количество попыток побега
+        self.loot = {}
+
+    def enemy_loot(self, user):
+        user.money += self.money  # получение денег с моба
+        msg = self.death + "\n\n" + "За победу над врагом ты получил {0}⭐ и {1}💵\n".format(self.xp, self.money)
+        msg += "А также залутал: "
+        i = 1
+        for item in self.loot.values():
+            if i < len(self.loot):
+                msg += item.name + ", "
+                i += 1
+            else:
+                msg += item.name  # чтоб после последнего залутаного предмета небыло ","
+            if item.name not in user.items.keys():
+                user.items[item.name] = item
+            elif len(self.loot) == 0:
+                msg += "ничего"
+            else:
+                # если у пользователя уже есть этот предмет, то его количество увеличивается на 1
+                user.items[item.name].count += 1
+        user.enemy_count += 1  # счетчик убитых мобов
+        return msg
 
     def to_damage(self):  # Нанесение урона
         return random.randint(self.damage1, self.damage2)

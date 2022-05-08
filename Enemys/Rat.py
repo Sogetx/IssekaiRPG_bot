@@ -1,3 +1,4 @@
+from Items import *
 from Enemys.Enemy import Enemy
 
 
@@ -14,3 +15,4 @@ class Rat(Enemy):
         self.description = "Крыса 🐀"
         self.death = "Ты добил крысу"
         self.sticker = "CAACAgIAAxkBAAEEonpidAX8NoblMe8cdTaSeZiIIyIAAVQAAvQYAAKjVZlLiO25jHP6UVYkBA"
+        self.loot = {'item': Item.Item()}

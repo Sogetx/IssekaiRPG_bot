@@ -1,10 +1,6 @@
 import random
-import config
-from buttons_generator import *
 from Enemys import *
 from constants import *
-
-bot = telebot.TeleBot(config.TELEGRAM_TOKEN)
 
 
 def bot_fight(user, menu, newlvl):
@@ -24,7 +20,6 @@ def bot_fight(user, menu, newlvl):
             is_crit = "Критические "
         else:
             dmg_to_enemy = user.enemy.take_damage(user.to_damage())
-
         if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив
@@ -33,14 +28,11 @@ def bot_fight(user, menu, newlvl):
                                  " ❤\n\nВраг ударил: " + str(dmg_to_user) +
                                  " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
             else:  # Если умрет пользователь
-                bot.send_message(user.id, user.death_msg(user.enemy.name), reply_markup=types.ReplyKeyboardMarkup().add('/start'))
+                bot.send_message(user.id, user.death_msg(), reply_markup=types.ReplyKeyboardMarkup().add('/start'))
                 bot.send_sticker(user.id, DEATH_STICKER)
                 user.menu = DEATH
         else:  # если умрет враг
-            user.money += user.enemy.money  # получение денег с моба
-            bot.send_message(user.id, user.enemy.death + "\n\n" +
-                             "За победу над врагом ты получил {0}⭐ и {1}💵".format(user.enemy.xp, user.enemy.money))
-            user.enemy_count += 1  # счетчик мобов
+            bot.send_message(user.id, user.enemy.enemy_loot(user))
             if user.add_xp(user.enemy.xp):  # проверка условия достиг ли игрок нового уровня
                 user.enemy = None
                 newlvl(user, NEW_LVL)  # выдача нового уровня
@@ -60,5 +52,7 @@ def enemy_create(user):  # Генерация мобов
             user.enemy = Slime.Slime()
         elif enm == 4:
             user.enemy = Goblin.Goblin()
+        # так можно если у всех мобов одинаковый шанс выпадения, чтоб дофига елифов небыло
+        # user.enemy = random.choice(list([Rat.Rat(),RadCockroach.RadCockroach(),Slime.Slime(),Goblin.Goblin()]))
     # Описание моба при первой встерече
     return "{0}\n\n{1}\n\nХарактеристики врага:\n{2}".format(user.enemy.name, user.enemy.description, repr(user.enemy))

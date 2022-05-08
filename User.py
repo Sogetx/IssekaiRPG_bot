@@ -39,8 +39,8 @@ class User:
         self.hp -= max(received_damage - (self.defence // 2), 0)
         return received_damage
 
-    def death_msg(self, enemy_name):
-        return "Ты вмэр 💀\n\nПричина смерти: {0}\n\nТвоя статистика:\n".format(enemy_name) + repr(self)  # + статистика
+    def death_msg(self):
+        return "Ты вмэр 💀\n\nПричина смерти: {0}\n\nТвоя статистика:\n".format(self.enemy.name) + repr(self)
 
     def add_xp(self, add):
         self.xp += add

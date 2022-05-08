@@ -1,3 +1,4 @@
+from Items import *
 from Enemys.Enemy import Enemy
 
 
@@ -15,3 +16,4 @@ class Goblin(Enemy):  # Параметры будут меняться
                            'размером не выше семилетнего ребенка'
         self.death = "Одной мелкой тварью меньше"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.loot = {'item': Item.Item()}
