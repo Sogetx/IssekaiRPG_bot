@@ -33,7 +33,7 @@ def bot_fight(user, menu, newlvl):
                                  " ❤\n\nВраг ударил: " + str(dmg_to_user) +
                                  " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
             else:  # Если умрет пользователь
-                bot.send_message(user.id, user.death_msg(user.enemy.name), reply_markup=buttons_generator(['/start']))
+                bot.send_message(user.id, user.death_msg(user.enemy.name), reply_markup=types.ReplyKeyboardMarkup().add('/start'))
                 bot.send_sticker(user.id, DEATH_STICKER)
                 user.menu = DEATH
         else:  # если умрет враг

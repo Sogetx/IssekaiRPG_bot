@@ -53,7 +53,7 @@ def bot_message(msg):  # обработчик текста
             bot.send_message(user.id, "⚰️")
     except KeyError:
         bot.send_message(msg.chat.id, 'Произошли какие-то траблы, нужно перезапустить бота',
-                         reply_markup=buttons_generator(["/start"]))
+                         reply_markup=types.ReplyKeyboardMarkup().add('/start'))
 
 
 def fight_menu(user, msg):  # Все что связано с взаимодействием в бою
@@ -182,9 +182,13 @@ def inventory_menu(user, msg):
                 item += itm
             i += 1
         bot.send_message(user.id, user.items[item].sell(user))
+        if len(user.items) % 5 == 0 and len(user.items) != 0:
+            user.inv_page -= 1
         inventory_menu(user, INVENTORY)
     elif msg in user.items.keys():
         bot.send_message(user.id, user.items[msg].use(user))
+        if len(user.items) % 5 == 0 and len(user.items) != 0:
+            user.inv_page -= 1
         inventory_menu(user, INVENTORY)
     elif msg == NEXT_PAGE:
         user.inv_page += 1
