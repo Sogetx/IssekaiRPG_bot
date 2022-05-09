@@ -67,7 +67,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         for weapon in user.items.values():
             if weapon.damage != 0:
                 weapons += ["", weapon.name, ""]
-        bot.send_message(user.id, "Ты вышел из инвентаря\n\n",
+        bot.send_message(user.id, "Ты вышел из инвентаря и продолжил бой",
                          reply_markup=buttons_generator(FIGHT_MENU_BUTTONS + weapons))
         user.menu = FIGHT_MENU
     elif msg == RUN:  # сбежать
@@ -163,7 +163,7 @@ def new_level(user, msg):  # получение нового уровня( ус�
 def inventory_menu(user, msg):
     if msg == INVENTORY:
         buttons = []
-        a = 2  # счетчик предметов
+        a = 1  # счетчик предметов
         message = "У тебя в инвентаре есть:\n\n"
         if len(user.items) == 0:
             message += "Пусто 😐"

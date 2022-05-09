@@ -35,13 +35,13 @@ class Item:
         message = "Ты использовал " + self.name + " и получил: +"
         if self.heal != 0:
             user.heal(self.heal)
-            message = str(self.heal) + " ❤"
+            message += "{0} ❤\n\nТеперь у тебя {1}/{2} ❤".format(self.heal, user.hp, user.max_hp)
         elif self.addpower != 0:
             user.addpower(self.addpower)
-            message = str(self.addpower) + " 💪"
+            message += "{0} 💪\n\nТеперь у тебя {1} 💪".format(self.addpower, user.power)
         elif self.adddefence != 0:
             user.defence += self.adddefence
-            message = str(self.adddefence) + " 🛡"
+            message += "{0} 🛡\n\nТеперь у тебя {1} 🛡".format(self.adddefence, user.defence)
         self.count -= 1
         if user.items[self.name].count == 0:
             user.items.pop(self.name)
