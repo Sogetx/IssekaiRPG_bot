@@ -54,16 +54,32 @@ def bot_message(msg):  # обработчик текста
 
 def fight_menu(user, msg):  # Все что связано с взаимодействием в бою
     if msg == GO_AHEAD:
+        weapons = []
+        for weapon in user.items.values():
+            if weapon.damage != 0:
+                weapons += ["", weapon.name+"("+str(weapon.damage)+"💥)", ""]
         bot.send_message(user.id, "Ты встретил моба\n\n" + enemy_create(user),
-                         reply_markup=buttons_generator(FIGHT_MENU_BUTTONS))
+                         reply_markup=buttons_generator(FIGHT_MENU_BUTTONS + weapons))
         bot.send_sticker(user.id, user.enemy.sticker)
+        user.menu = FIGHT_MENU
+    elif msg == BACK:
+        weapons = []
+        for weapon in user.items.values():
+            if weapon.damage != 0:
+                weapons += ["", weapon.name+"("+str(weapon.damage)+"💥)", ""]
+        bot.send_message(user.id, "Ты вышел из инвентаря\n\n",
+                         reply_markup=buttons_generator(FIGHT_MENU_BUTTONS + weapons))
         user.menu = FIGHT_MENU
     elif msg == RUN:  # сбежать
         user.enemy = None
         game_menu(user, GAME_MENU)  # переход в игровое меню
         bot.send_message(user.id, 'Ты сбежал')
     elif msg == TO_DAMAGE:  # Ударить врага
-        bot_fight(user, game_menu, new_level)
+        bot_fight(user, game_menu, new_level, msg)
+    elif msg in user.items.keys():
+        bot_fight(user, game_menu, new_level, msg)
+    elif msg == INVENTORY:
+        inventory_menu(user, msg)
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 
@@ -153,15 +169,15 @@ def inventory_menu(user, msg):
             message += "Пусто 😐"
         else:
             for i in user.items.values():
-                if ((user.inv_page-1)*5)+1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
+                if ((user.inv_page - 1) * 5) + 1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
                     if i.is_used:
                         buttons += [i.name]
                     else:
                         buttons += [""]
-                    buttons += i.buttons
+                    buttons += ["💵 Продать " + i.name, ""]
                     message += repr(i)
                 a += 1
-        if len(user.items) % 5 != 0 and len(user.items) > (user.inv_page*5):
+        if len(user.items) % 5 != 0 and len(user.items) > (user.inv_page * 5):
             buttons += [NEXT_PAGE, "", ""]
         if user.inv_page > 1:
             buttons += [BACK_PAGE, "", ""]
@@ -194,7 +210,10 @@ def inventory_menu(user, msg):
         inventory_menu(user, INVENTORY)
     elif msg == BACK:
         user.inv_page = 1
-        game_menu(user, GAME_MENU)
+        if user.enemy is not None:
+            fight_menu(user, msg)
+        else:
+            game_menu(user, GAME_MENU)
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 
