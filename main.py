@@ -163,7 +163,7 @@ def new_level(user, msg):  # получение нового уровня( ус�
 def inventory_menu(user, msg):
     if msg == INVENTORY:
         buttons = []
-        a = 1  # счетчик предметов
+        a = 2  # счетчик предметов
         message = "У тебя в инвентаре есть:\n\n"
         if len(user.items) == 0:
             message += "Пусто 😐"
@@ -224,7 +224,7 @@ def shop_menu(user, msg):
         buttons = []
         message = ""
         i = 0
-        while i <= 0:  # поменять на 3 когда будет 4 или больше товаров в словаре SHOP_ITEMS
+        while i <= 1:  # поменять на 3 когда будет 4 или больше товаров в словаре SHOP_ITEMS
             val = random.choice(list(SHOP_ITEMS.keys()))
             if val not in shopitems.keys():
                 shopitems[val] = SHOP_ITEMS[val]

@@ -20,7 +20,7 @@ class User:
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
         self.crit = 5  # шанс крит удара
-        self.items = {'item': Item.Item()}  # тестовые данные
+        self.items = {'item': Item.Item(), "Зелье хп": Potion.Potion()}  # тестовые данные
         # self.items = {}  # предметы в инвентаре
         # страничка инвентаря (если делать через отдельный аргумент в методе, то работает не так  как нужно почемуто)
         self.inv_page = 1
