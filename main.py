@@ -57,7 +57,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         weapons = []
         for weapon in user.items.values():
             if weapon.damage != 0:
-                weapons += ["", weapon.name+"("+str(weapon.damage)+"💥)", ""]
+                weapons += ["", weapon.name, ""]
         bot.send_message(user.id, "Ты встретил моба\n\n" + enemy_create(user),
                          reply_markup=buttons_generator(FIGHT_MENU_BUTTONS + weapons))
         bot.send_sticker(user.id, user.enemy.sticker)
@@ -66,7 +66,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         weapons = []
         for weapon in user.items.values():
             if weapon.damage != 0:
-                weapons += ["", weapon.name+"("+str(weapon.damage)+"💥)", ""]
+                weapons += ["", weapon.name, ""]
         bot.send_message(user.id, "Ты вышел из инвентаря\n\n",
                          reply_markup=buttons_generator(FIGHT_MENU_BUTTONS + weapons))
         user.menu = FIGHT_MENU
