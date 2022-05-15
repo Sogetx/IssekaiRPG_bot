@@ -4,4 +4,5 @@ Telegram RPG bot in genre "fantasy-issekai". Телеграм бот “Иссе
 1. Скачать этот проэкт;
 2. В папке проэкта создать файл config.py;
 3. Вписать в созданый файл: TELEGRAM_TOKEN = "токен вашего бота" ;
-4. Запустить файл main.py
+4. Зайти в настройку Python Interpreter и установить пакет "pyTelegramBotAPI"
+5. Запустить файл main.py
