@@ -1,2 +1,2 @@
 from Items import Item
-from Items import Potion
+from Items import Potion, Knife

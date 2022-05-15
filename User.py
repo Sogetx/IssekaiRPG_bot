@@ -20,23 +20,31 @@ class User:
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
         self.crit = 5  # шанс крит удара
-        self.items = {'item': Item.Item(), "Зелье хп": Potion.Potion()}  # тестовые данные
+        self.items = {'Нож': Knife.Knife(), "Зелье хп": Potion.Potion()}  # тестовые данные
         # self.items = {}  # предметы в инвентаре
         # страничка инвентаря (если делать через отдельный аргумент в методе, то работает не так  как нужно почемуто)
         self.inv_page = 1
+        self.pet = Pet.Pet()
 
     def __repr__(self):  # Статистика пользователя
-        return "Уровень: {0}\nТекущее ХП: {1} ❤\nМаксимальное ХП: {2} ❤\nДеньги: {3} 💵\n" \
-               "Опыт: {4}/{5} ⭐\nУрон: {6} 💥\nСила: {7} 💪\nШанс крита: {8} 🎯" \
-               "\nЗащита: {9} 🛡\nУбито мобов: {10} 👹\nСовершено походов: {11} 🚶‍♂". \
+        msg = "Уровень: {0}\nТекущее ХП: {1} ❤\nМаксимальное ХП: {2} ❤\nДеньги: {3} 💵\n" \
+              "Опыт: {4}/{5} ⭐\nУрон: {6} 💥\nСила: {7} 💪\nШанс крита: {8} 🎯" \
+              "\nЗащита: {9} 🛡\nУбито мобов: {10} 👹\nСовершено походов: {11} 🚶‍♂". \
             format(self.lvl, self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power,
                    self.crit, self.defence, self.enemy_count, self.go_ahead_count)
+        if self.pet.name is not None:
+            msg += "\n\nПитомец:{0}\n{1}\nМодификатор 💥: {2}\nМодификатор 💪: {3}\nМодификатор 🛡: {4}\n". \
+                format(self.pet.name, self.pet.description, self.pet.damage, self.pet.power, self.pet.defence)
+        return msg
 
-    def to_damage(self):  # Нанесение урона
-        return self.damage
+    def to_damage(self, weapon, msg):  # Нанесение урона
+        if weapon:
+            return int(self.items[msg].damage * self.pet.damage)
+        else:
+            return int(self.damage * self.pet.power * self.pet.damage)
 
     def take_damage(self, received_damage):  # Получение урона
-        self.hp -= max(received_damage - (self.defence // 2), 0)
+        self.hp -= int(max(received_damage - ((self.defence * self.pet.defence) // 2), 0))
         return received_damage
 
     def death_msg(self):

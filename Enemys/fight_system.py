@@ -13,7 +13,7 @@ def bot_fight(user, menu, newlvl, msg):
             user.enemy = None
             menu(user.id, GAME_MENU)
     elif msg in user.items.keys():  # если игрок использовал оружие
-        dmg_to_enemy = user.enemy.take_damage(user.items[msg].damage)
+        dmg_to_enemy = user.enemy.take_damage(user.to_damage(True,msg))
         if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив
@@ -33,14 +33,14 @@ def bot_fight(user, menu, newlvl, msg):
             else:
                 user.enemy = None
                 menu(user, GAME_MENU)  # показывается игровое меню
-    elif msg == TO_DAMAGE: # если игрок ударил без оружия
+    elif msg == TO_DAMAGE:  # если игрок ударил без оружия
         is_crit = ""
         # получение мобом урона от пользователя
         if user.crit >= random.randint(1, 100):  # если критический
-            dmg_to_enemy = user.enemy.take_damage(user.to_damage() * 2)
+            dmg_to_enemy = user.enemy.take_damage(user.to_damage(False,None) * 2)
             is_crit = "Критические "
         else:
-            dmg_to_enemy = user.enemy.take_damage(user.to_damage())
+            dmg_to_enemy = user.enemy.take_damage(user.to_damage(False,None))
         if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив

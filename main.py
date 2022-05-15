@@ -170,7 +170,7 @@ def inventory_menu(user, msg):
         else:
             for i in user.items.values():
                 if ((user.inv_page - 1) * 5) + 1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
-                    if i.is_used:
+                    if i.is_used and i.damage == 0:
                         buttons += [i.name]
                     else:
                         buttons += [""]

@@ -3,7 +3,7 @@ class Item:
         self.name = "item"
         self.description = "описание"
         self.count = 1  # количество
-        self.price = 3  # цена
+        self.price = 0  # цена
         self.is_used = False  # можно ли использовать этот предмет
         self.heal = 0  # сколько хилит(если это хилящий предмет)
         self.addpower = 0  # сколько добавляет силы(если это предмет добавляющий силу)

@@ -1,6 +1,7 @@
 from Items import *
 from config import TELEGRAM_TOKEN
 from telebot import *
+from Events.Pets import *
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
 # # # # # # # # # #   Стикеры   # # # # # # # # # #
 HELLO_STICKER = "CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE"
