@@ -1,1 +1,1 @@
-from Events.Pets import Pet,Pet1
+from Events.Pets import Pet,Pet1,Wolf
