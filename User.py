@@ -56,6 +56,7 @@ class User:
             self.xp -= self.xp_to_lvl
             self.xp_to_lvl = int(self.xp_to_lvl * 1.3)
             self.lvl += 1
+            self.get_pet()  # при достижении каждого 5-го уровня даеться питомец
             return True
 
     def addpower(self, plus_power):
@@ -76,3 +77,19 @@ class User:
             self.items[item.name] = item
         else:
             self.items[item.name].count += 1
+
+    def get_pet(self):
+        if self.lvl % 5 == 0:
+            if self.lvl == 5:
+                self.pet = Wolf.Wolf()
+            elif self.lvl == 10:
+                self.pet = Pet1.Pet1()
+            # elif self.lvl == 15:
+            #     self.pet =
+            # elif self.lvl == 20:
+            #     self.pet =
+            # elif self.lvl == 25:
+            #     self.pet =
+            bot.send_message(self.id, "Ты получил нового питомца:\n\n{0}".format(repr(self.pet)))
+            bot.send_sticker(self.id, self.pet.sticker)
+            # тут дальше сделаю систему выбора петов с разными бафами
