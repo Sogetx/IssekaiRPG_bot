@@ -12,4 +12,5 @@ class Scroll_of_defence(Item):
 
     def use(self, user):
         user.defence += 1
+        self.use_sell(user)
         return "Ты использовал {0} и получил: +1 🛡\n\nТеперь у тебя {1} 🛡".format(self.name, user.defence)

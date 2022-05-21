@@ -1,6 +1,6 @@
 from buttons_generator import buttons_generator
 from constants import *
-import User
+from User import User
 import random
 from Enemys.fight_system import enemy_create, bot_fight
 from Events.events_system import events_create
@@ -10,7 +10,7 @@ users = {}  # словарь(масив ключ-значение) пользо�
 
 @bot.message_handler(commands=['start'])
 def start(msg):  # обработчик команды /start
-    users[msg.chat.id] = User.User(msg.chat.id)  # добавление пользователя в словарь при начале игры
+    users[msg.chat.id] = User(msg.chat.id)  # добавление пользователя в словарь при начале игры
     user = users[msg.chat.id]
     # удаление моба, если игрок ввел /start в процессе боя, иначе будет продолжатся прерваный бой
     if user.enemy is not None:
@@ -220,21 +220,20 @@ def inventory_menu(user, msg):
 
 def shop_menu(user, msg):
     if msg == SHOP:
-        shopitems = {}
+        shopitems = []
         buttons = [""]
         message = ""
         i = 0
-        while i <= 1:  # поменять на 3 когда будет 4 или больше товаров в словаре SHOP_ITEMS
+        while i <= 3:
             val = random.choice(list(SHOP_ITEMS.keys()))
-            if val not in shopitems.keys():
-                shopitems[val] = SHOP_ITEMS[val]
+            if val not in shopitems:
+                shopitems.append(SHOP_ITEMS[val].name)
+                buttons += [SHOP_ITEMS[val].name]
+                message += SHOP_ITEMS[val].shop()
                 i += 1
-        for indx in shopitems.values():
-            buttons += [indx.name]
-            message += indx.shop()
         buttons += ["", BACK]
         bot.send_message(user.id, "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя "
-                                  "достаточно рупий!?\n "
+                                  "достаточно рупий!?\n"
                                   "У тебя есть {0} 💵\n\n".
                          format(user.money) + message, reply_markup=buttons_generator(buttons))
         user.menu = SHOP_MENU
