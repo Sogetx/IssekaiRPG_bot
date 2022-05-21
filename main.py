@@ -221,7 +221,7 @@ def inventory_menu(user, msg):
 def shop_menu(user, msg):
     if msg == SHOP:
         shopitems = {}
-        buttons = []
+        buttons = [""]
         message = ""
         i = 0
         while i <= 1:  # поменять на 3 когда будет 4 или больше товаров в словаре SHOP_ITEMS
@@ -230,9 +230,9 @@ def shop_menu(user, msg):
                 shopitems[val] = SHOP_ITEMS[val]
                 i += 1
         for indx in shopitems.values():
-            buttons += [indx.name, "", ""]
+            buttons += [indx.name]
             message += indx.shop()
-        buttons += [BACK]
+        buttons += ["", BACK]
         bot.send_message(user.id, "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя "
                                   "достаточно рупий!?\n "
                                   "У тебя есть {0} 💵\n\n".

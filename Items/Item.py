@@ -5,10 +5,10 @@ class Item:
         self.count = 1  # количество
         self.price = 0  # цена
         self.is_used = False  # можно ли использовать этот предмет
-        self.heal = 0  # сколько хилит(если это хилящий предмет)
-        self.addpower = 0  # сколько добавляет силы(если это предмет добавляющий силу)
-        self.adddefence = 0  # сколько добавляет защиты(если это предмет добавляющий защиту)
-        self.damage = 0  # сколько наносит урона(если это оружие)
+        # self.heal = 0  # сколько хилит(если это хилящий предмет)
+        # self.addpower = 0  # сколько добавляет силы(если это предмет добавляющий силу)
+        # self.adddefence = 0  # сколько добавляет защиты(если это предмет добавляющий защиту)
+        # self.damage = 0  # сколько наносит урона(если это оружие)
 
     def buy(self, user):  # покупка предмета
         if user.money >= self.price:  # если у пользователя хватает денег, то предмет можно купить
@@ -31,21 +31,25 @@ class Item:
             user.items.pop(self.name)
         return "Ты продал {0} и получил {1} 💵".format(name, price)
 
+    # def use(self, user):
+    #     message = "Ты использовал " + self.name + " и получил: +"
+    #     if self.heal != 0:
+    #         user.heal(self.heal)
+    #         message += "{0} ❤\n\nТеперь у тебя {1}/{2} ❤".format(self.heal, user.hp, user.max_hp)
+    #     elif self.addpower != 0:
+    #         user.addpower(self.addpower)
+    #         message += "{0} 💪\n\nТеперь у тебя {1} 💪".format(self.addpower, user.power)
+    #     elif self.adddefence != 0:
+    #         user.defence += self.adddefence
+    #         message += "{0} 🛡\n\nТеперь у тебя {1} 🛡".format(self.adddefence, user.defence)
+    #     self.count -= 1
+    #     if user.items[self.name].count == 0:
+    #         user.items.pop(self.name)
+    #     return message
+
     def use(self, user):
-        message = "Ты использовал " + self.name + " и получил: +"
-        if self.heal != 0:
-            user.heal(self.heal)
-            message += "{0} ❤\n\nТеперь у тебя {1}/{2} ❤".format(self.heal, user.hp, user.max_hp)
-        elif self.addpower != 0:
-            user.addpower(self.addpower)
-            message += "{0} 💪\n\nТеперь у тебя {1} 💪".format(self.addpower, user.power)
-        elif self.adddefence != 0:
-            user.defence += self.adddefence
-            message += "{0} 🛡\n\nТеперь у тебя {1} 🛡".format(self.adddefence, user.defence)
-        self.count -= 1
-        if user.items[self.name].count == 0:
-            user.items.pop(self.name)
-        return message
+        # действия предмета
+        return None
 
     def __repr__(self):  # для инвентаря
         return "{0} ({1} общей ценой {2} 💵) :\n{3}\n\n". \
