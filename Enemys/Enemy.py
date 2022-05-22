@@ -8,11 +8,11 @@ class Enemy:
         self.damage1 = 0  # минимальная атака
         self.damage2 = 0  # максимальная атака
         self.money = 0  # деньги с моба
-        self.xp = 0  # опыт с моба
+        # self.xp = 0  # опыт с моба
         # self.name = "имя моба"
         # self.description = "описание моба"
         self.death = "описание смерти моба"
-        # self.sticker = ""  # айди стикера моба
+        self.sticker = "CAACAgIAAxkBAAEEyURiijB_lEfWYrQTkobxFUM7UPEynQACMhEAAuwOiEq0aIFtwmbMqiQE"  # айди стикера моба
         self.run_att = 0  # количество попыток побега
         self.loot = []
 
@@ -32,7 +32,6 @@ class Enemy:
                     msg += item.name  # чтоб после последнего залутаного предмета небыло ","
                 if item.name not in user.items.keys():
                     user.items[item.name] = item
-
                 else:
                     # если у пользователя уже есть этот предмет, то его количество увеличивается на 1
                     user.items[item.name].count += 1

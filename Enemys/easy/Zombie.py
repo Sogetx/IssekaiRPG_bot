@@ -12,8 +12,8 @@ class Zombie(Enemy):  # Параметры будут меняться
         self.money = 20
         self.xp = 30
         self.name = "Зомби"
-        self.description = 'Довольно неприятное существо, передвигается и ведет себя как типичный победитель Октоберфеста. ' \
-                           'Единственный кто реально ценит ваши мозги'
+        self.description = "Довольно неприятное существо, передвигается и ведет себя как типичный победитель " \
+                           "Октоберфеста. Единственный кто реально ценит ваши мозги"
         self.death = "Вы убили то что и так уже мертво"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        # self.sticker = ""
         self.loot = []

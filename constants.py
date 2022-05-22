@@ -42,10 +42,9 @@ GAME_MENU_BUTTONS = [SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU]
 FIGHT_MENU_BUTTONS = [RUN, TO_DAMAGE, INVENTORY]
 NEW_LVL_BUTTONS = [ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]
 EVENTS_MENU_BUTTONS = []
-SHOP_MENU_BUTTONS = []
-SHOP_ITEMS = {"Свиток силы": Scroll_of_power.Scroll_of_power(),
-              "Свиток защиты": Scroll_of_defence.Scroll_of_defence(),
-              "Свиток крита": Scroll_of_crit.Scroll_of_defence(),
-              "Малое зелье хп": Small_hp_potion.Small_hp_potion(),
-              "Среднее зелье хп": Medium_hp_potion.Medium_hp_potion(),
-              "Большое зелье хп": Big_hp_potion.Big_hp_potion()}
+SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
+              Scroll_of_defence().name: Scroll_of_defence(),
+              Scroll_of_crit().name: Scroll_of_crit(),
+              Small_hp_potion().name: Small_hp_potion(),
+              Medium_hp_potion().name: Medium_hp_potion(),
+              Big_hp_potion().name: Big_hp_potion()}

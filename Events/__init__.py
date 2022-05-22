@@ -1,2 +1,2 @@
-from Events import Tavern
-from Events import Church
+from Events.Tavern import Tavern
+from Events.Church import Church

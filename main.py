@@ -74,9 +74,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         user.enemy = None
         game_menu(user, GAME_MENU)  # переход в игровое меню
         bot.send_message(user.id, 'Ты сбежал')
-    elif msg == TO_DAMAGE:  # Ударить врага
-        bot_fight(user, game_menu, new_level, msg)
-    elif msg in user.items.keys():
+    elif msg == TO_DAMAGE or msg in user.items.keys():  # Ударить врага
         bot_fight(user, game_menu, new_level, msg)
     elif msg == INVENTORY:
         inventory_menu(user, msg)
@@ -87,7 +85,6 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
     if msg == GO_AHEAD:
         bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(events_create(user), user.event.description))
-        bot.send_message(user.id, 'Вы пережили еще одно событие')
         game_menu(user, GAME_MENU)
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
@@ -111,13 +108,11 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
                          format(user.hp, user.money), reply_markup=buttons_generator(GAME_MENU_BUTTONS))
         user.menu = GAME_MENU
     elif msg == SHOP:
-        # # # переход в меню магазина # # #
         bot.send_sticker(user.id, SHOP_STICKER)
         shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
-        go = random.randint(1, 5)
-        if go == 1:
+        if random.randint(1, 5) == 1:
             events_menu(user, msg)
         else:
             fight_menu(user, msg)
@@ -231,11 +226,10 @@ def shop_menu(user, msg):
                 buttons += [SHOP_ITEMS[val].name]
                 message += SHOP_ITEMS[val].shop()
                 i += 1
-        buttons += ["", BACK]
         bot.send_message(user.id, "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя "
                                   "достаточно рупий!?\n"
                                   "У тебя есть {0} 💵\n\n".
-                         format(user.money) + message, reply_markup=buttons_generator(buttons))
+                         format(user.money) + message, reply_markup=buttons_generator(buttons + ["", BACK]))
         user.menu = SHOP_MENU
     elif msg in SHOP_ITEMS.keys():
         bot.send_message(user.id, SHOP_ITEMS[msg].buy(user))

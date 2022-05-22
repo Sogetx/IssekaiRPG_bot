@@ -1,7 +1,7 @@
 from Items.Item import Item
 
 
-class Scroll_of_defence(Item):
+class Scroll_of_crit(Item):
     def __init__(self):
         super().__init__()
         self.name = "Свиток крита"
