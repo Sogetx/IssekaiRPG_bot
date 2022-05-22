@@ -50,8 +50,8 @@ def bot_fight(user, menu, newlvl, msg):
 def enemy_create(user):  # Генерация мобов
     if user.enemy is None:  # если игрок не дерется с мобом
         enemys = [Rat(), RadCockroach(), Slime(), Goblin(), Zombie()]
-        # if user.lvl >= 5:
-        #     enemys += []  # + средние мобы
+        if user.lvl >= 5:
+            enemys += [Ork(), Bandit(), Werewolf()]  # + средние мобы
         # if user.lvl >= 10:
         #     enemys += []  # + сложные мобы
         user.enemy = random.choice(enemys)
