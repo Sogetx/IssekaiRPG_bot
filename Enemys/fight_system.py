@@ -13,7 +13,7 @@ def bot_fight(user, menu, newlvl, msg):
             user.enemy = None
             menu(user.id, GAME_MENU)
     elif msg in user.items.keys():  # если игрок использовал оружие
-        dmg_to_enemy = user.enemy.take_damage(user.to_damage(True,msg))
+        dmg_to_enemy = user.enemy.take_damage(user.to_damage(True, msg))
         if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив
@@ -37,10 +37,10 @@ def bot_fight(user, menu, newlvl, msg):
         is_crit = ""
         # получение мобом урона от пользователя
         if user.crit >= random.randint(1, 100):  # если критический
-            dmg_to_enemy = user.enemy.take_damage(user.to_damage(False,None) * 2)
-            is_crit = "Критические "
+            dmg_to_enemy = user.enemy.take_damage(user.to_damage(False, None) * 2)
+            is_crit = "критические "
         else:
-            dmg_to_enemy = user.enemy.take_damage(user.to_damage(False,None))
+            dmg_to_enemy = user.enemy.take_damage(user.to_damage(False, None))
         if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив
@@ -66,19 +66,11 @@ def bot_fight(user, menu, newlvl, msg):
 
 def enemy_create(user):  # Генерация мобов
     if user.enemy is None:  # если игрок не дерется с мобом
-        enm = random.randint(1, 4)  # генерируем определенного моба на условии того какое число выпадет
-        if enm == 1:
-            user.enemy = RadCockroach.RadCockroach()
-        elif enm == 2:
-            user.enemy = Rat.Rat()
-        elif enm == 3:
-            user.enemy = Slime.Slime()
-        elif enm == 4:
-            user.enemy = Goblin.Goblin()
-        #
-        #
-        #
-        # так можно если у всех мобов одинаковый шанс выпадения, чтоб дофига елифов небыло
-        # user.enemy = random.choice(list([Rat.Rat(),RadCockroach.RadCockroach(),Slime.Slime(),Goblin.Goblin()]))
+        enemys = [Rat(), RadCockroach(), Slime(), Goblin()]
+        # if user.lvl >= 5:
+        #     enemys += []  # + средние мобы
+        # if user.lvl >= 10:
+        #     enemys += []  # + сложные мобы
+        user.enemy = random.choice(enemys)
     # Описание моба при первой встерече
-    return "{0}\n\n{1}\n\nХарактеристики врага:\n{2}".format(user.enemy.name, user.enemy.description, repr(user.enemy))
+        return "{0}\n\n{1}\n\nХарактеристики врага:\n{2}".format(user.enemy.name, user.enemy.description, repr(user.enemy))
