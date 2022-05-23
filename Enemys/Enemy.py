@@ -8,7 +8,7 @@ class Enemy:
         self.damage1 = 0  # минимальная атака
         self.damage2 = 0  # максимальная атака
         self.money = 0  # деньги с моба
-        # self.xp = 0  # опыт с моба
+        self.xp = 0  # опыт с моба
         # self.name = "имя моба"
         # self.description = "описание моба"
         self.death = "описание смерти моба"
@@ -30,11 +30,7 @@ class Enemy:
                     i += 1
                 else:
                     msg += item.name  # чтоб после последнего залутаного предмета небыло ","
-                if item.name not in user.items.keys():
-                    user.items[item.name] = item
-                else:
-                    # если у пользователя уже есть этот предмет, то его количество увеличивается на 1
-                    user.items[item.name].count += 1
+                user.add_item(item)
         user.enemy_count += 1  # счетчик убитых мобов
         return msg
 
@@ -44,6 +40,12 @@ class Enemy:
     def take_damage(self, received_damage):  # Получение урона
         self.hp -= received_damage
         return received_damage
+
+    def escape(self):
+        if self.hp <= self.max_hp // 10 and self.run_att == 0:  # условие для побега моба
+            self.run_att = 1
+            if random.randint(1, 30) == 1:
+                return True
 
     def __repr__(self):  # Характеристики моба
         return "{0}❤, урон: {1} - {2}💥".format(self.hp, self.damage1, self.damage2)

@@ -4,14 +4,11 @@ from constants import *
 
 
 def bot_fight(user, menu, newlvl, msg):
-    if user.enemy.hp < user.enemy.max_hp // 10 and user.enemy.run_att == 0:  # условие для побега моба
-        val = random.randint(1, 30)
-        user.enemy.run_att = 1
-        if val == 1:
-            bot.send_message(user.id, user.enemy.name + " сбежал, ну не знаю мог бы его и догнать, "
-                                                        "но раз тебе лень то ладно")
-            user.enemy = None
-            menu(user.id, GAME_MENU)
+    if user.enemy.escape():
+        bot.send_message(user.id, user.enemy.name + " сбежал, ну не знаю мог бы его и догнать, "
+                                                    "но раз тебе лень то ладно")
+        user.enemy = None
+        menu(user.id, GAME_MENU)
     elif msg == TO_DAMAGE or msg in user.items.keys():
         is_crit = ""
         dmg_to_enemy = 0
