@@ -125,7 +125,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
         shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
-        if random.randint(1, 1) == 1:
+        if random.randint(1, 5) == 1:
             events_menu(user, msg)
         else:
             fight_menu(user, msg)
