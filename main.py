@@ -3,7 +3,8 @@ from constants import *
 from User import User
 import random
 from Enemys.fight_system import enemy_create, bot_fight
-from Events.events_system import events_create
+#from Events.events_system import events_create
+from Events import *
 
 users = {}  # словарь(масив ключ-значение) пользователей
 
@@ -43,6 +44,8 @@ def bot_message(msg):  # обработчик текста
             new_level(user, msg.text)
         elif user.menu == SHOP_MENU:
             shop_menu(user, msg.text)
+        elif user.menu == EVENTS_MENU:
+            events_menu(user, msg.text)
         elif user.menu == DEATH:  # если пользователь пишет сообщение боту, но он уже мертв
             bot.send_message(user.id, 'Ты же уже мертв, куда тебе идти то?\n\n'
                                       '         --> /start <--')
@@ -84,10 +87,20 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
     if msg == GO_AHEAD:
-        bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(events_create(user), user.event.description))
-        game_menu(user, GAME_MENU)
-    else:
-        bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
+        user.event = random.choice([Tavern(), Church(), Anisimov()])
+        if not user.event.is_active:
+            bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
+            game_menu(user, GAME_MENU)
+        else:
+            bot.send_message(user.id, "{0}".format(user.event.description))
+            user.event.action(user)
+            user.menu = EVENTS_MENU
+
+    if not(msg == GO_AHEAD):
+        if user.event.name == "Анисимов":
+            user.event.answer(user, msg)
+            user.event = None
+            game_menu(user, GAME_MENU)
 
 
 def main_menu(user, msg):
@@ -112,7 +125,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
         shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
-        if random.randint(1, 5) == 1:
+        if random.randint(1, 1) == 1:
             events_menu(user, msg)
         else:
             fight_menu(user, msg)
