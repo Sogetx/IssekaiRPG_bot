@@ -87,21 +87,22 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
     if msg == GO_AHEAD:
-        user.event = random.choice([Tavern(), Church(), Anisimov()])
+        #user.event = random.choice([Tavern(), Church(), Anisimov(), Odd_Even()])
+        user.event = random.choice([Odd_Even(), Anisimov()])
         if not user.event.is_active:
             bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
             game_menu(user, GAME_MENU)
         else:
-            bot.send_message(user.id, "{0}".format(user.event.description))
-            user.event.action(user)
+            bot.send_message(user.id, "{0}".format(user.event.description),
+                             reply_markup=buttons_generator(user.event.buttons + [BACK]))
             user.menu = EVENTS_MENU
-
-    if not(msg == GO_AHEAD):
-        if user.event.name == "Анисимов":
-            user.event.answer(user, msg)
-            user.event = None
+    if msg == BACK:
+        game_menu(user, GAME_MENU)
+    elif not(msg == GO_AHEAD):
+        if user.event.name == "Анисимов" and user.event.answer(user, msg):
             game_menu(user, GAME_MENU)
-
+        elif user.event.name == "Четное-Нечетное" and user.event.choice(user, msg):
+            game_menu(user, GAME_MENU)
 
 def main_menu(user, msg):
     if msg == MAIN_MENU:  # Если было выбрано главное меню
@@ -125,7 +126,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
         shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
-        if random.randint(1, 5) == 1:
+        if random.randint(1, 1) == 1:
             events_menu(user, msg)
         else:
             fight_menu(user, msg)
