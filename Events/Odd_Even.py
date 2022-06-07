@@ -18,8 +18,8 @@ class Odd_Even(Event):
             bot.send_message(user.id, "Число: " + str(val) + "\n\n🎉Ты угадал!🎉\n\nРезультат: +50 💵")
             return True
         elif (msg == "Четное" and val%2==1) or (msg == "Нечетное" and val%2==0):
-            mon = 200
-            if user.money < 200:
+            mon = 50
+            if user.money < 50:
                 mon = user.money
             bot.send_message(user.id, "Число: " + str(val) + "\n\nТы не угадал.\n\nРезультат: -"+str(mon)+"💵")
             user.minusmoney(mon)
