@@ -5,15 +5,13 @@ from Enemys.Enemy import Enemy
 class Grass(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 1
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
-        self.name = "Гоблин"
-        self.description = 'Мелкое, противное, хитрое и крайне омерзительное чудовище ' \
-                           'размером не выше семилетнего ребенка'
-        self.death = "Одной мелкой тварью меньше"
+        self.damage1 = 0
+        self.damage2 = 0
+        self.money = 1
+        self.xp = 1
+        self.name = "Трава"
+        self.description = 'Тебе показалось что на тебя быканула обычная безобидная травка'
+        self.death = "Непонимаю зачем нужно было нападать на траву"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
-        self.loot = []

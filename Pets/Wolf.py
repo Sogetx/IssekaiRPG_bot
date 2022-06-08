@@ -1,4 +1,4 @@
-from Events.Pets.Pet import Pet
+from Pets.Pet import Pet
 
 
 class Wolf(Pet):

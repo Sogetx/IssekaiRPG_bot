@@ -36,4 +36,3 @@ class Item:
 
     def shop(self):  # для магазина
         return "{0}\nЦена: {1} 💵 :\n{2}\n\n".format(self.name, self.price, self.description)
-

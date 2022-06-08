@@ -30,7 +30,7 @@ def bot_fight(user, menu, newlvl, msg):
                                  " 💥\nУ тебя осталось:" + str(user.hp) + " ❤")
             else:  # Если умрет пользователь
                 bot.send_message(user.id, user.death_msg(), reply_markup=types.ReplyKeyboardMarkup().add('/start'))
-                bot.send_sticker(user.id, DEATH_STICKER)
+                bot.send_sticker(user.id, "CAACAgIAAxkBAAEEms1ibridDAOemzBFkVXyS8LUmExOVgACRxcAAvuxcEvbmQyQSCSazyQE")
                 user.menu = DEATH
         else:  # если умрет враг
             bot.send_message(user.id, user.enemy.enemy_loot(user))
@@ -48,7 +48,7 @@ def enemy_create(user):  # Генерация мобов
     if user.enemy is None:  # если игрок не дерется с мобом
         enemys = [Rat(), RadCockroach(), Slime(), Goblin(), Zombie(), Gollum(),Grass(),Caravan()]
         if user.lvl >= 5:
-            enemys += [Ork(), Bandit(), Werewolf(),Cacodemon(),Master(),CJ(),Nezuko(),Super_Sus()]  # + средние мобы
+            enemys += [Ork(), Bandit(), Werewolf(),Cacodemon(),Master(),CJ(),Nezuko(),Super_Sus(), Gordon()]  # + средние мобы
         # if user.lvl >= 10:
         #     enemys += [Dark_Knight(),Dio(),Agent_Smith(),Orochimaru(),Kaneki(),Davy_Jones(),Bowser(),Dungeon_Master(),Yagami()]  # + сложные мобы
         user.enemy = random.choice(enemys)

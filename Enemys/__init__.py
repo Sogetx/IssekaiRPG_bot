@@ -6,6 +6,8 @@ from Enemys.easy.Zombie import Zombie
 from Enemys.easy.Gollum import Gollum
 from Enemys.easy.Grass import Grass
 from Enemys.easy.Caravan import Caravan
+
+
 from Enemys.normal.Ork import Ork
 from Enemys.normal.Cacodemon import Cacodemon
 from Enemys.normal.Bandit import Bandit
@@ -14,6 +16,9 @@ from Enemys.normal.Master import Master
 from Enemys.normal.CJ import CJ
 from Enemys.normal.Nezuko import Nezuko
 from Enemys.normal.Super_Sus import Super_Sus
+from Enemys.normal.Gordon import Gordon
+
+
 from Enemys.hard.Dark_Knight import Dark_Knight
 from Enemys.hard.Dio import Dio
 from Enemys.hard.Agent_Smith import Agent_Smith

@@ -1,13 +1,9 @@
 from Items import *
 from config import TELEGRAM_TOKEN
 from telebot import *
-#from Events.Pets import *
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
-# # # # # # # # # #   Стикеры   # # # # # # # # # #
-HELLO_STICKER = "CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE"
-SHOP_STICKER = "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE"
-DEATH_STICKER = "CAACAgIAAxkBAAEEms1ibridDAOemzBFkVXyS8LUmExOVgACRxcAAvuxcEvbmQyQSCSazyQE"
+
 # # # # # # # # # #   Действия   # # # # # # # # # #
 RUN = "Сбежать 🏃‍♂"
 START_NEW_GAME = "Начать свое приключение 🕹"
@@ -35,16 +31,13 @@ NEW_LVL = 4
 EVENTS_MENU = 5
 SHOP_MENU = 6
 INVENTORY_MENU = 7
-# # # # # # # # # #   меню кнопок   # # # # # # # # # #
-MAIN_MENU_BUTTONS = [START_NEW_GAME, SUPPORT]
-MAIN_MENU_BUTTONS2 = [CONTINUE_GAME, SUPPORT]
-GAME_MENU_BUTTONS = [SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU]
-FIGHT_MENU_BUTTONS = [RUN, TO_DAMAGE, INVENTORY]
-NEW_LVL_BUTTONS = [ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]
-EVENTS_MENU_BUTTONS = []
+
+# предметы которые продаются в магазине
 SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
               Scroll_of_defence().name: Scroll_of_defence(),
               Scroll_of_crit().name: Scroll_of_crit(),
               Small_hp_potion().name: Small_hp_potion(),
               Medium_hp_potion().name: Medium_hp_potion(),
-              Big_hp_potion().name: Big_hp_potion()}
+              Big_hp_potion().name: Big_hp_potion(),
+              Banana().name: Banana(),
+              Scrap().name: Scrap()}
