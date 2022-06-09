@@ -242,7 +242,7 @@ def shop_menu(user, msg):
             if val not in shopitems:
                 shopitems.append(SHOP_ITEMS[val].name)
                 buttons += [SHOP_ITEMS[val].name]
-                message += SHOP_ITEMS[val].shop()
+                message += repr(SHOP_ITEMS[val])
                 i += 1
         bot.send_message(user.id, "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя "
                                   "достаточно рупий!?\n"

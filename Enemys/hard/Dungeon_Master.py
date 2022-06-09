@@ -15,4 +15,4 @@ class Dungeon_Master(Enemy):  # Параметры будут меняться
         self.description = 'Надо описание'
         self.death = "Одной мелкой тварью меньше"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
-        self.loot = []
+        self.loot = [Belt_Billy()]

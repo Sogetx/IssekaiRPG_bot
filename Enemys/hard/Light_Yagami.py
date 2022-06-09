@@ -2,7 +2,7 @@ from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Yagami(Enemy):  # Параметры будут меняться
+class Light_Yagami(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
         self.max_hp = 55

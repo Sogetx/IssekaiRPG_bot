@@ -27,4 +27,4 @@ from Enemys.hard.Kaneki import Kaneki
 from Enemys.hard.Davy_Jones import Davy_Jones
 from Enemys.hard.Bowser import Bowser
 from Enemys.hard.Dungeon_Master import Dungeon_Master
-from Enemys.hard.Yagami import Yagami
+from Enemys.hard.Light_Yagami import Light_Yagami

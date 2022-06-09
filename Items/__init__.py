@@ -11,14 +11,15 @@ from Items.shop.Scroll_of_power import Scroll_of_power
 from Items.shop.Banana import Banana
 from Items.shop.Scrap import Scrap
 from Items.shop.Sock import Sock
+from Items.shop.Сandy import Candy
 
-
+from Items.loot.Adams_apple import Adams_apple
 from Items.loot.Big_eye import Big_eye
 from Items.loot.Fang import Fang
 from Items.loot.Golden_YTB import Golden_YTB
 from Items.loot.Silver_YTB import Silver_YTB
 from Items.loot.Horn import Horn
-from Items.loot.Latex_mask import Latex_mask
+from Items.loot.Belt_Billy import Belt_Billy
 from Items.loot.Meat import Meat
 from Items.loot.Mussels import Mussels
 from Items.loot.Police_cap import Police_cap

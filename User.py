@@ -62,9 +62,6 @@ class User:
         self.power += plus_power
         self.damage += plus_power
 
-    def adddamage(self, plus_damage):
-        self.damage += plus_damage
-
     def heal(self, heal_hp):
         self.hp = min(self.hp + heal_hp, self.max_hp)
 
@@ -73,7 +70,7 @@ class User:
 
     def add_item(self, item):
         if item.name not in self.items.keys():
-            self.items[item.name] = [item,1]
+            self.items[item.name] = [item, 1]
         else:
             self.items[item.name][1] += 1
 

@@ -15,4 +15,4 @@ class Gordon(Enemy):  # Параметры будут меняться
         self.description = 'Я тебе кадык вырву с*ка'
         self.death = "Смерть мусорам, Свободу пацанам"
         # self.sticker = ""
-        self.loot = []
+        self.loot = [Adams_apple(), Candy()]
