@@ -33,17 +33,12 @@ SHOP_MENU = 6
 INVENTORY_MENU = 7
 
 # предметы которые продаются в магазине
-# SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
-#               Scroll_of_defence().name: Scroll_of_defence(),
-#               Scroll_of_crit().name: Scroll_of_crit(),
-#               Small_hp_potion().name: Small_hp_potion(),
-#               Medium_hp_potion().name: Medium_hp_potion(),
-#               Big_hp_potion().name: Big_hp_potion(),
-#               Banana().name: Banana(),
-#               Scrap().name: Scrap(),
-#               Sock().name: Sock()}
-
 SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
               Scroll_of_defence().name: Scroll_of_defence(),
               Scroll_of_crit().name: Scroll_of_crit(),
-              Small_hp_potion().name: Small_hp_potion()}
+              Small_hp_potion().name: Small_hp_potion(),
+              Medium_hp_potion().name: Medium_hp_potion(),
+              Big_hp_potion().name: Big_hp_potion(),
+              Banana().name: Banana(),
+              Scrap().name: Scrap(),
+              Sock().name: Sock()}

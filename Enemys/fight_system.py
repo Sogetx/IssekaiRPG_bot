@@ -51,8 +51,8 @@ def enemy_create(user):  # Генерация мобов
             enemys += [Ork(), Bandit(), Werewolf(),Cacodemon(),Master(),CJ(),Nezuko(),Super_Sus(), Gordon()]  # + средние мобы
         # if user.lvl >= 10:
         #     enemys += [Dark_Knight(),Dio(),Agent_Smith(),Orochimaru(),Kaneki(),Davy_Jones(),Bowser(),Dungeon_Master(),Yagami()]  # + сложные мобы
-        #user.enemy = random.choice(enemys)
-        user.enemy = Super_Sus()
+        user.enemy = random.choice(enemys)
+
         # Описание моба при первой встерече
         return "{0}\n\n{1}\n\nХарактеристики врага:\n{2}".format(user.enemy.name, user.enemy.description,
                                                                  repr(user.enemy))
