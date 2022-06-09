@@ -21,18 +21,18 @@ class User:
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
         self.crit = 5  # шанс крит удара
-        self.items = {}  # предметы в инвентаре
+        self.items = {}  # предметы в инвентаре в виде "ключ: [предмет, кол-во]"
         # страничка инвентаря (если делать через отдельный аргумент в методе, то работает не так  как нужно почемуто)
         self.inv_page = 1
         self.pet = Pet()  # без модификаторов
 
     def __repr__(self):  # Статистика пользователя
-        msg = "Уровень: {0}\nХП: {1}/{2} ❤\nДеньги: {3} 💵\n Опыт: {4}/{5} ⭐\nУрон: {6} 💥\nСила: {7} 💪\nШанс крита: " \
+        msg = "Уровень: {0}\nХП: {1}/{2} ❤\nДеньги: {3} 💵\nОпыт: {4}/{5} ⭐\nУрон: {6} 💥\nСила: {7} 💪\nШанс крита: " \
               "{8} 🎯\nЗащита: {9} 🛡\nУбито мобов: {10} 👹\nСовершено походов: {11} 🚶‍♂". \
             format(self.lvl, self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power,
                    self.crit, self.defence, self.enemy_count, self.go_ahead_count)
         if self.pet.name is not None:
-            msg += "\n\nПитомец:{0}\n{1}\nМодификатор 💥: {2}\nМодификатор 💪: {3}\nМодификатор 🛡: {4}\n". \
+            msg += "\n\nПитомец:{0}\n{1}\nx{2} 💥, x{3} 💪, x{4} 🛡\n". \
                 format(self.pet.name, self.pet.description, self.pet.damage, self.pet.power, self.pet.defence)
         return msg
 
@@ -73,9 +73,9 @@ class User:
 
     def add_item(self, item):
         if item.name not in self.items.keys():
-            self.items[item.name] = item
+            self.items[item.name] = [item,1]
         else:
-            self.items[item.name].count += 1
+            self.items[item.name][1] += 1
 
     def get_pet(self):
         if self.lvl % 5 == 0:

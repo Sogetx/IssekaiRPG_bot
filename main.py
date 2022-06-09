@@ -58,8 +58,8 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
     if msg == GO_AHEAD:
         weapons = []
         for weapon in user.items.values():
-            if weapon.damage != 0:
-                weapons += ["", weapon.name, ""]
+            if weapon[0].damage != 0:
+                weapons += ["", weapon[0].name, ""]
         bot.send_message(user.id, "Ты встретил моба\n\n" + enemy_create(user),
                          reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons))
         bot.send_sticker(user.id, user.enemy.sticker)
@@ -67,8 +67,8 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
     elif msg == BACK:
         weapons = []
         for weapon in user.items.values():
-            if weapon.damage != 0:
-                weapons += ["", weapon.name, ""]
+            if weapon[0].damage != 0:
+                weapons += ["", weapon[0].name, ""]
         bot.send_message(user.id, "Ты вышел из инвентаря и продолжил бой",
                          reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons))
         user.menu = FIGHT_MENU
@@ -86,8 +86,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
     if msg == GO_AHEAD:
-        #user.event = random.choice([Tavern(), Church(), Anisimov(), Odd_Even(), Dobby()])
-        user.event = Dobby()
+        user.event = random.choice([Tavern(), Church(), Anisimov(), Odd_Even(), Dobby()])
         if not user.event.is_active:
             bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
             game_menu(user, GAME_MENU)
@@ -121,14 +120,15 @@ def main_menu(user, msg):
 def game_menu(user, msg):  # игровое меню: статистика, магазин, пойти в бой и возврат в главное меню
     if msg == GAME_MENU:
         bot.send_message(user.id, "У тебя:\n{0}/{1}❤ {2}💵\n\nЧе дальше будеш делать?".
-                         format(user.hp, user.max_hp, user.money), reply_markup=buttons_generator([SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU]))
+                         format(user.hp, user.max_hp, user.money),
+                         reply_markup=buttons_generator([SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU]))
         user.menu = GAME_MENU
     elif msg == SHOP:
         shop_menu(user, msg)
         bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE")
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
-        if random.randint(1, 1) == 1:
+        if random.randint(1, 5) == 1:
             events_menu(user, msg)
         else:
             fight_menu(user, msg)
@@ -180,13 +180,15 @@ def inventory_menu(user, msg):
             message += "Пусто 😐"
         else:
             for i in user.items.values():
+                i = i[0]
                 if ((user.inv_page - 1) * 5) + 1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
                     if i.is_used and i.damage == 0:
                         buttons += [i.name]
                     else:
                         buttons += [""]
                     buttons += ["💵 Продать " + i.name, ""]
-                    message += repr(i)
+                    message += "{0} ({1} общей ценой {2} 💵) :\n{3}\n\n".\
+                        format(i.name, user.items[i.name][1], user.items[i.name][1] * i.price, i.description)
                 a += 1
         if len(user.items) % 5 != 0 and len(user.items) > (user.inv_page * 5):
             buttons += [NEXT_PAGE, "", ""]
@@ -204,12 +206,12 @@ def inventory_menu(user, msg):
             elif i >= 2:
                 item += itm
             i += 1
-        bot.send_message(user.id, user.items[item].sell(user))
+        bot.send_message(user.id, user.items[item][0].sell(user))
         if len(user.items) % 5 == 0 and len(user.items) != 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)
     elif msg in user.items.keys():
-        bot.send_message(user.id, user.items[msg].use(user))
+        bot.send_message(user.id, user.items[msg][0].use(user))
         if len(user.items) % 5 == 0 and len(user.items) != 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)
