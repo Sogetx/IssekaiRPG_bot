@@ -46,13 +46,16 @@ def bot_fight(user, menu, newlvl, msg):
 
 def enemy_create(user):  # Генерация мобов
     if user.enemy is None:  # если игрок не дерется с мобом
-        enemys = [Rat(), RadCockroach(), Slime(), Goblin(), Zombie(), Gollum(),Grass(),Caravan()]
+        enemys = [Rat(), RadCockroach(), Slime(), Goblin(), Zombie(), Gollum(), Grass(), Caravan()]
         if user.lvl >= 5:
-            enemys += [Ork(), Bandit(), Werewolf(),Cacodemon(),Master(),CJ(),Nezuko(),Super_Sus(), Gordon()]  # + средние мобы
-        # if user.lvl >= 10:
-        #     enemys += [Dark_Knight(),Dio(),Agent_Smith(),Orochimaru(),Kaneki(),Davy_Jones(),Bowser(),Dungeon_Master(),Yagami()]  # + сложные мобы
-        user.enemy = random.choice(enemys)
+            enemys += [Ork(), Bandit(), Werewolf(), Cacodemon(), Master(), CJ(), Nezuko(), Super_Sus(), Gordon(),
+                       Lukashenko]  # + средние мобы
+        if user.lvl >= 15:
+            enemys += [Dark_Knight(), Dio(), Agent_Smith(), Orochimaru(), Kaneki(), Davy_Jones(), Bowser(),
+                       Dungeon_Master(), Light_Yagami()]  # + сложные мобы
 
+        #user.enemy = random.choice(enemys)
+        user.enemy = Lukashenko()
         # Описание моба при первой встерече
         return "{0}\n\n{1}\n\nХарактеристики врага:\n{2}".format(user.enemy.name, user.enemy.description,
                                                                  repr(user.enemy))

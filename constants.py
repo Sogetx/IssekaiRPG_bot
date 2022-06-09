@@ -42,4 +42,5 @@ SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
               Banana().name: Banana(),
               Scrap().name: Scrap(),
               Sock().name: Sock(),
-              Candy().name: Candy()}
+              Candy().name: Candy(),
+              Potato().name: Potato()}

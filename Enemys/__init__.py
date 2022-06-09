@@ -17,6 +17,7 @@ from Enemys.normal.CJ import CJ
 from Enemys.normal.Nezuko import Nezuko
 from Enemys.normal.Super_Sus import Super_Sus
 from Enemys.normal.Gordon import Gordon
+from Enemys.normal.Lukashenko import Lukashenko
 
 
 from Enemys.hard.Dark_Knight import Dark_Knight
