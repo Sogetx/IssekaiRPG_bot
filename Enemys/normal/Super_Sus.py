@@ -1,3 +1,5 @@
+import random
+
 from Items import *
 from Enemys.Enemy import Enemy
 
@@ -11,9 +13,13 @@ class Super_Sus(Enemy):  # Параметры будут меняться
         self.damage2 = 9
         self.money = 15
         self.xp = 25
-        self.name = "Гоблин"
-        self.description = 'Мелкое, противное, хитрое и крайне омерзительное чудовище ' \
-                           'размером не выше семилетнего ребенка'
-        self.death = "Одной мелкой тварью меньше"
+        self.name = "Супер сус"
+        self.description = 'надо описание'
+        self.death = "надо смерть"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
         self.loot = []
+        val = random.randint(1, 10)
+        if val == 1:  # шанс 1 к 10 что лут золотая кнопка
+            self.loot.append(Golden_YTB)
+        elif 1 < val < 5:  # шанс 3 к 10 что лут серебряная кнопка
+            self.loot.append(Silver_YTB)

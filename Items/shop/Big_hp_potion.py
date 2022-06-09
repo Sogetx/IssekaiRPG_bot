@@ -6,7 +6,6 @@ class Big_hp_potion(Item):
         super().__init__()
         self.name = "Большое зелье хп"
         self.description = "Остался без руки? Не проблема!"
-        self.count = 1  # количество
         self.price = 100  # цена
         self.is_used = True  # можно ли использовать этот предмет
 

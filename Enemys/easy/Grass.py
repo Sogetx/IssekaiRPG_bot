@@ -7,8 +7,6 @@ class Grass(Enemy):  # Параметры будут меняться
         super().__init__()
         self.max_hp = 1
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 0
-        self.damage2 = 0
         self.money = 1
         self.xp = 1
         self.name = "Трава"

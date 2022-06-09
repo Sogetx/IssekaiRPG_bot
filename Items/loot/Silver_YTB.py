@@ -1,9 +1,9 @@
 from Items.Item import Item
 
 
-class Golden_YTB(Item):
+class Silver_YTB(Item):
     def __init__(self):
         super().__init__()
         self.name = "Золотая кнопка ютуба"
-        self.description = "Дают за 1млн подпищиков"
-        self.price = 100  # цена
+        self.description = "Дают за 100 тис подпищиков"
+        self.price = 50  # цена

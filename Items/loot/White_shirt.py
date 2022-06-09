@@ -6,5 +6,4 @@ class White_shirt(Item):
         super().__init__()
         self.name = "Белая майка"
         self.description = "Легендарная дефолтная майка Си Джея"
-        self.count = 1  # количество
         self.price = 10  # цена

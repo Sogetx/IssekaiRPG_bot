@@ -6,7 +6,6 @@ class Medium_hp_potion(Item):
         super().__init__()
         self.name = "Среднее зелье хп"
         self.description = "Лечит вас от нормальных таких ранений"
-        self.count = 1  # количество
         self.price = 50  # цена
         self.is_used = True  # можно ли использовать этот предмет
 

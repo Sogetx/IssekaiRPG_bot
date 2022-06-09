@@ -11,9 +11,8 @@ class Dio(Enemy):  # Параметры будут меняться
         self.damage2 = 9
         self.money = 15
         self.xp = 25
-        self.name = "Гоблин"
-        self.description = 'Мелкое, противное, хитрое и крайне омерзительное чудовище ' \
-                           'размером не выше семилетнего ребенка'
+        self.name = "Дио"
+        self.description = 'Муда муда муда муда муда муда'
         self.death = "Одной мелкой тварью меньше"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
         self.loot = []

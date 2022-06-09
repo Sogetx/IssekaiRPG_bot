@@ -11,9 +11,8 @@ class Davy_Jones(Enemy):  # Параметры будут меняться
         self.damage2 = 9
         self.money = 15
         self.xp = 25
-        self.name = "Гоблин"
-        self.description = 'Мелкое, противное, хитрое и крайне омерзительное чудовище ' \
-                           'размером не выше семилетнего ребенка'
+        self.name = "Дейви Джонс"
+        self.description = 'Надо описание'
         self.death = "Одной мелкой тварью меньше"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
         self.loot = []

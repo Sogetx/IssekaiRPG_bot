@@ -6,5 +6,4 @@ class Mussels(Item):
         super().__init__()
         self.name = "Мидии"
         self.description = ""
-        self.count = 1  # количество
         self.price = 30  # цена

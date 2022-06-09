@@ -86,7 +86,8 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
     if msg == GO_AHEAD:
-        user.event = random.choice([Tavern(), Church(), Anisimov(), Odd_Even()])
+        #user.event = random.choice([Tavern(), Church(), Anisimov(), Odd_Even(), Dobby()])
+        user.event = Dobby()
         if not user.event.is_active:
             bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
             game_menu(user, GAME_MENU)
@@ -100,6 +101,8 @@ def events_menu(user, msg):  # Все что связано с взаимоде�
         if user.event.name == "Анисимов" and user.event.answer(user, msg):
             game_menu(user, GAME_MENU)
         elif user.event.name == "Четное-Нечетное" and user.event.choice(user, msg):
+            game_menu(user, GAME_MENU)
+        elif user.event.name == "Добби" and user.event.give_sock(user, msg):
             game_menu(user, GAME_MENU)
 
 
@@ -125,7 +128,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
         bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE")
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1
-        if random.randint(1, 5) == 1:
+        if random.randint(1, 1) == 1:
             events_menu(user, msg)
         else:
             fight_menu(user, msg)

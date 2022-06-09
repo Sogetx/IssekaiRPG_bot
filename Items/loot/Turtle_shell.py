@@ -6,5 +6,4 @@ class Turtle_shell(Item):
         super().__init__()
         self.name = "Панцырь большой черепахи"
         self.description = "надо описание"
-        self.count = 1  # количество
         self.price = 45  # цена

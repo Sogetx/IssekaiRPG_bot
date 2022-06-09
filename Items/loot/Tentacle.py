@@ -6,5 +6,4 @@ class Tentacle(Item):
         super().__init__()
         self.name = "Щупальце"
         self.description = "надо описание"
-        self.count = 1  # количество
         self.price = 20  # цена

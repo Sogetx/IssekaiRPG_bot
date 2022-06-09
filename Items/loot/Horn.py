@@ -6,5 +6,4 @@ class Horn(Item):
         super().__init__()
         self.name = "Рог"
         self.description = ""
-        self.count = 1  # количество
         self.price = 9  # цена

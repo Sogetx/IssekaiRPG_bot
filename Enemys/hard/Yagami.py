@@ -7,13 +7,15 @@ class Yagami(Enemy):  # Параметры будут меняться
         super().__init__()
         self.max_hp = 55
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
+        self.damage1 = 999999999
+        self.damage2 = 999999999
         self.money = 15
         self.xp = 25
-        self.name = "Гоблин"
-        self.description = 'Мелкое, противное, хитрое и крайне омерзительное чудовище ' \
-                           'размером не выше семилетнего ребенка'
+        self.name = "Лайт Ягами"
+        self.description = 'Надо описание'
         self.death = "Одной мелкой тварью меньше"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
         self.loot = []
+
+    def __repr__(self):  # Характеристики моба
+        return "{0}❤, урон: ∞💥".format(self.hp)

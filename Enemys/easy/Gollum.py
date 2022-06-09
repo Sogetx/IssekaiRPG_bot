@@ -15,4 +15,4 @@ class Gollum(Enemy):  # Параметры будут меняться
         self.description = 'Надо описание'
         self.death = "Одной мелкой тварью меньше"
         self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
-        self.loot = []
+        self.loot = [Ring_of_omnipotence()]

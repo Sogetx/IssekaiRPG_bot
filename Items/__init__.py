@@ -1,4 +1,6 @@
 from Items.Item import Item
+
+
 from Items.shop.Knife import Knife
 from Items.shop.Small_hp_potion import Small_hp_potion
 from Items.shop.Medium_hp_potion import Medium_hp_potion
@@ -8,10 +10,13 @@ from Items.shop.Scroll_of_defence import Scroll_of_defence
 from Items.shop.Scroll_of_power import Scroll_of_power
 from Items.shop.Banana import Banana
 from Items.shop.Scrap import Scrap
+from Items.shop.Sock import Sock
+
 
 from Items.loot.Big_eye import Big_eye
 from Items.loot.Fang import Fang
 from Items.loot.Golden_YTB import Golden_YTB
+from Items.loot.Silver_YTB import Silver_YTB
 from Items.loot.Horn import Horn
 from Items.loot.Latex_mask import Latex_mask
 from Items.loot.Meat import Meat

@@ -5,9 +5,6 @@ class Item:
         self.count = 1  # количество
         self.price = 0  # цена
         self.is_used = False  # можно ли использовать этот предмет
-        # self.heal = 0  # сколько хилит(если это хилящий предмет)
-        # self.addpower = 0  # сколько добавляет силы(если это предмет добавляющий силу)
-        # self.adddefence = 0  # сколько добавляет защиты(если это предмет добавляющий защиту)
         self.damage = 0  # сколько наносит урона(если это оружие)
 
     def buy(self, user):  # покупка предмета
@@ -20,14 +17,17 @@ class Item:
 
     def sell(self, user):
         user.money += self.price
-        self.count -= 1
-        if user.items[self.name].count == 0:
-            user.items.pop(self.name)
+        # self.count -= 1
+        # if user.items[self.name].count == 0:
+        #     user.items.pop(self.name)
+        self.use(user)
         return "Ты продал {0} и получил {1} 💵".format(self.name, self.price)
 
     def use(self, user):
         self.count -= 1
-        if user.items[self.name].count == 0:
+        # if user.items[self.name].count == 0:
+        #     user.items.pop(self.name)
+        if self.count == 0:
             user.items.pop(self.name)
 
     def __repr__(self):  # для инвентаря

@@ -6,5 +6,4 @@ class Latex_mask(Item):
         super().__init__()
         self.name = "Латексная маска"
         self.description = "Если ее одеть то можно спокойно идти на ограбление, или вступать в клуб любителей гачи-мучи"
-        self.count = 1  # количество
         self.price = 15  # цена

@@ -6,5 +6,4 @@ class Fang(Item):
         super().__init__()
         self.name = "Клык"
         self.description = "надо описание"
-        self.count = 1  # количество
         self.price = 7  # цена

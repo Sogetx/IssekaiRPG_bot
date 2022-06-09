@@ -4,9 +4,8 @@ from Items.Item import Item
 class Banana(Item):
     def __init__(self):
         super().__init__()
-        self.name = "Банан"
-        self.description = "Обожают миньены"
-        self.count = 1  # количество
+        self.name = "🍌"
+        self.description = "я 🍌 я я 🍌 🍌 чищу 🍌"
         self.price = 5  # цена
         self.is_used = True  # можно ли использовать этот предмет
 

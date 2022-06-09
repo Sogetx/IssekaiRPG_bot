@@ -6,5 +6,4 @@ class Wool(Item):
         super().__init__()
         self.name = "Шерсть"
         self.description = "3 шерсти + 3 доски = кровать"
-        self.count = 1  # количество
         self.price = 5  # цена

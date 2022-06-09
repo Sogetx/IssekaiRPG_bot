@@ -7,10 +7,7 @@ class Caravan(Enemy):  # Параметры будут меняться
         super().__init__()
         self.max_hp = 1000
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 0
-        self.damage2 = 0
         self.money = 300
-        self.xp = 0
         self.run_att = 1  # чтоб караван не сбежал
         self.name = "Караван"
         self.description = 'Долго бить, но награда стоит того'
