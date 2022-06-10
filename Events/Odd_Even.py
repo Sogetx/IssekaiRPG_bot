@@ -11,7 +11,7 @@ class Odd_Even(Event):
         self.buttons = ["Четное", "Нечетное",""]
         self.is_active = True
 
-    def choice(self, user, msg):
+    def active_action(self, user, msg):
         val = random.randint(1,100)
         if (msg == "Четное" and val%2==0) or (msg == "Нечетное" and val%2==1):
             user.money += 50

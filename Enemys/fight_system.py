@@ -3,7 +3,7 @@ from Enemys import *
 from constants import *
 
 
-def bot_fight(user, menu, newlvl, msg):
+def bot_fight(user, menu, msg):
     if user.enemy.escape():
         bot.send_message(user.id, user.enemy.name + " сбежал, ну не знаю мог бы его и догнать, "
                                                     "но раз тебе лень то ладно")
@@ -36,7 +36,6 @@ def bot_fight(user, menu, newlvl, msg):
             bot.send_message(user.id, user.enemy.enemy_loot(user))
             if user.add_xp(user.enemy.xp):  # проверка условия достиг ли игрок нового уровня
                 user.enemy = None
-                newlvl(user, NEW_LVL)  # выдача нового уровня
             else:
                 user.enemy = None
                 menu(user, GAME_MENU)  # показывается игровое меню
@@ -54,8 +53,8 @@ def enemy_create(user):  # Генерация мобов
             enemys += [Dark_Knight(), Dio(), Agent_Smith(), Orochimaru(), Kaneki(), Davy_Jones(), Bowser(),
                        Dungeon_Master(), Light_Yagami()]  # + сложные мобы
 
-        #user.enemy = random.choice(enemys)
-        user.enemy = Lukashenko()
+        user.enemy = random.choice(enemys)
+        #user.enemy = Lukashenko()
         # Описание моба при первой встерече
         return "{0}\n\n{1}\n\nХарактеристики врага:\n{2}".format(user.enemy.name, user.enemy.description,
                                                                  repr(user.enemy))

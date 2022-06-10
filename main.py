@@ -15,7 +15,8 @@ def start(msg):  # обработчик команды /start
     # удаление моба, если игрок ввел /start в процессе боя, иначе будет продолжатся прерваный бой
     if user.enemy is not None:
         user.enemy = None
-    bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE")  # приветственный стикер
+    # приветственный стикер
+    bot.send_sticker(user.id,"CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE")
     bot.send_message(user.id, "Добро пожаловать, {0.first_name}!\n"
                               "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
                               "созданому по больной фантазии авторов, фэнтези мире".
@@ -77,7 +78,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         game_menu(user, GAME_MENU)  # переход в игровое меню
         bot.send_message(user.id, 'Ты сбежал')
     elif msg == TO_DAMAGE or msg in user.items.keys():  # Ударить врага
-        bot_fight(user, game_menu, new_level, msg)
+        bot_fight(user, game_menu, msg)
     elif msg == INVENTORY:
         inventory_menu(user, msg)
     else:
@@ -94,20 +95,16 @@ def events_menu(user, msg):  # Все что связано с взаимоде�
             bot.send_message(user.id, "{0}".format(user.event.description),
                              reply_markup=buttons_generator(user.event.buttons + [BACK]))
             user.menu = EVENTS_MENU
-    if msg == BACK:
+    elif msg == BACK:
         game_menu(user, GAME_MENU)
-    elif not (msg == GO_AHEAD):
-        if user.event.name == "Анисимов" and user.event.answer(user, msg):
-            game_menu(user, GAME_MENU)
-        elif user.event.name == "Четное-Нечетное" and user.event.choice(user, msg):
-            game_menu(user, GAME_MENU)
-        elif user.event.name == "Добби" and user.event.give_sock(user, msg):
-            game_menu(user, GAME_MENU)
+    if user.event.is_active and user.event.active_action(user, msg):
+        game_menu(user, GAME_MENU)
 
 
 def main_menu(user, msg):
     if msg == MAIN_MENU:  # Если было выбрано главное меню
-        bot.send_message(user.id, "Ты вернулся в главное меню", reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT]))
+        bot.send_message(user.id, "Ты вернулся в главное меню",
+                         reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT]))
         user.menu = MAIN_MENU
     elif msg == CONTINUE_GAME or msg == START_NEW_GAME:
         game_menu(user, GAME_MENU)  # переход в игровое меню
@@ -143,15 +140,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
 
 
 def new_level(user, msg):  # получение нового уровня( условия, кнопки выбора характеристик повышение параметров героя)
-    if msg == NEW_LVL:
-        bot.send_message(user.id, "🎉Ты получил новый уровень🎉\n\n"
-                                  "Твои характеристики:\n\n"
-                                  "Сила: {0} 💪\nЗащита: {1} 🛡\nШанс крита: {2} 🎯\nМаксимальное ХП: {3}❤\n\n"
-                                  "Выбери какую хар-ку ты хочешь увеличить:".
-                         format(user.power, user.defence, user.crit, user.max_hp),
-                         reply_markup=buttons_generator([ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]))
-        user.menu = NEW_LVL
-    elif msg == ADD_HP:  # если игрок выбрал поднять макс хп на 10
+    if msg == ADD_HP:  # если игрок выбрал поднять макс хп на 10
         user.max_hp += 10  # увеличение макс хп на 10
     elif msg == ADD_POWER:  # если выбран параметр Сила +2
         user.addpower(2)  # повышение силы на 2
@@ -159,16 +148,9 @@ def new_level(user, msg):  # получение нового уровня( ус�
         user.defence += 2  # повышение защиты персонажа на 2
     elif msg == ADD_CRIT:
         user.crit += 1
-    if msg != NEW_LVL:
-        user.heal(user.max_hp)  # полное востановление хп игрока
-        if user.add_xp(0):
-            bot.send_message(user.id, "🎉Ты получил новый уровень🎉\n\n"
-                                      "Твои характеристики:\n\n"
-                                      "Сила: {0} 💪\nЗащита: {1} 🛡\nШанс крита: {2} 🎯\nМаксимальное ХП: {3}❤\n\n"
-                                      "Выбери какую хар-ку ты хочешь увеличить:".
-                             format(user.power, user.defence, user.crit, user.max_hp))
-        else:
-            game_menu(user, GAME_MENU)  # переход в игровое меню
+    user.heal(user.max_hp)
+    if not (user.add_xp(0)):  # если игрок не получил сразу несколько уровней
+        game_menu(user, GAME_MENU)  # переход в игровое меню
 
 
 def inventory_menu(user, msg):
@@ -187,7 +169,7 @@ def inventory_menu(user, msg):
                     else:
                         buttons += [""]
                     buttons += ["💵 Продать " + i.name, ""]
-                    message += "{0} ({1} общей ценой {2} 💵) :\n{3}\n\n".\
+                    message += "{0} ({1} общей ценой {2} 💵) :\n{3}\n\n". \
                         format(i.name, user.items[i.name][1], user.items[i.name][1] * i.price, i.description)
                 a += 1
         if len(user.items) % 5 != 0 and len(user.items) > (user.inv_page * 5):
@@ -198,15 +180,7 @@ def inventory_menu(user, msg):
         bot.send_message(user.id, message, reply_markup=buttons_generator(buttons))
         user.menu = INVENTORY_MENU
     elif msg.startswith("💵 Продать"):
-        item = ""
-        i = 0
-        for itm in (msg.split()):
-            if 2 <= i < len(msg.split()) - 1:  # для предметов, у которых названия из разного кол-ва слов
-                item += itm + " "
-            elif i >= 2:
-                item += itm
-            i += 1
-        bot.send_message(user.id, user.items[item][0].sell(user))
+        bot.send_message(user.id, user.items[" ".join(msg.split()[2:])][0].sell(user))
         if len(user.items) % 5 == 0 and len(user.items) != 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)
@@ -233,21 +207,16 @@ def inventory_menu(user, msg):
 
 def shop_menu(user, msg):
     if msg == SHOP:
-        shopitems = []
-        buttons = [""]
+        buttons = []
         message = ""
-        i = 0
-        while i <= 3:
-            val = random.choice(list(SHOP_ITEMS))
-            if val not in shopitems:
-                shopitems.append(SHOP_ITEMS[val].name)
-                buttons += [SHOP_ITEMS[val].name]
+        while len(buttons) < 4:
+            val = random.choice(list(SHOP_ITEMS.keys()))
+            if val not in buttons:
+                buttons.append(val)
                 message += repr(SHOP_ITEMS[val])
-                i += 1
         bot.send_message(user.id, "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя "
-                                  "достаточно рупий!?\n"
-                                  "У тебя есть {0} 💵\n\n".
-                         format(user.money) + message, reply_markup=buttons_generator(buttons + ["", BACK]))
+                                  "достаточно рупий!?\nУ тебя есть {0} 💵\n\n".
+                         format(user.money) + message, reply_markup=buttons_generator([""] + buttons + ["", BACK]))
         user.menu = SHOP_MENU
     elif msg in SHOP_ITEMS.keys():
         bot.send_message(user.id, SHOP_ITEMS[msg].buy(user))

@@ -21,7 +21,7 @@ class Anisimov(Event):
         self.buttons = answers[question]
 
 
-    def answer(self, user, msg):
+    def active_action(self, user, msg):
         if msg in ["Н", "9,8", "Вода", "300000 км/с", "l/t"]:
             user.money += 100
             bot.send_message(user.id, "🎉Молодец, правильно🎉\nВот твои 100 💵")

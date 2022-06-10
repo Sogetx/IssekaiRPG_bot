@@ -6,3 +6,7 @@ class Event:
     def action(self, user): # действия выполняемые при создании ивента
         # действия с user
         return "результат"
+
+    def active_action(self, user, msg):
+        #если с ивентом нужно взаимодействовать
+        return True

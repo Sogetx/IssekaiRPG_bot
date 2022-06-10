@@ -1,3 +1,4 @@
+from buttons_generator import buttons_generator
 from constants import *
 from Pets import *
 
@@ -21,7 +22,8 @@ class User:
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
         self.crit = 5  # шанс крит удара
-        self.items = {}  # предметы в инвентаре в виде "ключ: [предмет, кол-во]"
+        self.items = {
+            Big_hp_potion().name: [Big_hp_potion(), 1]}  # предметы в инвентаре в виде "ключ: [предмет, кол-во]"
         # страничка инвентаря (если делать через отдельный аргумент в методе, то работает не так  как нужно почемуто)
         self.inv_page = 1
         self.pet = Pet()  # без модификаторов
@@ -32,13 +34,13 @@ class User:
             format(self.lvl, self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.damage, self.power,
                    self.crit, self.defence, self.enemy_count, self.go_ahead_count)
         if self.pet.name is not None:
-            msg += "\n\nПитомец:{0}\n{1}\nx{2} 💥, x{3} 💪, x{4} 🛡\n". \
+            msg += "\n\nПитомец:\n{0}\n{1}\nx{2} 💥, x{3} 💪, x{4} 🛡\n". \
                 format(self.pet.name, self.pet.description, self.pet.damage, self.pet.power, self.pet.defence)
         return msg
 
     def to_damage(self, weapon, msg):  # Нанесение урона
         if weapon:
-            return int(self.items[msg].damage * self.pet.damage)
+            return int(self.items[msg][0].damage * self.pet.damage)
         else:
             return int(self.damage * self.pet.power * self.pet.damage)
 
@@ -55,7 +57,15 @@ class User:
             self.xp -= self.xp_to_lvl
             self.xp_to_lvl = int(self.xp_to_lvl * 1.3)
             self.lvl += 1
-            self.get_pet()  # при достижении каждого 5-го уровня даеться питомец
+            self.menu = NEW_LVL
+            bot.send_message(self.id, "🎉Ты получил {0} уровень🎉 {1}"
+                                      "\n\nТвои характеристики:\n\n"
+                                      "Сила: {2} 💪\nЗащита: {3} 🛡\nШанс крита: {4} 🎯\n"
+                                      "Максимальное ХП: {5}❤\n\nВыбери какую хар-ку ты хочешь увеличить:".
+                             format(self.lvl, self.get_pet(), self.power, self.defence, self.crit, self.max_hp),
+                             reply_markup=buttons_generator([ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]))
+            if self.lvl % 5 == 0:
+                bot.send_sticker(self.id, self.pet.sticker)
             return True
 
     def addpower(self, plus_power):
@@ -75,7 +85,9 @@ class User:
             self.items[item.name][1] += 1
 
     def get_pet(self):
-        if self.lvl % 5 == 0:
+        if self.lvl % 5 != 0:
+            return ""
+        else:
             if self.lvl == 5:
                 self.pet = Wolf()
             # elif self.lvl == 10:
@@ -86,6 +98,6 @@ class User:
             #     self.pet =
             # elif self.lvl == 25:
             #     self.pet =
-            bot.send_message(self.id, "Ты получил нового питомца:\n\n" + repr(self.pet))
-            bot.send_sticker(self.id, self.pet.sticker)
+            return "\n\nИ нового питомца:\n\n" + repr(self.pet)
+
             # тут дальше сделаю систему выбора петов с разными бафами

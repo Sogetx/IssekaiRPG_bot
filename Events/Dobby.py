@@ -11,7 +11,7 @@ class Dobby(Event):
         self.buttons = ["Дать носок✅", "Не давать носок❌", ""]
         self.is_active = True
 
-    def give_sock(self, user, msg):
+    def active_action(self, user, msg):
         if msg == "Не давать носок❌":
             return True
         elif msg == "Дать носок✅":
