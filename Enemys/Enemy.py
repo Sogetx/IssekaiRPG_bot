@@ -20,19 +20,15 @@ class Enemy:
         user.money += self.money  # получение денег с моба
         msg = self.death + "\n\n" + "За победу над врагом ты получил {0}⭐ и {1}💵\n".format(self.xp, self.money)
         msg += "А также залутал: "
-        i = 1
-        if len(self.loot) == 0:
-            msg += "ничего"
-        else:
-            for item in self.loot:
-                if i < len(self.loot):
-                    msg += item.name + ", "
-                    i += 1
-                else:
-                    msg += item.name  # чтоб после последнего залутаного предмета небыло ","
-                user.add_item(item)
         user.enemy_count += 1  # счетчик убитых мобов
-        return msg
+        if len(self.loot) == 0:
+            return msg + "ничего"
+        else:
+            items = []
+            for item in self.loot:
+                items.append(item.name)
+                user.add_item(item)
+            return msg + ", ".join(items)
 
     def to_damage(self):  # Нанесение урона
         return random.randint(self.damage1, self.damage2)
