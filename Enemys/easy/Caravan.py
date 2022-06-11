@@ -12,5 +12,5 @@ class Caravan(Enemy):  # Параметры будут меняться
         self.name = "Караван"
         self.description = 'Долго бить, но награда стоит того'
         self.death = "Караван ограблен"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.sticker = "CAACAgIAAxkBAAEE-BdipLAu9nhDBcOKyMSGHdfsI_Y8_wACAiMAAnrSKUkg1c2NRJYR1yQE"
         self.loot = []

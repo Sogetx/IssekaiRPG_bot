@@ -5,7 +5,7 @@ from Enemys.Enemy import Enemy
 class Dark_Knight(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 140
         self.hp = self.max_hp  # хп противника
         self.damage1 = 10
         self.damage2 = 15

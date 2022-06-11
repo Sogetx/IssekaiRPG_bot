@@ -14,5 +14,5 @@ class Ork(Enemy):  # Параметры будут меняться
         self.name = "Орк"
         self.description = "Большое тупое создание, пришло своровать твой 🚽"
         self.death = "Za путина!"
-        # self.sticker = ""
-        self.loot = [Horn(),Fang()]
+        self.sticker = "CAACAgIAAxkBAAEE-B1ipLJ7e3or0IvJTUEx7t3o33LUDQACORsAAkJ9KUmE5lTgDRrfeCQE"
+        self.loot = [Horn(), Fang()]

@@ -11,8 +11,9 @@ class Rat(Enemy):
         self.damage2 = 3
         self.money = 5
         self.xp = 5
-        self.name = "Крыса"
-        self.description = "Крыса 🐀"
-        self.death = "Ты добил крысу"
-        self.sticker = "CAACAgIAAxkBAAEEonpidAX8NoblMe8cdTaSeZiIIyIAAVQAAvQYAAKjVZlLiO25jHP6UVYkBA"
+        self.name = "🐀"
+        self.description = "Вы встречаете здоровую крысу копающуюся в вашем холодильнике. Может мусорить дома меньше " \
+                           "надо чтоб таких тварей не встречать? "
+        self.death = "Ты добил крысу и возможно спас часть еды с холодильника."
+        self.sticker = "CAACAgIAAxkBAAEE-B9ipLMcSYlZihQw82e2uPIUKtUQ9gACFhkAAqAMKUlSFm2iQyRMQCQE"
         self.loot = [Wool()]
