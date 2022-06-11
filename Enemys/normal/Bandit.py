@@ -13,6 +13,6 @@ class Bandit(Enemy):  # Параметры будут меняться
         self.xp = 45
         self.name = "Бандос"
         self.description = 'Человек лишенный положительних моральных качеств как бы в фильмы не доказывали обратное'
-        self.death = "Смерть мусорам, Свободу пацанам"
-        # self.sticker = ""
+        self.death = "Ля, маслину поймал!"
+        self.sticker = "CAACAgIAAxkBAAEE-BBipKr2RBywDWBrpRahT5a6_4a8mgACgBgAAiGIKUlETpEgg1cAAZckBA"
         self.loot = []

@@ -8,7 +8,7 @@ class Item:
 
     def buy(self, user):  # покупка предмета
         if user.money >= self.price:  # если у пользователя хватает денег, то предмет можно купить
-            user.money -= self.price
+            user.minusmoney(self.price)
             user.add_item(self)
             return "Ты успешно купил: " + self.name + "\n\nпо цене " + str(self.price) + " 💵"  # квитанция об оплате
         else:

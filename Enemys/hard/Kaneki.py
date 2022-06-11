@@ -5,14 +5,14 @@ from Enemys.Enemy import Enemy
 class Kaneki(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 160
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 11
+        self.damage2 = 15
+        self.money = 70
+        self.xp = 350
         self.name = "Канеки"
         self.description = 'Сколько будет 1000 - 7?'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.death = "Теперь он дединсайд в прямом и переносном смысле"
+        self.sticker = "CAACAgIAAxkBAAEE9-BipIhYOdd958-aqHXEJFnLhoPYnwACqRsAAigBEUlAeuR4jgtKAAEkBA"
         self.loot = [Tentacle()]

@@ -5,14 +5,14 @@ from Enemys.Enemy import Enemy
 class Orochimaru(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 250
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 5
+        self.damage2 = 8
+        self.money = 95
+        self.xp = 300
         self.name = "Орочимару"
-        self.description = 'Надо описание'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
-        self.loot = []
+        self.description = "Убил 3-го хокаге"
+        self.death = "Ушел, оставив тебе свою награду, и стал мамой"
+        self.sticker = "CAACAgIAAxkBAAEE-A5ipKkxIefRIPLRnEEO1fPJg2fW6AAC_xoAAurNIUmHJWi5LnMnDSQE"
+        self.loot = [Fang()]

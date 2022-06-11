@@ -12,4 +12,4 @@ class Grass(Enemy):  # Параметры будут меняться
         self.name = "Трава"
         self.description = 'Тебе показалось что на тебя быканула обычная безобидная травка'
         self.death = "Непонимаю зачем нужно было нападать на траву"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.sticker = "CAACAgIAAxkBAAEE985ipIgmlCKt_fHb0L6S3_mXrHQ1yAAC9x4AAiHeKUm0uNZakWkwwiQE"

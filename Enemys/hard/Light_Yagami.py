@@ -5,16 +5,16 @@ from Enemys.Enemy import Enemy
 class Light_Yagami(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 50
         self.hp = self.max_hp  # хп противника
         self.damage1 = 999999999
         self.damage2 = 999999999
-        self.money = 15
-        self.xp = 25
+        self.money = 50
+        self.xp = 500
         self.name = "Лайт Ягами"
-        self.description = 'Надо описание'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.description = "Да, Кира это я"
+        self.death = "Убив его ты сказал - ""Это тебе за L"""
+        self.sticker = "CAACAgIAAxkBAAEE-AxipKjz5U6uMSOP1jPUOG97VSQi8gACex4AAuSGKUnWmZrfzO3ZOyQE"
         self.loot = []
 
     def __repr__(self):  # Характеристики моба

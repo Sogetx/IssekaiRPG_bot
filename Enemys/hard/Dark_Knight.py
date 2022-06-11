@@ -7,12 +7,12 @@ class Dark_Knight(Enemy):  # Параметры будут меняться
         super().__init__()
         self.max_hp = 55
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 10
+        self.damage2 = 15
+        self.money = 100
+        self.xp = 300
         self.name = "Темный рыцарь"
-        self.description = 'Надо описание'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
-        self.loot = []
+        self.description = 'Дойстойный рыцарь нашего времени'
+        self.death = "Латексное воинство лишилось своего командира"
+        self.sticker = "CAACAgIAAxkBAAEE99ZipIhPxQFM0VDJppXvVkIMV0CM6gACSx0AAqbfEUlA1uaTAAFhoAMkBA"
+        self.loot = [Police_cap()]

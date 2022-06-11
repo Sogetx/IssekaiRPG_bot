@@ -16,7 +16,7 @@ def start(msg):  # обработчик команды /start
     if user.enemy is not None:
         user.enemy = None
     # приветственный стикер
-    bot.send_sticker(user.id,"CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE")
+    bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE")
     bot.send_message(user.id, "Добро пожаловать, {0.first_name}!\n"
                               "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
                               "созданому по больной фантазии авторов, фэнтези мире".
@@ -143,7 +143,7 @@ def new_level(user, msg):  # получение нового уровня( ус�
     if msg == ADD_HP:  # если игрок выбрал поднять макс хп на 10
         user.max_hp += 10  # увеличение макс хп на 10
     elif msg == ADD_POWER:  # если выбран параметр Сила +2
-        user.addpower(2)  # повышение силы на 2
+        user.power += 2  # повышение силы на 2
     elif msg == ADD_DEFENCE:  # если выбран параметр Защита +2
         user.defence += 2  # повышение защиты персонажа на 2
     elif msg == ADD_CRIT:
@@ -176,11 +176,10 @@ def inventory_menu(user, msg):
             buttons += [NEXT_PAGE, "", ""]
         if user.inv_page > 1:
             buttons += [BACK_PAGE, "", ""]
-        buttons += [BACK, "", ""]
-        bot.send_message(user.id, message, reply_markup=buttons_generator(buttons))
+        bot.send_message(user.id, message, reply_markup=buttons_generator(buttons + [BACK, "", ""]))
         user.menu = INVENTORY_MENU
     elif msg.startswith("💵 Продать"):
-        bot.send_message(user.id, user.items[" ".join(msg.split()[2:])][0].sell(user))
+        bot.send_message(user.id, user.items[msg[10:]][0].sell(user))
         if len(user.items) % 5 == 0 and len(user.items) != 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)

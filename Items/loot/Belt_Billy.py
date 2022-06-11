@@ -6,4 +6,4 @@ class Belt_Billy(Item):
         super().__init__()
         self.name = "Ремень Билли"
         self.description = "Чтобы его получить ты убил Билли. Фаны гачи-мучи тебя никогда не простят"
-        self.price = 15  # цена
+        self.price = 35  # цена

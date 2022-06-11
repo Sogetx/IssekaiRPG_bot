@@ -15,5 +15,5 @@ class Werewolf(Enemy):  # Параметры будут меняться
         self.description = "Днём он человек, а ночью звереет в ожидании нового сезона ДжоДжо. \nМожет все таки не " \
                            "стоит лазить по ночам чтоб с такими типами не встречаться? "
         self.death = "Ты избавил от мучений этого бедолагу"
-        # self.sticker = ""
-        self.loot = [Fang(),Wool()]
+        self.sticker = "CAACAgIAAxkBAAEE99JipIhKaZk3XOj73ANSKVSlKWyO6QACxhgAAiZcEEnoc0M4oQZyTCQE"
+        self.loot = [Fang(), Wool(), Meat()]

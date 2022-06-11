@@ -5,7 +5,7 @@ class Small_hp_potion(Item):
     def __init__(self):
         super().__init__()
         self.name = "Малое зелье хп"
-        self.description = "лечит вас от легких ранений"
+        self.description = "Лечит вас от легких ранений"
         self.price = 20  # цена
         self.is_used = True  # можно ли использовать этот предмет
 

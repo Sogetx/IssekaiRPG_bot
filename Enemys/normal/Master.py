@@ -5,14 +5,15 @@ from Enemys.Enemy import Enemy
 class Master(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 100
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 8
+        self.damage2 = 10
+        self.money = 60
+        self.xp = 55
         self.name = "Создатель"
-        self.description = 'Надо описание'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.description = 'Существо абсолютно безформеное только слегка напоминающие человека. Мечтает сделать мир ' \
+                           'лучше вмешавшись в природу человека. '
+        self.death = "Мечтам идеального мира выродков не суждено было сбыться"
+        self.sticker = "CAACAgIAAxkBAAEE-AhipKa4t556TM-BkbvNAAH8gW0mfNsAArMZAAIg5ylJOgABjObs2gABJSQE"
         self.loot = []

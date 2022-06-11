@@ -5,14 +5,14 @@ from Enemys.Enemy import Enemy
 class Nezuko(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 90
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 6
+        self.damage2 = 10
+        self.money = 50
+        self.xp = 50
         self.name = "Незуко"
         self.description = '*пытается что-то сказать с закрытым ртом*'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.death = "*мило плачет*"
+        self.sticker = "CAACAgIAAxkBAAEE-BJipKz4Grg4zCB-eKtiQlp9nSIfDwACNRcAAjh-KUmN9Z1pI2lKHSQE"
         self.loot = []

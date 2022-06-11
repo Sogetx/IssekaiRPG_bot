@@ -7,10 +7,10 @@ class Lukashenko(Enemy):  # Параметры будут меняться
         super().__init__()
         self.max_hp = 110
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 5
+        self.damage1 = 1
         self.damage2 = 12
-        self.money = 55
-        self.xp = 55
+        self.money = 100
+        self.xp = 60
         self.name = "Лукашенко"
         self.description = 'А я сейчас вам покажу, откуда на беларусь готовилось нападение. И если бы за шесть часов ' \
                            'до операции не был нанесён превентивный удар по позициям — четыре позиции, ' \
@@ -19,6 +19,6 @@ class Lukashenko(Enemy):  # Параметры будут меняться
                            'что начали. Биологическое оружие, самые большие атомные электростанции — и всё это были ' \
                            'готовы взорвать, '
         self.death = "Картошечный король ушел в мир иной"
-        # self.sticker = ""
+        self.sticker = "CAACAgIAAxkBAAEE9-ZipIhhiVdgFpBCH6satg2t_sBvlQAC4BwAArNCIEkAAeNkcEh3_KQkBA"
         self.loot = [Potato(), Wool()]
 

@@ -5,14 +5,14 @@ from Enemys.Enemy import Enemy
 class Agent_Smith(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 160
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 10
+        self.damage2 = 14
+        self.money = 100
+        self.xp = 200
         self.name = "Аген Смитт"
-        self.description = 'Надо описание'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
-        self.loot = []
+        self.description = 'Делового вида человек с какого-то известного фильма'
+        self.death = "Мистер Андерсон вы так ничего и не поняли"
+        self.sticker = "CAACAgIAAxkBAAEE99hipIhRyPXIelsAAXI32WbTLjs8AAHAAAImGQACpDIRSSMIKc4tRHxsJAQ"
+        self.loot = [Sunglasses()]

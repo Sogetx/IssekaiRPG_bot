@@ -12,7 +12,7 @@ class Gollum(Enemy):  # Параметры будут меняться
         self.money = 15
         self.xp = 25
         self.name = "Голум"
-        self.description = 'Надо описание'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
+        self.description = 'Лысое маленькое существо родственное гоблинам. Считает себя великим властелином всея руси.'
+        self.death = "Погиб так и не реализовав силу кольца и свои бредовые идеи, ну зато хоть мир от себя спас."
+        self.sticker = "CAACAgIAAxkBAAEE99BipIhEHawzQ4r6Dwe6ej-nokayNgACTBkAAhpUEElF2uENNrotZSQE"
         self.loot = [Ring_of_omnipotence()]

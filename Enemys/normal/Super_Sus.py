@@ -7,15 +7,15 @@ from Enemys.Enemy import Enemy
 class Super_Sus(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 1
+        self.max_hp = 75
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 1
-        self.damage2 = 2
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 4
+        self.damage2 = 5
+        self.money = 50
+        self.xp = 50
         self.name = "Супер сус"
-        self.description = 'надо описание'
-        self.death = "надо смерть"
+        self.description = 'Человек небольшого размера известен тем что влезет в любую нору, щель или заброшку'
+        self.death = "Вы убили легенду"
         self.sticker = "CAACAgIAAxkBAAEE8x5ioe6QnepWS6tcY0oOpPirq3dHrwAC-xgAAmHMEElJOzpZkbyi4iQE"
         self.loot = []
         val = random.randint(1, 10)

@@ -19,7 +19,6 @@ ADD_CRIT = "Шанс крита 🎯 +1"
 ADD_HP = "Максимальное ХП ❤ +10"
 BACK = "◀ Назад ◀"
 INVENTORY = "Инвентарь 🎒"
-TORY = "Максимальное ХП ❤ +10"
 NEXT_PAGE = "▶Следующая страничка▶"
 BACK_PAGE = "◀Предидущая страничка◀"
 # # # # # # # # # #   меню игрока   # # # # # # # # # #
@@ -43,4 +42,5 @@ SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
               Scrap().name: Scrap(),
               Sock().name: Sock(),
               Candy().name: Candy(),
-              Potato().name: Potato()}
+              Potato().name: Potato(),
+              Lightsaber().name: Lightsaber()}

@@ -5,14 +5,14 @@ from Enemys.Enemy import Enemy
 class Dio(Enemy):  # Параметры будут меняться
     def __init__(self):
         super().__init__()
-        self.max_hp = 55
+        self.max_hp = 170
         self.hp = self.max_hp  # хп противника
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
+        self.damage1 = 9
+        self.damage2 = 12
+        self.money = 100
+        self.xp = 300
         self.name = "Дио"
-        self.description = 'Муда муда муда муда муда муда'
-        self.death = "Одной мелкой тварью меньше"
-        self.sticker = "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA"
-        self.loot = []
+        self.description = 'За Вардо'
+        self.death = "Ты переиграл его переигрывание"
+        self.sticker = "CAACAgIAAxkBAAEE995ipIhXdZUYlUMhJG-mW8X0S3SmjgACPx4AAovfEUmQZSnYbAPkYiQE"
+        self.loot = [Stand_arrow()]
