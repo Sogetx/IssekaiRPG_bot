@@ -5,7 +5,7 @@ class Mussels(Item):
     def __init__(self):
         super().__init__()
         self.name = "Мидии"
-        self.description = ""
+        self.description = "Добавьте лимон, будет вкусно"
         self.price = 30
         self.is_used = True
 

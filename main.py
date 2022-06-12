@@ -20,7 +20,8 @@ def start(msg):  # обработчик команды /start
     bot.send_message(user.id, "Добро пожаловать, {0.first_name}!\n"
                               "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
                               "созданому по больной фантазии авторов, фэнтези мире".
-                     format(msg.from_user, bot.get_me()), reply_markup=buttons_generator([START_NEW_GAME, SUPPORT]))
+                     format(msg.from_user, bot.get_me()),
+                     reply_markup=buttons_generator([START_NEW_GAME, SUPPORT], True))
 
 
 @bot.message_handler(commands=['help'])
@@ -61,16 +62,15 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         for weapon in user.items.values():
             if weapon[0].damage != 0:
                 weapons += ["", weapon[0].name, ""]
-
-        if msg == GO_AHEAD and user.enemy is None:
+        if msg == GO_AHEAD:
             enemy = enemy_create(user)
             bot.send_message(user.id, "Ты встретил моба\n\n{0}\n\n{1}\n\nХарактеристики врага:\n{2}".
                              format(enemy.name, enemy.description, repr(enemy)),
-                             reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons))
+                             reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons, False))
             bot.send_sticker(user.id, enemy.sticker)
         elif msg == BACK:
             bot.send_message(user.id, "Ты вышел из инвентаря и продолжил бой",
-                             reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons))
+                             reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons, False))
         user.menu = FIGHT_MENU
     elif msg == RUN:  # сбежать
         user.enemy = None
@@ -85,30 +85,29 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 
 
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
-    if msg == GO_AHEAD and user.event is None:
+    if msg == GO_AHEAD:
         user.event = random.choice([Tavern(), Church(), Anisimov(), Odd_Even(), Dobby()])
         if not user.event.is_active:
             bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
-            user.event = None
             game_menu(user, GAME_MENU)
         else:
             bot.send_message(user.id, "{0}\n\n{1}".format(user.event.name, user.event.description),
-                             reply_markup=buttons_generator(user.event.buttons + [BACK]))
+                             reply_markup=buttons_generator(user.event.buttons + [BACK], True))
             user.menu = EVENTS_MENU
-    if (not(user.event is None) and user.event.is_active and user.event.active_action(user, msg)) or msg == BACK:  # если активный ивент закончился
-        user.event = None
+    if msg == BACK or (user.event.is_active and user.event.active_action(user, msg)):  # если активный ивент закончился
         game_menu(user, GAME_MENU)
 
 
 def main_menu(user, msg):
     if msg == MAIN_MENU:  # Если было выбрано главное меню
         bot.send_message(user.id, "Ты вернулся в главное меню",
-                         reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT]))
+                         reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT], True))
         user.menu = MAIN_MENU
     elif msg == CONTINUE_GAME or msg == START_NEW_GAME:
         game_menu(user, GAME_MENU)  # переход в игровое меню
     elif msg == SUPPORT:
-        bot.send_message(user.id, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - Gmail Лев")
+        bot.send_message(user.id, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - Gmail Лев",
+                         reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT], True))
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 
@@ -117,13 +116,13 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
     if msg == GAME_MENU:
         bot.send_message(user.id, "У тебя:\n{0}/{1}❤ {2}💵\n\nЧе дальше будеш делать?".
                          format(user.hp, user.max_hp, user.money),
-                         reply_markup=buttons_generator([SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU]))
+                         reply_markup=buttons_generator([SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU], True))
         user.menu = GAME_MENU
     elif msg == SHOP:
         shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1  # кол-во походов игрока +1
-        if random.randint(1, 5) == 1:  # шанс 1 к 5 что будет ивент(не бой с мобом)
+        if random.randint(1, 1) == 1:  # шанс 1 к 5 что будет ивент(не бой с мобом)
             events_menu(user, msg)
         else:
             fight_menu(user, msg)
@@ -175,7 +174,7 @@ def inventory_menu(user, msg):
             buttons += [NEXT_PAGE, "", ""]
         if user.inv_page > 1:  # если игрок не на 1 страничке
             buttons += [BACK_PAGE, "", ""]
-        bot.send_message(user.id, message, reply_markup=buttons_generator(buttons + [BACK, "", ""]))
+        bot.send_message(user.id, message, reply_markup=buttons_generator(buttons + [BACK, "", ""], False))
         user.menu = INVENTORY_MENU
     elif msg.startswith("💵 Продать"):
         bot.send_message(user.id, user.items[msg[10:]][0].sell(user))
@@ -215,7 +214,7 @@ def shop_menu(user, msg):
             if val not in buttons:
                 buttons.append(val)
                 message += repr(SHOP_ITEMS[val])
-        bot.send_message(user.id, message, reply_markup=buttons_generator([""] + buttons + ["", BACK]))
+        bot.send_message(user.id, message, reply_markup=buttons_generator([""] + buttons + ["", BACK], False))
         bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE")
         user.menu = SHOP_MENU
     elif msg in SHOP_ITEMS.keys():

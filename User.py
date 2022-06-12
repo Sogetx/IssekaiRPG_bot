@@ -57,7 +57,7 @@ class User:
                                       "Сила: {2} 💪\nЗащита: {3} 🛡\nШанс крита: {4} 🎯\n"
                                       "Максимальное ХП: {5}❤\n\nВыбери какую хар-ку ты хочешь увеличить:".
                              format(self.lvl, self.get_pet(), self.power, self.defence, self.crit, self.max_hp),
-                             reply_markup=buttons_generator([ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]))
+                             reply_markup=buttons_generator([ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP], True))
             return True
 
     def heal(self, heal_hp):  # хил

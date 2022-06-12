@@ -13,3 +13,6 @@ class Caravan(Enemy):
         self.death = "Караван ограблен"
         self.sticker = "CAACAgIAAxkBAAEE-BdipLAu9nhDBcOKyMSGHdfsI_Y8_wACAiMAAnrSKUkg1c2NRJYR1yQE"
         self.loot = []
+
+    def __repr__(self):  # Характеристики моба
+        return "{0}❤, урон: {1}💥".format(self.hp, self.damage1)

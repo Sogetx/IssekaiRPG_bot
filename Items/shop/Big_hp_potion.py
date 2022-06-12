@@ -6,7 +6,7 @@ class Big_hp_potion(Item):
         super().__init__()
         self.name = "Большое зелье хп"
         self.description = "Остался без руки? Не проблема!"
-        self.price = 100
+        self.price = 150
         self.is_used = True
 
     def use(self, user):

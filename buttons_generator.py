@@ -1,9 +1,10 @@
 from telebot import *
 
 
-def buttons_generator(buttons):  # генератор кнопок
+def buttons_generator(buttons, one_time):  # генератор кнопок
     # buttons - массив кнопок
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    # one_time - защита от спама(кроме боя,магазина,инвентаря)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=one_time)
     i, x, y, z = 0, 0, 1, 2
     while i < len(buttons):
         if z < len(buttons):
