@@ -6,8 +6,8 @@ class Potato(Item):
         super().__init__()
         self.name = "🥔"
         self.description = "Основной источних доходов 🇧🇾"
-        self.price = 3  # цена
-        self.is_used = True  # можно ли использовать этот предмет
+        self.price = 10
+        self.is_used = True
 
     def use(self, user):
         user.heal(5)

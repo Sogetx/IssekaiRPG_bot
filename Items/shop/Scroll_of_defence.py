@@ -6,8 +6,8 @@ class Scroll_of_defence(Item):
         super().__init__()
         self.name = "Свиток защиты"
         self.description = "Увеличивает максимальную 🛡 на 1"
-        self.price = 150  # цена
-        self.is_used = True  # можно ли использовать этот предмет
+        self.price = 150
+        self.is_used = True
 
     def use(self, user):
         user.defence += 1

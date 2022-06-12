@@ -6,6 +6,6 @@ class Knife(Item):
         super().__init__()
         self.name = "🔪"
         self.description = "Обычный кухонный нож"
-        self.price = 400  # цена
-        self.is_used = True  # можно ли использовать этот предмет
-        self.damage = 15
+        self.price = 300
+        self.is_used = True
+        self.damage = 13

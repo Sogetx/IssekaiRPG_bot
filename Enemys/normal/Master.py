@@ -2,11 +2,11 @@ from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Master(Enemy):  # Параметры будут меняться
+class Master(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 100
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 8
         self.damage2 = 10
         self.money = 60

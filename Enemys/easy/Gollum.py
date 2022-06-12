@@ -2,11 +2,11 @@ from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Gollum(Enemy):  # Параметры будут меняться
+class Gollum(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 55
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 4
         self.damage2 = 9
         self.money = 15

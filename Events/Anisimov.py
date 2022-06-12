@@ -34,4 +34,6 @@ class Anisimov(Event):
             bot.send_sticker(user.id, "CAACAgIAAxkBAAEE7MZini34iaGG7nqav_UbdVmTIJbF6wACAgADNpB7Ot2m94b8xdNVJAQ")
             user.minusmoney(val)
             return True
+        else:
+            return False
 

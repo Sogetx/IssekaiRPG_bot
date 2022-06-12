@@ -43,4 +43,8 @@ SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
               Sock().name: Sock(),
               Candy().name: Candy(),
               Potato().name: Potato(),
-              Lightsaber().name: Lightsaber()}
+              Lightsaber().name: Lightsaber(),
+              Excalibur().name: Excalibur(),
+              Furious_Sword().name: Furious_Sword(),
+              Golden_Sword().name: Golden_Sword(),
+              Iron_Sword().name: Iron_Sword()}

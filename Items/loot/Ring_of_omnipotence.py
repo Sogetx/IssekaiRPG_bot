@@ -6,4 +6,4 @@ class Ring_of_omnipotence(Item):
         super().__init__()
         self.name = "Кольцо всевластия"
         self.description = "Дешевая подделка"
-        self.price = 3  # цена
+        self.price = 3

@@ -6,4 +6,4 @@ class Meat(Item):
         super().__init__()
         self.name = "Мясо 🥩"
         self.description = "Гнилое, ни на что не годится, разве что продать"
-        self.price = 4  # цена
+        self.price = 4

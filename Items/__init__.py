@@ -14,6 +14,10 @@ from Items.shop.Sock import Sock
 from Items.shop.Сandy import Candy
 from Items.shop.Potato import Potato
 from Items.shop.Lightsaber import Lightsaber
+from Items.shop.Excalibur import Excalibur
+from Items.shop.Furious_Sword import Furious_Sword
+from Items.shop.Golden_Sword import Golden_Sword
+from Items.shop.Iron_Sword import Iron_Sword
 
 from Items.loot.Adams_apple import Adams_apple
 from Items.loot.Big_eye import Big_eye

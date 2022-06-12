@@ -1,14 +1,13 @@
 import random
-
 from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Super_Sus(Enemy):  # Параметры будут меняться
+class Super_Sus(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 75
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 4
         self.damage2 = 5
         self.money = 50

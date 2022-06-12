@@ -1,6 +1,5 @@
-import random
 from Events.Event import Event
-from constants import bot, BACK
+from constants import bot
 
 
 class Dobby(Event):
@@ -13,6 +12,7 @@ class Dobby(Event):
 
     def active_action(self, user, msg):
         if msg == "Не давать носок❌":
+            bot.send_message(user.id, "Ты плохой дядя, ты не дал Добби носок")
             return True
         elif msg == "Дать носок✅":
             if not ("Носок 🧦" in user.items.keys()):
@@ -23,3 +23,5 @@ class Dobby(Event):
             bot.send_sticker(user.id, "CAACAgIAAxkBAAEE8utiod5drKCIr9VFeESUDKJbBgJUIgACgxgAAldJEEn8H67si4stVCQE")
             bot.send_message(user.id, "Cпасибо, вот моя тебе благодарность: \n +200 💵")
             return True
+        else:
+            return False

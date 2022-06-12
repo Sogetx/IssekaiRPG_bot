@@ -3,25 +3,24 @@ import random
 
 class Enemy:
     def __init__(self):
-        self.max_hp = 0
-        self.hp = self.max_hp  # хп противника
+        self.max_hp = 0  # полное хп
+        self.hp = self.max_hp  # хп
         self.damage1 = 0  # минимальная атака
         self.damage2 = 0  # максимальная атака
         self.money = 0  # деньги с моба
         self.xp = 0  # опыт с моба
-        # self.name = "имя моба"
-        # self.description = "описание моба"
-        self.death = "описание смерти моба"
-        self.sticker = "CAACAgIAAxkBAAEEyURiijB_lEfWYrQTkobxFUM7UPEynQACMhEAAuwOiEq0aIFtwmbMqiQE"  # айди стикера моба
+        self.name = "имя"
+        self.description = "описание"
+        self.death = "описание смерти"
+        self.sticker = "айди стикера"
         self.run_att = 0  # количество попыток побега
-        self.loot = []
+        self.loot = []  # лут
 
-    def enemy_loot(self, user):
-        user.money += self.money  # получение денег с моба
-        msg = self.death + "\n\n" + "За победу над врагом ты получил {0}⭐ и {1}💵\n".format(self.xp, self.money)
-        msg += "А также залутал: "
-        user.enemy_count += 1  # счетчик убитых мобов
-        if len(self.loot) == 0:
+    def enemy_loot(self, user):  # получение награды за убийство моба
+        user.money += self.money  # получение денег
+        msg = self.death + "\n\nЗа победу над врагом ты получил {0}⭐ и {1}💵\nА также залутал: ".format(self.xp, self.money)
+        user.enemy_count += 1  # +1 к счетчику убитых мобов
+        if len(self.loot) == 0:  # если у моба нету лута
             return msg + "ничего"
         else:
             items = []
@@ -37,7 +36,7 @@ class Enemy:
         self.hp -= received_damage
         return received_damage
 
-    def escape(self):
+    def escape(self):  # побег моба
         if self.hp <= self.max_hp // 10 and self.run_att == 0:  # условие для побега моба
             self.run_att = 1
             if random.randint(1, 30) == 1:

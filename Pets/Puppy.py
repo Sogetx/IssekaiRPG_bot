@@ -5,7 +5,7 @@ class Puppy(Pet):
     def __init__(self):
         super().__init__()
         self.name = "Щенок"
-        self.description =
-        self.power = 1.2  # модификатор силы
-        self.defence = 1  # модификатор защиты
-        self.damage = 1.4  # модификатор атаки
+        self.description = "Знаете брать в такое опасное приключение щенка возможно не стоило"
+        self.power = 1.2
+        self.defence = 1
+        self.damage = 1.4

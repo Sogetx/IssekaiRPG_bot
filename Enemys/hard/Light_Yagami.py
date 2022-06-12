@@ -1,12 +1,11 @@
-from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Light_Yagami(Enemy):  # Параметры будут меняться
+class Light_Yagami(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 50
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 999999999
         self.damage2 = 999999999
         self.money = 50

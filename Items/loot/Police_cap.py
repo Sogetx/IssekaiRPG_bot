@@ -6,4 +6,4 @@ class Police_cap(Item):
         super().__init__()
         self.name = "Фуражка полицая"
         self.description = "Сталин рекомендует 👍🏼"
-        self.price = 20  # цена
+        self.price = 20

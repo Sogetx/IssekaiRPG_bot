@@ -6,4 +6,4 @@ class Golden_YTB(Item):
         super().__init__()
         self.name = "Золотая кнопка ютуба"
         self.description = "Дают за 1млн подпищиков"
-        self.price = 100  # цена
+        self.price = 100

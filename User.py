@@ -7,16 +7,15 @@ class User:
 
     def __init__(self, uid):
         self.id = uid  # айди пользователя
-        self.money = 200  # деньги
-        self.max_hp = 100  # максимальное здоровье
+        self.money = 200000  # деньги
+        self.max_hp = 1000  # максимальное здоровье
         self.hp = self.max_hp  # здоровье
-        self.power = 10  # Сила (урон без предметов)
+        self.power = 30  # Сила (урон без предметов)
         self.defence = 1  # защита
         self.enemy_count = 0  # кол-во убитых мобов
         self.go_ahead_count = 0  # кол-во совершеных походов
         self.xp = 0  # опыт
-        self.xp_to_lvl = 100  # сколько опыта до след. уровня
-        self.lvl = 1  # уровень
+        self.lvl = 20  # уровень
         self.menu = MAIN_MENU  # в каком меню находится пользователь
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
@@ -29,28 +28,28 @@ class User:
     def __repr__(self):  # Статистика пользователя
         msg = "Уровень: {0}\nХП: {1}/{2} ❤\nДеньги: {3} 💵\nОпыт: {4}/{5} ⭐\nСила: {6} 💪\nШанс крита: " \
               "{7} 🎯\nЗащита: {8} 🛡\nУбито мобов: {9} 👹\nСовершено походов: {10} 🚶‍♂". \
-            format(self.lvl, self.hp, self.max_hp, self.money, self.xp, self.xp_to_lvl, self.power,
+            format(self.lvl, self.hp, self.max_hp, self.money, self.xp, int(100 * (1.2 ** (self.lvl - 1))), self.power,
                    self.crit, self.defence, self.enemy_count, self.go_ahead_count)
-        if self.pet.name is not None:
-            msg += "\n\nПитомец:\n{0}\n{1}\nx{2} 💥, x{3} 💪, x{4} 🛡\n". \
-                format(self.pet.name, self.pet.description, self.pet.damage, self.pet.power, self.pet.defence)
+        if self.pet.name is not None:  # Статистика пользователя + хар-ки питомца (если он есть)
+            msg += "\n\nПитомец:\n" + repr(self.pet)
         return msg
 
     def to_damage(self, weapon, msg):  # Нанесение урона
-        if weapon:
-            return int(self.items[msg][0].damage * self.power / 5 * self.pet.damage)
-        else:
+        if weapon:  # если используется оружие
+            return int(self.items[msg][0].damage * (1 + self.power / 50) * self.pet.damage)
+        else:  # если не оружие
             return int(self.power * self.pet.power * self.pet.damage)
 
     def take_damage(self, received_damage):  # Получение урона
         self.hp -= int(max(received_damage - ((self.defence * self.pet.defence) // 2), 0))
         return received_damage
 
-    def add_xp(self, add):
+    def add_xp(self, add):  # получение опыта
         self.xp += add
-        if self.xp >= self.xp_to_lvl and self.lvl < 25:
-            self.xp -= self.xp_to_lvl
-            self.xp_to_lvl = int(self.xp_to_lvl * 1.3)
+        self.enemy = None  # так как опыт за моба уже получен, то он удаляется из юзера
+        # если хватает опыта до нового уровня и уровень не максимальный(25)
+        if self.xp >= int(100 * (1.2 ** (self.lvl - 1))) and self.lvl < 25:
+            self.xp -= int(100 * (1.2 ** (self.lvl - 1)))
             self.lvl += 1
             self.menu = NEW_LVL
             bot.send_message(self.id, "🎉Ты получил {0} уровень🎉 {1}"
@@ -61,20 +60,20 @@ class User:
                              reply_markup=buttons_generator([ADD_POWER, ADD_DEFENCE, ADD_CRIT, ADD_HP]))
             return True
 
-    def heal(self, heal_hp):
-        self.hp = min(self.hp + heal_hp, self.max_hp)
+    def heal(self, heal_hp):  # хил
+        self.hp = min(self.hp + heal_hp, self.max_hp)  # чтобы хп небыло больше максимального
 
-    def minusmoney(self, minus):
+    def minusmoney(self, minus):  # трата денег
         self.money = max(self.money - minus, 0)
 
-    def add_item(self, item):
-        if item.name not in self.items.keys():
+    def add_item(self, item):  # добавление предмета в инвентарь
+        if item.name not in self.items.keys():  # если такого предмета еще нету в инвентаре
             self.items[item.name] = [item, 1]
-        else:
+        else:  # если такой предмет уже есть, то его количество +1
             self.items[item.name][1] += 1
 
-    def get_pet(self):
-        if not(self.lvl in [5, 15, 25]):
+    def get_pet(self):  # получение питомца
+        if not (self.lvl in [5, 15, 25]):
             return ""
         else:
             if self.lvl == 5:

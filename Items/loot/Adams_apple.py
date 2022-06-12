@@ -6,4 +6,4 @@ class Adams_apple(Item):
         super().__init__()
         self.name = "Кадык"
         self.description = "Гордон хотел тебе вырвать, но получилось наоборот"
-        self.price = 20  # цена
+        self.price = 20

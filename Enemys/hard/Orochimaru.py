@@ -2,11 +2,11 @@ from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Orochimaru(Enemy):  # Параметры будут меняться
+class Orochimaru(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 250
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 5
         self.damage2 = 8
         self.money = 95

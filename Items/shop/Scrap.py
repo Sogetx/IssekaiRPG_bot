@@ -6,6 +6,6 @@ class Scrap(Item):
         super().__init__()
         self.name = "Лом"
         self.description = "Легендарное оружие ближнего боя Гордона Фримена"
-        self.price = 650  # цена
-        self.is_used = True  # можно ли использовать этот предмет
+        self.price = 650
+        self.is_used = True
         self.damage = 20

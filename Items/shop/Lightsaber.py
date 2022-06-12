@@ -6,6 +6,6 @@ class Lightsaber(Item):
         super().__init__()
         self.name = "Световой меч"
         self.description = "Да прибудет с тобой сила!"
-        self.price = 1000  # цена
-        self.is_used = True  # можно ли использовать этот предмет
-        self.damage = 35
+        self.price = 1200
+        self.is_used = True
+        self.damage = 40

@@ -2,11 +2,11 @@ from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Kaneki(Enemy):  # Параметры будут меняться
+class Kaneki(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 160
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 11
         self.damage2 = 15
         self.money = 70

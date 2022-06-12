@@ -6,4 +6,4 @@ class Sock(Item):
         super().__init__()
         self.name = "🧦"
         self.description = "Этот носок может кому-то помочь стать свободным"
-        self.price = 100  # цена
+        self.price = 100

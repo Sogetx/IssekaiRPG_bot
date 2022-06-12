@@ -6,7 +6,7 @@ class RadCockroach(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 50
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 2
         self.damage2 = 5
         self.money = 5

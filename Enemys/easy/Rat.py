@@ -6,7 +6,7 @@ class Rat(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 25
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 1
         self.damage2 = 3
         self.money = 5

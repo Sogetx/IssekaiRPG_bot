@@ -25,3 +25,5 @@ class Odd_Even(Event):
             bot.send_message(user.id, "Число: " + str(val) + "\n\nТы не угадал.\n\nРезультат: -" + str(mon) + "💵")
             user.minusmoney(mon)
             return True
+        else:
+            return False

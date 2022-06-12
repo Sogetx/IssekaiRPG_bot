@@ -1,12 +1,11 @@
-from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Grass(Enemy):  # Параметры будут меняться
+class Grass(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 1
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.money = 1
         self.xp = 1
         self.name = "Трава"

@@ -1,12 +1,11 @@
-from Items import *
 from Enemys.Enemy import Enemy
 
 
-class Slime(Enemy):  # Параметры будут меняться
+class Slime(Enemy):
     def __init__(self):
         super().__init__()
         self.max_hp = 30
-        self.hp = self.max_hp  # хп противника
+        self.hp = self.max_hp
         self.damage1 = 1
         self.damage2 = 6
         self.money = 7
