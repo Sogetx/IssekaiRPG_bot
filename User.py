@@ -7,15 +7,15 @@ class User:
 
     def __init__(self, uid):
         self.id = uid  # айди пользователя
-        self.money = 200000  # деньги
-        self.max_hp = 1000  # максимальное здоровье
+        self.money = 200  # деньги
+        self.max_hp = 100  # максимальное здоровье
         self.hp = self.max_hp  # здоровье
-        self.power = 30  # Сила (урон без предметов)
+        self.power = 10  # Сила (урон без предметов)
         self.defence = 1  # защита
         self.enemy_count = 0  # кол-во убитых мобов
         self.go_ahead_count = 0  # кол-во совершеных походов
         self.xp = 0  # опыт
-        self.lvl = 20  # уровень
+        self.lvl = 1  # уровень
         self.menu = MAIN_MENU  # в каком меню находится пользователь
         self.enemy = None  # с каким мобов бьется игрок
         self.event = None  # ивент
