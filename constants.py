@@ -1,4 +1,4 @@
-from Items import *
+from items import *
 from config import TELEGRAM_TOKEN
 from telebot import *
 
@@ -32,12 +32,12 @@ SHOP_MENU = 6
 INVENTORY_MENU = 7
 
 # предметы которые продаются в магазине
-SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
-              Scroll_of_defence().name: Scroll_of_defence(),
-              Scroll_of_crit().name: Scroll_of_crit(),
-              Small_hp_potion().name: Small_hp_potion(),
-              Medium_hp_potion().name: Medium_hp_potion(),
-              Big_hp_potion().name: Big_hp_potion(),
+SHOP_ITEMS = {ScrollOfPower().name: ScrollOfPower(),
+              ScrollOfDefence().name: ScrollOfDefence(),
+              ScrollOfCrit().name: ScrollOfCrit(),
+              SmallHpPotion().name: SmallHpPotion(),
+              MediumHpPotion().name: MediumHpPotion(),
+              BigHpPotion().name: BigHpPotion(),
               Banana().name: Banana(),
               Scrap().name: Scrap(),
               Sock().name: Sock(),
@@ -46,6 +46,6 @@ SHOP_ITEMS = {Scroll_of_power().name: Scroll_of_power(),
               Mussels().name: Mussels(),
               Lightsaber().name: Lightsaber(),
               Excalibur().name: Excalibur(),
-              Furious_Sword().name: Furious_Sword(),
-              Golden_Sword().name: Golden_Sword(),
-              Iron_Sword().name: Iron_Sword()}
+              FuriousSword().name: FuriousSword(),
+              GoldenSword().name: GoldenSword(),
+              IronSword().name: IronSword()}

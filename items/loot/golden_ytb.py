@@ -1,0 +1,9 @@
+from items.item import Item
+
+
+class GoldenYTB(Item):
+    def __init__(self):
+        super().__init__()
+        self.name = "Золотая кнопка ютуба"
+        self.description = "Дают за 1млн подпищиков"
+        self.price = 100

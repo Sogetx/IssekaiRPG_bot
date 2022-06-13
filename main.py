@@ -1,9 +1,9 @@
 from buttons_generator import buttons_generator
 from constants import *
-from User import User
+from user import User
 import random
-from Enemys.fight_system import enemy_create, bot_fight
-from Events import *
+from enemys.fight_system import enemy_create, bot_fight
+from events import *
 
 users = {}  # словарь(масив ключ-значение) пользователей
 
@@ -12,14 +12,11 @@ users = {}  # словарь(масив ключ-значение) пользо�
 def start(msg):  # обработчик команды /start
     users[msg.chat.id] = User(msg.chat.id)  # добавление пользователя в словарь при начале игры
     user = users[msg.chat.id]
-    # удаление моба, если игрок ввел /start в процессе боя, иначе будет продолжатся прерваный бой
-    if user.enemy is not None:
-        user.enemy = None
     # приветственный стикер
     bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbFibmcM88jMUQhItJWitmTQeBjFdgACSRYAAsOLeEs1cJYvU2PfdyQE")
     bot.send_message(user.id, "Добро пожаловать, {0.first_name}!\n"
                               "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
-                              "созданому по больной фантазии авторов, фэнтези мире".
+                              "созданому по больной фантазии авторов, мире".
                      format(msg.from_user, bot.get_me()),
                      reply_markup=buttons_generator([START_NEW_GAME, SUPPORT], True))
 
@@ -73,7 +70,6 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
                              reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons, False))
         user.menu = FIGHT_MENU
     elif msg == RUN:  # сбежать
-        user.enemy = None
         bot.send_message(user.id, 'Ты сбежал')
         game_menu(user, GAME_MENU)  # переход в игровое меню
     elif msg == TO_DAMAGE or msg in user.items.keys():  # Ударить врага
@@ -86,7 +82,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
     if msg == GO_AHEAD:
-        user.event = random.choice([Tavern(), Church(), Anisimov(), Odd_Even(), Dobby()])
+        user.event = random.choice([Tavern(), Church(), Anisimov(), OddEven(), Dobby()])
         if not user.event.is_active:
             bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
             game_menu(user, GAME_MENU)
@@ -94,8 +90,13 @@ def events_menu(user, msg):  # Все что связано с взаимоде�
             bot.send_message(user.id, "{0}\n\n{1}".format(user.event.name, user.event.description),
                              reply_markup=buttons_generator(user.event.buttons + [BACK], True))
             user.menu = EVENTS_MENU
-    if msg == BACK or (user.event.is_active and user.event.active_action(user, msg)):  # если активный ивент закончился
+    elif msg == BACK:
         game_menu(user, GAME_MENU)
+    elif msg in user.event.buttons:
+        user.event.active_action(user, msg)  # активный ивент
+        game_menu(user, GAME_MENU)
+    else:
+        bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 
 
 def main_menu(user, msg):
@@ -122,7 +123,7 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
         shop_menu(user, msg)
     elif msg == GO_AHEAD:
         user.go_ahead_count += 1  # кол-во походов игрока +1
-        if random.randint(1, 1) == 1:  # шанс 1 к 5 что будет ивент(не бой с мобом)
+        if random.randint(1, 5) == 1:  # шанс 1 к 5 что будет ивент(не бой с мобом)
             events_menu(user, msg)
         else:
             fight_menu(user, msg)

@@ -1,0 +1,15 @@
+from items.item import Item
+
+
+class ScrollOfCrit(Item):
+    def __init__(self):
+        super().__init__()
+        self.name = "Свиток крита"
+        self.description = "Увеличивает шанс критического урона 🎯 на 1"
+        self.price = 200
+        self.is_used = True
+
+    def use(self, user):
+        user.crit += 1
+        super().use(user)
+        return "Ты использовал {0} и получил: +1 🎯\n\nТеперь у тебя {1} 🎯".format(self.name, user.crit)
