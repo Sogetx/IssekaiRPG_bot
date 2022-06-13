@@ -1,6 +1,6 @@
 import random
 from items import *
-from enemys.Enemy import Enemy
+from enemys.enemy import Enemy
 
 
 class SuperSus(Enemy):

@@ -25,4 +25,4 @@ class Item:
             user.items.pop(self.name)
 
     def __repr__(self):  # описание предмета
-        return "{0}\nЦена: {1} 💵 :\n{2}\n\n".format(self.name, self.price, self.description)
+        return "{0}\nЦена: {1} 💵 :\n{2}".format(self.name, self.price, self.description)

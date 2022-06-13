@@ -5,7 +5,7 @@ import random
 from enemys.fight_system import enemy_create, bot_fight
 from events import *
 
-users = {}  # словарь(масив ключ-значение) пользователей
+users = {}  # словарь(масив ключ-значение) пользователей в виде {id: User()}
 
 
 @bot.message_handler(commands=['start'])
@@ -48,7 +48,7 @@ def bot_message(msg):  # обработчик текста
             bot.send_message(user.id, 'Ты же уже мертв, куда тебе идти то?\n\n'
                                       '         --> /start <--')
             bot.send_message(user.id, "⚰️")
-    except KeyError:
+    except KeyError: # если пользователя нету в словаре пользователей
         bot.send_message(msg.chat.id, 'Произошли какие-то траблы, нужно перезапустить бота',
                          reply_markup=types.ReplyKeyboardMarkup().add('/start'))
 
@@ -70,6 +70,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
                              reply_markup=buttons_generator([RUN, TO_DAMAGE, INVENTORY] + weapons, False))
         user.menu = FIGHT_MENU
     elif msg == RUN:  # сбежать
+        user.enemy = None
         bot.send_message(user.id, 'Ты сбежал')
         game_menu(user, GAME_MENU)  # переход в игровое меню
     elif msg == TO_DAMAGE or msg in user.items.keys():  # Ударить врага
@@ -91,9 +92,11 @@ def events_menu(user, msg):  # Все что связано с взаимоде�
                              reply_markup=buttons_generator(user.event.buttons + [BACK], True))
             user.menu = EVENTS_MENU
     elif msg == BACK:
+        user.event = None
         game_menu(user, GAME_MENU)
     elif msg in user.event.buttons:
         user.event.active_action(user, msg)  # активный ивент
+        user.event = None
         game_menu(user, GAME_MENU)
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
@@ -208,14 +211,14 @@ def inventory_menu(user, msg):
 def shop_menu(user, msg):
     if msg == SHOP:
         buttons = []
-        message = "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если" \
-                  " у тебя достаточно рупий!?\nУ тебя есть {0} 💵\n\n".format(user.money)
+        message = "Лампы, верёвки, бомбы! Тебе всё это нужно? Оно твоё, мой друг… если у тебя достаточно рупий!?\n\n"
         while len(buttons) < 4:
             val = random.choice(list(SHOP_ITEMS.keys()))
             if val not in buttons:
                 buttons.append(val)
-                message += repr(SHOP_ITEMS[val])
-        bot.send_message(user.id, message, reply_markup=buttons_generator([""] + buttons + ["", BACK], False))
+                message += repr(SHOP_ITEMS[val]) + "\n\n"
+        bot.send_message(user.id, message + "У тебя на счету {0} 💵".format(user.money),
+                         reply_markup=buttons_generator([""] + buttons + ["", BACK], False))
         bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE")
         user.menu = SHOP_MENU
     elif msg in SHOP_ITEMS.keys():

@@ -36,6 +36,7 @@ def bot_fight(user, menu, msg):
         else:  # если умрет враг
             bot.send_message(user.id, user.enemy.enemy_loot(user))
             if not (user.add_xp(user.enemy.xp)):  # если игрок неполучил новый уровень
+                user.enemy = None
                 menu(user, GAME_MENU)  # показывается игровое меню
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
