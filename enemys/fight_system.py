@@ -1,14 +1,16 @@
 import random
+
 from enemys import *
 from constants import *
 
 
-def bot_fight(user, menu, msg):
+def bot_fight(user, msg):
     if user.enemy.escape():  # если враг сбежал
         bot.send_message(user.id, user.enemy.name + " сбежал, ну не знаю мог бы его и догнать, "
                                                     "но раз тебе лень то ладно")
-        menu(user, GAME_MENU)
-    elif msg == TO_DAMAGE or (msg in user.items.keys() and user.items[msg][0].damage != 0):
+        user.enemy = None
+        return True
+    else:
         is_crit = ""
         dmg_to_enemy = 0
         if msg == TO_DAMAGE:  # если игрок ударил без оружия
@@ -34,12 +36,12 @@ def bot_fight(user, menu, msg):
                 bot.send_sticker(user.id, "CAACAgIAAxkBAAEEms1ibridDAOemzBFkVXyS8LUmExOVgACRxcAAvuxcEvbmQyQSCSazyQE")
                 user.menu = DEATH
         else:  # если умрет враг
-            bot.send_message(user.id, user.enemy.enemy_loot(user))
-            if not (user.add_xp(user.enemy.xp)):  # если игрок неполучил новый уровень
-                user.enemy = None
-                menu(user, GAME_MENU)  # показывается игровое меню
-    else:
-        bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
+            enemy = user.enemy
+            bot.send_message(user.id, enemy.enemy_loot(user))
+            user.enemy = None
+
+            if not (user.add_xp(enemy.xp)):  # если игрок неполучил новый уровень
+                return True
 
 
 def enemy_create(user):  # Генерация мобов
@@ -51,7 +53,5 @@ def enemy_create(user):  # Генерация мобов
         enemys += [DarkKnight(), Dio(), AgentSmith(), Orochimaru(), Kaneki(),
                    DavyJones(), Bowser(), DungeonMaster(), LightYagami()]  # + сложные мобы
     user.enemy = random.choice(enemys)
-    # Описание моба при первой встерече
+    # Описание моба при первой встрече
     return user.enemy
-    # return "{0}\n\n{1}\n\nХарактеристики врага:\n{2}".format(user.enemy.name, user.enemy.description,
-    #                                                          repr(user.enemy))

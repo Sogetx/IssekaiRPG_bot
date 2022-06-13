@@ -83,3 +83,11 @@ class User:
             elif self.lvl == 25:
                 self.pet = AlphaWolf()
             return "\n\nИ нового питомца:\n\n" + repr(self.pet)
+
+    # def weapon_loader(self):  # добавление кнопок оружия(для боя)
+    #     weapons = []  # масив для кнопок оружия во время боя(если у игрока есть оружие в инвентаре)
+    #     for weapon in self.items.values():
+    #         if weapon[0].damage != 0:
+    #             weapons += ["", weapon[0].name, ""]
+    #     return weapons
+

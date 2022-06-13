@@ -73,8 +73,10 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         user.enemy = None
         bot.send_message(user.id, 'Ты сбежал')
         game_menu(user, GAME_MENU)  # переход в игровое меню
-    elif msg == TO_DAMAGE or msg in user.items.keys():  # Ударить врага
-        bot_fight(user, game_menu, msg)
+        # Ударить врага
+    elif msg == TO_DAMAGE or (msg in user.items.keys() and user.items[msg][0].damage != 0):
+        if bot_fight(user, msg):  # если противник умер
+            game_menu(user, GAME_MENU)
     elif msg == INVENTORY:
         inventory_menu(user, msg)
     else:
@@ -181,7 +183,7 @@ def inventory_menu(user, msg):
             buttons += [BACK_PAGE, "", ""]
         bot.send_message(user.id, message, reply_markup=buttons_generator(buttons + [BACK, "", ""], False))
         user.menu = INVENTORY_MENU
-    elif msg.startswith("💵 Продать"):
+    elif msg.startswith("💵 Продать") and msg[10:] in user.items.keys():
         bot.send_message(user.id, user.items[msg[10:]][0].sell(user))
         # если уменьшилось кол-во предметов в инвентаре, то проверка нужно ли вернутся на 1 страничку инвентаря назад
         if len(user.items) % 5 == 0 and len(user.items) != 0:
@@ -189,7 +191,6 @@ def inventory_menu(user, msg):
         inventory_menu(user, INVENTORY)
     elif msg in user.items.keys():
         bot.send_message(user.id, user.items[msg][0].use(user))
-        # если уменьшилось кол-во предметов в инвентаре, то проверка нужно ли вернутся на 1 страничку инвентаря назад
         if len(user.items) % 5 == 0 and len(user.items) != 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)
