@@ -135,7 +135,8 @@ def game_menu(user, msg):  # игровое меню: статистика, ма
     elif msg == INVENTORY:
         inventory_menu(user, msg)
     elif msg == STATISTICS:
-        bot.send_message(user.id, "Твоя статистика:\n" + repr(user))
+        bot.send_message(user.id, "Твоя статистика:\n" + repr(user),
+                         reply_markup=buttons_generator([SHOP, GO_AHEAD, INVENTORY, STATISTICS, MAIN_MENU], True))
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 
