@@ -15,4 +15,4 @@ class Bowser(Enemy):
         self.description = 'Тот самый монстр из Марио что постоянно крадет принцессу.'
         self.death = "Боузер побежден но принцеcса неоценила вашего героизма и ушла."
         self.sticker = "CAACAgIAAxkBAAEE99pipIhTmeXPLRNSu-az5jSHCsQYuAAC1xwAAsnIEEmIZZDJ7VwpIiQE"
-        self.loot = [TurtleShell()]
+        self.loot = [TurtleShell(), Fang()]
