@@ -77,11 +77,11 @@ class User:
             return ""
         else:
             if self.lvl == 5:
-                self.pet = Puppy()
+                self.pet = Pet(PUPPY)
             elif self.lvl == 15:
                 self.pet = Pet(WOLF)
             elif self.lvl == 25:
-                self.pet = AlphaWolf()
+                self.pet = Pet(ALPHA_WOLF)
             return "\n\nИ нового питомца:\n\n" + repr(self.pet)
 
     # def weapon_loader(self):  # добавление кнопок оружия(для боя)
