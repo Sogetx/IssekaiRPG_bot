@@ -1,3 +1,4 @@
+#from enemys.enemy import Enemy
 from items import *
 from config import TELEGRAM_TOKEN
 from telebot import *
@@ -32,20 +33,65 @@ SHOP_MENU = 6
 INVENTORY_MENU = 7
 
 # предметы которые продаются в магазине
-SHOP_ITEMS = {ScrollOfPower().name: ScrollOfPower(),
-              ScrollOfDefence().name: ScrollOfDefence(),
-              ScrollOfCrit().name: ScrollOfCrit(),
-              SmallHpPotion().name: SmallHpPotion(),
-              MediumHpPotion().name: MediumHpPotion(),
-              BigHpPotion().name: BigHpPotion(),
-              Banana().name: Banana(),
-              Scrap().name: Scrap(),
-              Sock().name: Sock(),
-              Candy().name: Candy(),
-              Potato().name: Potato(),
-              Mussels().name: Mussels(),
-              Lightsaber().name: Lightsaber(),
-              Excalibur().name: Excalibur(),
-              FuriousSword().name: FuriousSword(),
-              GoldenSword().name: GoldenSword(),
-              IronSword().name: IronSword()}
+# SHOP_ITEMS = {ScrollOfPower().name: ScrollOfPower(),
+#               ScrollOfDefence().name: ScrollOfDefence(),
+#               ScrollOfCrit().name: ScrollOfCrit(),
+#               SmallHpPotion().name: SmallHpPotion(),
+#               MediumHpPotion().name: MediumHpPotion(),
+#               BigHpPotion().name: BigHpPotion(),
+#               Banana().name: Banana(),
+#               Scrap().name: Scrap(),
+#               Sock().name: Sock(),
+#               Candy().name: Candy(),
+#               Potato().name: Potato(),
+#               Mussels().name: Mussels(),
+#               Lightsaber().name: Lightsaber(),
+#               Excalibur().name: Excalibur(),
+#               FuriousSword().name: FuriousSword(),
+#               GoldenSword().name: GoldenSword(),
+#               IronSword().name: IronSword()}
+
+
+SHOP_ITEMS = {"Свиток силы": Scroll(SCROLL_OF_POWER),
+              "Свиток защиты": Scroll(SCROLL_OF_DEFENCE),
+              "Свиток крита": Scroll(SCROLL_OF_CRIT),
+              "Малое зелье хп": HealItem(SMALL_HP_POTION),
+              "Среднее зелье хп": HealItem(MEDIUM_HP_POTION),
+              "Большое зелье хп": HealItem(BIG_HP_POTION),
+              "🍌": HealItem(BANANA),
+              "Лом": Weapon(SCRAP),
+              "🧦": Item(SOCK),
+              "🍬": HealItem(CANDY),
+              "🥔": HealItem(POTATO),
+              "Мидии": HealItem(MUSSELS),
+              "Световой меч": Weapon(LIGHTSABER),
+              "Экскалибур": Weapon(EXCALIBUR),
+              "Яростный меч": Weapon(FURIOUS_SWORD),
+              "Золотой меч": Weapon(GOLDEN_SWORD),
+              "Железный меч": Weapon(IRON_SWORD)}
+
+
+LOOT = {"Клык": Item(FANG),
+        "Кольцо всевластия": Item(RING_OF_OMNIPOTENCE),
+        "Мясо 🥩": Item(MEAT),
+        "Большой глаз 👁": Item(BIG_EYE),
+        "Золотая кнопка ютуба": Item(GOLDEN_YTB),
+        "Серебряная кнопка ютуба": Item(SILVER_YTB),
+        "Шерсть": Item(WOOL),
+        "Рог": Item(HORN),
+        "Белая майка": Item(WHITE_SHIRT),
+        "Солнцезащитные очки": Item(SUNGLASSES),
+        "Щупальце": Item(TENTACLE),
+        "Стрела для стэндов": Item(STAND_ARROW),
+        "Фуражка полицая": Item(POLICE_CAP),
+        "Ремень Билли": Item(BELT_BILLY),
+        "Панцырь большой черепахи": Item(TURTLE_SHELL),
+        "Кадык": Item(ADAMS_APPLE),
+        "🍬": HealItem(CANDY),
+        "Мидии": HealItem(MUSSELS),
+        "🥔": HealItem(POTATO)}
+
+
+
+
+

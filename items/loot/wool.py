@@ -1,9 +1,4 @@
-from items.item import Item
-
-
-class Wool(Item):
-    def __init__(self):
-        super().__init__()
-        self.name = "Шерсть"
-        self.description = "3 шерсти + 3 доски = кровать"
-        self.price = 5
+WOOL = ["Шерсть",
+        "3 шерсти + 3 доски = кровать",
+        5,
+        False]

@@ -2,6 +2,7 @@ import random
 
 from enemys import *
 from constants import *
+from enemys.enemy import *
 
 
 def bot_fight(user, msg):
@@ -45,13 +46,22 @@ def bot_fight(user, msg):
 
 
 def enemy_create(user):  # Генерация мобов
-    enemys = [Rat(), RadCockroach(), Slime(), Goblin(), Zombie(), Gollum(), Grass(), Caravan()]  # легкие мобы
+    enemys = [Enemy(RAT), Enemy(RAD_COCKROACH), Enemy(SLIME), Enemy(ZOMBIE), Enemy(GOBLIN), Enemy(GOLLUM), Enemy(GRASS),
+              Enemy(CARAVAN)]
+    # enemys = ENEMYS
+
+    # enemys = [Rat(), RadCockroach(), Slime(), Goblin(), Zombie(), Gollum(), Grass(), Caravan()]  # легкие мобы
     if user.lvl >= 5:
-        enemys += [Ork(), Bandit(), Werewolf(), Cacodemon(), Master(),
-                   CJ(), Nezuko(), SuperSus(), Gordon(), Lukashenko()]  # + средние мобы
+        enemys += [Enemy(BANDIT), Enemy(CACODEMON), Enemy(CJ), Enemy(GORDON), Enemy(LUKASHENKO), Enemy(MASTER),
+                   Enemy(NEZUKO), Enemy(ORK), Enemy(SUPER_SUS), Enemy(WEREWOLF)]
+        # enemys += [Ork(), Bandit(), Werewolf(), Cacodemon(), Master(),
+        #            CJ(), Nezuko(), SuperSus(), Gordon(), Lukashenko()]  # + средние мобы
     if user.lvl >= 15:
-        enemys += [DarkKnight(), Dio(), AgentSmith(), Orochimaru(), Kaneki(),
-                   DavyJones(), Bowser(), DungeonMaster(), LightYagami()]  # + сложные мобы
+        enemys += [Enemy(DARK_NIGHT), Enemy(DIO), Enemy(AGENT_SMITH), Enemy(OROCHIMARU), Enemy(KANEKI),
+                   Enemy(DAVY_JONES), Enemy(BOWSER), Enemy(DUNGEON_MASTER), Enemy(LIGHT_YAGAMI)]
+        # enemys += [DarkKnight(), Dio(), AgentSmith(), Orochimaru(), Kaneki(),
+        #            DavyJones(), Bowser(), DungeonMaster(), LightYagami()]  # + сложные мобы
+
     user.enemy = random.choice(enemys)
     # Описание моба при первой встрече
     return user.enemy

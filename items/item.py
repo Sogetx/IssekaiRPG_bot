@@ -1,10 +1,9 @@
 class Item:
-    def __init__(self):
-        self.name = "item"
-        self.description = "описание"
-        self.price = 0  # цена
-        self.is_used = False  # можно ли использовать этот предмет
-        self.damage = 0  # сколько наносит урона(если это оружие)
+    def __init__(self,stats):
+        self.name = stats[0]
+        self.description = stats[1]
+        self.price = stats[2]  # цена
+        self.is_used = stats[3]  # можно ли использовать этот предмет
 
     def buy(self, user):  # покупка предмета
         if user.money >= self.price:  # если у пользователя хватает денег, то предмет можно купить

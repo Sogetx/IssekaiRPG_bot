@@ -1,11 +1,12 @@
-from enemys.easy.goblin import Goblin
-from enemys.easy.rad_cockroach import RadCockroach
-from enemys.easy.rat import Rat
-from enemys.easy.slime import Slime
-from enemys.easy.zombie import Zombie
-from enemys.easy.gollum import Gollum
-from enemys.easy.grass import Grass
-from enemys.easy.caravan import Caravan
+from enemys.easy.goblin import GOBLIN
+
+from enemys.easy.rad_cockroach import RAD_COCKROACH
+from enemys.easy.rat import RAT
+from enemys.easy.slime import SLIME
+from enemys.easy.zombie import ZOMBIE
+from enemys.easy.gollum import GOLLUM
+from enemys.easy.grass import GRASS
+from enemys.easy.caravan import CARAVAN
 
 
 from enemys.normal.ork import Ork

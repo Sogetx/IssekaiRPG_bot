@@ -1,9 +1,4 @@
-from items.item import Item
-
-
-class RingOfOmnipotence(Item):
-    def __init__(self):
-        super().__init__()
-        self.name = "Кольцо всевластия"
-        self.description = "Дешевая подделка"
-        self.price = 3
+RING_OF_OMNIPOTENCE = ["Кольцо всевластия",
+                       "Дешевая подделка c Алика",
+                       3,
+                       False]

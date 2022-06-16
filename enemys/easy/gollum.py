@@ -1,18 +1,6 @@
-from items import *
-from enemys.enemy import Enemy
-
-
-class Gollum(Enemy):
-    def __init__(self):
-        super().__init__()
-        self.max_hp = 55
-        self.hp = self.max_hp
-        self.damage1 = 4
-        self.damage2 = 9
-        self.money = 15
-        self.xp = 25
-        self.name = "Голум"
-        self.description = 'Лысое маленькое существо родственное гоблинам. Считает себя великим властелином всея руси.'
-        self.death = "Погиб так и не реализовав силу кольца и свои бредовые идеи, ну зато хоть мир от себя спас."
-        self.sticker = "CAACAgIAAxkBAAEE99BipIhEHawzQ4r6Dwe6ej-nokayNgACTBkAAhpUEElF2uENNrotZSQE"
-        self.loot = [RingOfOmnipotence()]
+GOLLUM = [55, 4, 9, 15, 25,
+          "Голум",
+          'Лысое маленькое существо родственное гоблинам. Считает себя великим властелином всея руси.',
+          "Погиб так и не реализовав силу кольца и свои бредовые идеи, ну зато хоть мир от себя спас.",
+          "CAACAgIAAxkBAAEE99BipIhEHawzQ4r6Dwe6ej-nokayNgACTBkAAhpUEElF2uENNrotZSQE",
+          ["Кольцо всевластия"]]

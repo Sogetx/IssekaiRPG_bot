@@ -57,7 +57,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
     if msg == GO_AHEAD or msg == BACK:  # если игрок пошел вперед (в бой) или вернулся из инвентаря(во время боя)
         weapons = []  # масив для кнопок оружия во время боя(если у игрока есть оружие в инвентаре)
         for weapon in user.items.values():
-            if weapon[0].damage != 0:
+            if isinstance(weapon[0],Weapon):
                 weapons += ["", weapon[0].name, ""]
         if msg == GO_AHEAD:
             enemy = enemy_create(user)
@@ -74,7 +74,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         bot.send_message(user.id, 'Ты сбежал')
         game_menu(user, GAME_MENU)  # переход в игровое меню
         # Ударить врага
-    elif msg == TO_DAMAGE or (msg in user.items.keys() and user.items[msg][0].damage != 0):
+    elif msg == TO_DAMAGE or (msg in user.items.keys() and isinstance(user.items[msg][0],Weapon)):
         if bot_fight(user, msg):  # если противник умер
             game_menu(user, GAME_MENU)
     elif msg == INVENTORY:
@@ -168,7 +168,7 @@ def inventory_menu(user, msg):
             for i in user.items.values():
                 i = i[0]
                 if ((user.inv_page - 1) * 5) + 1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
-                    if i.is_used and i.damage == 0:
+                    if i.is_used and not(isinstance(i, Weapon)):
                         buttons += [i.name]
                     else:
                         buttons += [""]
@@ -184,14 +184,16 @@ def inventory_menu(user, msg):
         bot.send_message(user.id, message, reply_markup=buttons_generator(buttons + [BACK, "", ""], False))
         user.menu = INVENTORY_MENU
     elif msg.startswith("💵 Продать") and msg[10:] in user.items.keys():
+        before_use = len(user.items)
         bot.send_message(user.id, user.items[msg[10:]][0].sell(user))
         # если уменьшилось кол-во предметов в инвентаре, то проверка нужно ли вернутся на 1 страничку инвентаря назад
-        if len(user.items) % 5 == 0 and len(user.items) != 0:
+        if len(user.items) < before_use and len(user.items) % 5 == 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)
-    elif msg in user.items.keys():
+    elif msg in user.items.keys() and user.items[msg][0].is_used:
+        before_use = len(user.items)
         bot.send_message(user.id, user.items[msg][0].use(user))
-        if len(user.items) % 5 == 0 and len(user.items) != 0:
+        if len(user.items) < before_use and len(user.items) % 5 == 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)
     elif msg == NEXT_PAGE:  # переход на след. страничку инвентаря
