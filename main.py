@@ -221,12 +221,16 @@ def shop_menu(user, msg):
             if val not in buttons:
                 buttons.append(val)
                 message += repr(SHOP_ITEMS[val]) + "\n\n"
+        user.shop_items = buttons # чтоб игрок не мог купить предмет, которого нету в магазине
         bot.send_message(user.id, message + "У тебя на счету {0} 💵".format(user.money),
                          reply_markup=buttons_generator([""] + buttons + ["", BACK], False))
         bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE")
         user.menu = SHOP_MENU
     elif msg in SHOP_ITEMS.keys():
-        bot.send_message(user.id, SHOP_ITEMS[msg].buy(user))
+        if not(msg in user.shop_items):
+            bot.send_message(user.id, "У меня нету в наличии \"{0}\" ".format(msg))
+        else:
+            bot.send_message(user.id, SHOP_ITEMS[msg].buy(user))
     elif msg == BACK:
         game_menu(user, GAME_MENU)
     else:

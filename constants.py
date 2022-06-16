@@ -33,25 +33,6 @@ SHOP_MENU = 6
 INVENTORY_MENU = 7
 
 # предметы которые продаются в магазине
-# SHOP_ITEMS = {ScrollOfPower().name: ScrollOfPower(),
-#               ScrollOfDefence().name: ScrollOfDefence(),
-#               ScrollOfCrit().name: ScrollOfCrit(),
-#               SmallHpPotion().name: SmallHpPotion(),
-#               MediumHpPotion().name: MediumHpPotion(),
-#               BigHpPotion().name: BigHpPotion(),
-#               Banana().name: Banana(),
-#               Scrap().name: Scrap(),
-#               Sock().name: Sock(),
-#               Candy().name: Candy(),
-#               Potato().name: Potato(),
-#               Mussels().name: Mussels(),
-#               Lightsaber().name: Lightsaber(),
-#               Excalibur().name: Excalibur(),
-#               FuriousSword().name: FuriousSword(),
-#               GoldenSword().name: GoldenSword(),
-#               IronSword().name: IronSword()}
-
-
 SHOP_ITEMS = {"Свиток силы": Scroll(SCROLL_OF_POWER),
               "Свиток защиты": Scroll(SCROLL_OF_DEFENCE),
               "Свиток крита": Scroll(SCROLL_OF_CRIT),
@@ -70,7 +51,7 @@ SHOP_ITEMS = {"Свиток силы": Scroll(SCROLL_OF_POWER),
               "Золотой меч": Weapon(GOLDEN_SWORD),
               "Железный меч": Weapon(IRON_SWORD)}
 
-
+# лут с мобов
 LOOT = {"Клык": Item(FANG),
         "Кольцо всевластия": Item(RING_OF_OMNIPOTENCE),
         "Мясо 🥩": Item(MEAT),
