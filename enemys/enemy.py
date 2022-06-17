@@ -10,24 +10,22 @@ class Enemy:
         self.damage2 = stats[2]  # максимальная атака
         self.money = stats[3]  # деньги с моба
         self.xp = stats[4]  # опыт с моба
-        self.name = stats[5]
-        self.description = stats[6]
-        self.death = stats[7]
-        self.sticker = stats[8]
+        self.name = stats[5]  # имя
+        self.description = stats[6]  # описание
+        self.death = stats[7]  # описание смерти
+        self.sticker = stats[8]  # стикер
         self.run_att = 0  # количество попыток побега
         self.loot = stats[9]  # лут
 
     def enemy_loot(self, user):  # получение награды за убийство моба
         user.money += self.money  # получение денег
-        msg = self.death + "\n\nЗа победу над врагом ты получил {0}⭐ и {1}💵\nА также залутал: ".format(self.xp,
-                                                                                                        self.money)
+        msg = self.death + "\n\nЗа победу над врагом ты получил {0}⭐ и {1}💵\nА также залутал: ".\
+            format(self.xp, self.money)
         user.enemy_count += 1  # +1 к счетчику убитых мобов
         if len(self.loot) == 0:  # если у моба нету лута
             return msg + "ничего"
         else:
-            # items = []
             for item in self.loot:
-                # items.append(LOOT[item.name])
                 user.add_item(LOOT[item])
             return msg + ", ".join(self.loot)
 
@@ -46,11 +44,3 @@ class Enemy:
 
     def __repr__(self):  # Характеристики моба
         return "{0}❤, урон: {1} - {2}💥".format(self.hp, self.damage1, self.damage2)
-
-
-# GOBLIN = [55,4,9,15,25,
-#           "Гоблин",
-#           'Мелкое, противное, хитрое и крайне омерзительное чудовище размером не выше семилетнего ребенка',
-#           "Одной мелкой тварью меньше",
-#           "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA",
-#           ["Клык"]]

@@ -4,7 +4,7 @@ from items.item import Item
 class HealItem(Item):
     def __init__(self,stats):
         super().__init__(stats),
-        self.heal = stats[4]
+        self.heal = stats[3]
 
     def use(self, user):
         user.heal(self.heal)

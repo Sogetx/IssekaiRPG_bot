@@ -4,3 +4,5 @@ GOBLIN = [55, 4, 9, 15, 25,
           "Одной мелкой тварью меньше",
           "CAACAgIAAxkBAAEEonxidAYAAbCeIdVXU6mTTRCqvY_tw2gAAnkYAAJymJhLrpRlJmL2F6IkBA",
           ["Клык"]]
+
+

@@ -2,7 +2,7 @@ from items.item import Item
 
 
 class Scroll(Item):
-    def __init__(self,stats):
+    def __init__(self, stats):
         super().__init__(stats),
 
     def use(self, user):

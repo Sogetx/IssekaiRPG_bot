@@ -1,5 +1,3 @@
-import random
-
 from enemys import *
 from constants import *
 from enemys.enemy import *
@@ -13,16 +11,14 @@ def bot_fight(user, msg):
         return True
     else:
         is_crit = ""
-        dmg_to_enemy = 0
         if msg == TO_DAMAGE:  # если игрок ударил без оружия
             if user.crit >= random.randint(1, 100):  # если критический
                 dmg_to_enemy = user.enemy.take_damage(user.to_damage(False, None) * 2)
                 is_crit = "критические "
             else:
                 dmg_to_enemy = user.enemy.take_damage(user.to_damage(False, None))
-        elif msg in user.items.keys():  # если игрок использовал оружие
+        else:  # если игрок использовал оружие
             dmg_to_enemy = user.enemy.take_damage(user.to_damage(True, msg))
-
         if user.enemy.hp > 0:  # если враг жив
             dmg_to_user = user.take_damage(user.enemy.to_damage())
             if user.hp > 0:  # если пользователь жив
@@ -46,22 +42,12 @@ def bot_fight(user, msg):
 
 
 def enemy_create(user):  # Генерация мобов
-    enemys = [Enemy(RAT), Enemy(RAD_COCKROACH), Enemy(SLIME), Enemy(ZOMBIE), Enemy(GOBLIN), Enemy(GOLLUM), Enemy(GRASS),
-              Enemy(CARAVAN)]
-    # enemys = ENEMYS
-
-    # enemys = [Rat(), RadCockroach(), Slime(), Goblin(), Zombie(), Gollum(), Grass(), Caravan()]  # легкие мобы
+    enemys = [RAT, RAD_COCKROACH, SLIME, ZOMBIE, GOBLIN, GOLLUM, GRASS, CARAVAN]
     if user.lvl >= 5:
-        enemys += [Enemy(BANDIT), Enemy(CACODEMON), Enemy(CJ), Enemy(GORDON), Enemy(LUKASHENKO), Enemy(MASTER),
-                   Enemy(NEZUKO), Enemy(ORK), Enemy(SUPER_SUS), Enemy(WEREWOLF)]
-        # enemys += [Ork(), Bandit(), Werewolf(), Cacodemon(), Master(),
-        #            CJ(), Nezuko(), SuperSus(), Gordon(), Lukashenko()]  # + средние мобы
+        enemys += [BANDIT, CACODEMON, CJ, GORDON, LUKASHENKO, MASTER, NEZUKO, ORK, SUPER_SUS, WEREWOLF]
     if user.lvl >= 15:
-        enemys += [Enemy(DARK_NIGHT), Enemy(DIO), Enemy(AGENT_SMITH), Enemy(OROCHIMARU), Enemy(KANEKI),
-                   Enemy(DAVY_JONES), Enemy(BOWSER), Enemy(DUNGEON_MASTER), Enemy(LIGHT_YAGAMI)]
-        # enemys += [DarkKnight(), Dio(), AgentSmith(), Orochimaru(), Kaneki(),
-        #            DavyJones(), Bowser(), DungeonMaster(), LightYagami()]  # + сложные мобы
-
-    user.enemy = random.choice(enemys)
+        enemys += [DARK_NIGHT, DIO, AGENT_SMITH, OROCHIMARU, KANEKI, DAVY_JONES, BOWSER, DUNGEON_MASTER, LIGHT_YAGAMI]
+    user.enemy = Enemy(random.choice(list(enemys)))
+    user.enemy = Enemy(CARAVAN)
     # Описание моба при первой встрече
     return user.enemy

@@ -30,25 +30,30 @@ def settings(msg):  # обработчик команды /help
 def bot_message(msg):  # обработчик текста
     try:  # возможна ошибка KeyError
         user = users[msg.chat.id]
-        if user.menu == GAME_MENU:  # игровое меню
-            game_menu(user, msg.text)
-        elif user.menu == FIGHT_MENU:  # меню боя
-            fight_menu(user, msg.text)
-        elif user.menu == INVENTORY_MENU:  # инвентарь
-            inventory_menu(user, msg.text)
-        elif user.menu == MAIN_MENU:  # главное меню
-            main_menu(user, msg.text)
-        elif user.menu == NEW_LVL:  # меню нового уровня
-            new_level(user, msg.text)
-        elif user.menu == SHOP_MENU:  # магазин
-            shop_menu(user, msg.text)
-        elif user.menu == EVENTS_MENU:  # меню ивента(если он активный)
-            events_menu(user, msg.text)
-        elif user.menu == DEATH:  # если пользователь пишет сообщение боту, но он уже мертв
-            bot.send_message(user.id, 'Ты же уже мертв, куда тебе идти то?\n\n'
-                                      '         --> /start <--')
-            bot.send_message(user.id, "⚰️")
-    except KeyError: # если пользователя нету в словаре пользователей
+        if (time.time() - user.last_msg_time) < 0.5:  # ограничение отправки сообщений 1 в 0.5сек
+            user.last_msg_time = time.time()
+            bot.send_message(user.id, "😡альоо, не спамь!😡")
+        else:
+            user.last_msg_time = time.time()
+            if user.menu == GAME_MENU:  # игровое меню
+                game_menu(user, msg.text)
+            elif user.menu == FIGHT_MENU:  # меню боя
+                fight_menu(user, msg.text)
+            elif user.menu == INVENTORY_MENU:  # инвентарь
+                inventory_menu(user, msg.text)
+            elif user.menu == MAIN_MENU:  # главное меню
+                main_menu(user, msg.text)
+            elif user.menu == NEW_LVL:  # меню нового уровня
+                new_level(user, msg.text)
+            elif user.menu == SHOP_MENU:  # магазин
+                shop_menu(user, msg.text)
+            elif user.menu == EVENTS_MENU:  # меню ивента(если он активный)
+                events_menu(user, msg.text)
+            elif user.menu == DEATH:  # если пользователь пишет сообщение боту, но он уже мертв
+                bot.send_message(user.id, 'Ты же уже мертв, куда тебе идти то?\n\n'
+                                          '         --> /start <--')
+                bot.send_message(user.id, "⚰️")
+    except KeyError:  # если пользователя нету в словаре пользователей
         bot.send_message(msg.chat.id, 'Произошли какие-то траблы, нужно перезапустить бота',
                          reply_markup=types.ReplyKeyboardMarkup().add('/start'))
 
@@ -57,7 +62,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
     if msg == GO_AHEAD or msg == BACK:  # если игрок пошел вперед (в бой) или вернулся из инвентаря(во время боя)
         weapons = []  # масив для кнопок оружия во время боя(если у игрока есть оружие в инвентаре)
         for weapon in user.items.values():
-            if isinstance(weapon[0],Weapon):
+            if isinstance(weapon[0], Weapon):
                 weapons += ["", weapon[0].name, ""]
         if msg == GO_AHEAD:
             enemy = enemy_create(user)
@@ -74,7 +79,7 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
         bot.send_message(user.id, 'Ты сбежал')
         game_menu(user, GAME_MENU)  # переход в игровое меню
         # Ударить врага
-    elif msg == TO_DAMAGE or (msg in user.items.keys() and isinstance(user.items[msg][0],Weapon)):
+    elif msg == TO_DAMAGE or (msg in user.items.keys() and isinstance(user.items[msg][0], Weapon)):
         if bot_fight(user, msg):  # если противник умер
             game_menu(user, GAME_MENU)
     elif msg == INVENTORY:
@@ -86,13 +91,13 @@ def fight_menu(user, msg):  # Все что связано с взаимодей
 def events_menu(user, msg):  # Все что связано с взаимодействием c ивентом
     if msg == GO_AHEAD:
         user.event = random.choice([Tavern(), Church(), Anisimov(), OddEven(), Dobby()])
-        if not user.event.is_active:
-            bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
-            game_menu(user, GAME_MENU)
-        else:
+        if isinstance(user.event, ActiveEvent):
             bot.send_message(user.id, "{0}\n\n{1}".format(user.event.name, user.event.description),
                              reply_markup=buttons_generator(user.event.buttons + [BACK], True))
             user.menu = EVENTS_MENU
+        else:
+            bot.send_message(user.id, "{1}\n\nРезультат: {0}".format(user.event.action(user), user.event.description))
+            game_menu(user, GAME_MENU)
     elif msg == BACK:
         user.event = None
         game_menu(user, GAME_MENU)
@@ -168,7 +173,7 @@ def inventory_menu(user, msg):
             for i in user.items.values():
                 i = i[0]
                 if ((user.inv_page - 1) * 5) + 1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
-                    if i.is_used and not(isinstance(i, Weapon)):
+                    if (isinstance(i, Item)) and not (isinstance(i, Weapon)):
                         buttons += [i.name]
                     else:
                         buttons += [""]
@@ -190,7 +195,8 @@ def inventory_menu(user, msg):
         if len(user.items) < before_use and len(user.items) % 5 == 0:
             user.inv_page -= 1
         inventory_menu(user, INVENTORY)
-    elif msg in user.items.keys() and user.items[msg][0].is_used:
+    elif msg in user.items.keys() and \
+            (isinstance(user.items[msg][0], Item)) and not (isinstance(user.items[msg][0], Weapon)):
         before_use = len(user.items)
         bot.send_message(user.id, user.items[msg][0].use(user))
         if len(user.items) < before_use and len(user.items) % 5 == 0:
@@ -221,13 +227,13 @@ def shop_menu(user, msg):
             if val not in buttons:
                 buttons.append(val)
                 message += repr(SHOP_ITEMS[val]) + "\n\n"
-        user.shop_items = buttons # чтоб игрок не мог купить предмет, которого нету в магазине
+        user.shop_items = buttons  # чтоб игрок не мог купить предмет, которого нету в магазине
         bot.send_message(user.id, message + "У тебя на счету {0} 💵".format(user.money),
                          reply_markup=buttons_generator([""] + buttons + ["", BACK], False))
         bot.send_sticker(user.id, "CAACAgIAAxkBAAEEmbNibmeymHwNw_LwnwmbL7sC4ifSoAACYRYAApUBeUsatN_ZdOmq6CQE")
         user.menu = SHOP_MENU
     elif msg in SHOP_ITEMS.keys():
-        if not(msg in user.shop_items):
+        if not (msg in user.shop_items):
             bot.send_message(user.id, "У меня нету в наличии \"{0}\" ".format(msg))
         else:
             bot.send_message(user.id, SHOP_ITEMS[msg].buy(user))

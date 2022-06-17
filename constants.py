@@ -1,4 +1,3 @@
-#from enemys.enemy import Enemy
 from items import *
 from config import TELEGRAM_TOKEN
 from telebot import *

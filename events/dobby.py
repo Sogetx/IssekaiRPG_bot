@@ -1,14 +1,13 @@
-from events.event import Event
+from events.active_event import ActiveEvent
 from constants import bot
 
 
-class Dobby(Event):
+class Dobby(ActiveEvent):
     def __init__(self):
-        super().__init__()
-        self.name = "Добби"
-        self.description = "Добби хочет быть свободен. Даш Добби носок? Добби будет очень благодарен."
-        self.buttons = ["Дать носок✅", "Не давать носок❌", ""]
-        self.is_active = True
+        stats = ["Добби",
+                 "Добби хочет быть свободен. Даш Добби носок? Добби будет очень благодарен.",
+                 ["Дать носок✅", "Не давать носок❌", ""]]
+        super().__init__(stats)
 
     def active_action(self, user, msg):
         if msg == "Не давать носок❌":

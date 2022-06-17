@@ -4,9 +4,7 @@ import random
 
 class Church(Event):
     def __init__(self):
-        super().__init__()
-        self.description = "Вы заходите в небольшое святилище, оно аккуратное, чистое хотя никого в нем нету. " \
-
+        super().__init__("Вы заходите в небольшое святилище, оно аккуратное, чистое хотя никого в нем нету. ")
 
     def action(self, user):
         val = random.randint(1, 2)
