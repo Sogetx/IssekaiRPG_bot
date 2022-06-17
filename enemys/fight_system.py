@@ -48,6 +48,5 @@ def enemy_create(user):  # Генерация мобов
     if user.lvl >= 15:
         enemys += [DARK_NIGHT, DIO, AGENT_SMITH, OROCHIMARU, KANEKI, DAVY_JONES, BOWSER, DUNGEON_MASTER, LIGHT_YAGAMI]
     user.enemy = Enemy(random.choice(list(enemys)))
-    user.enemy = Enemy(CARAVAN)
     # Описание моба при первой встрече
     return user.enemy
