@@ -18,7 +18,7 @@ def start(msg):  # обработчик команды /start
                               "Я - {1.first_name}, бот который будет вести тебя по вымышленому, "
                               "созданому по больной фантазии авторов, мире".
                      format(msg.from_user, bot.get_me()),
-                     reply_markup=buttons_generator([START_NEW_GAME, SUPPORT], True))
+                     reply_markup=buttons_generator([START_NEW_GAME, SUPPORT], False))
 
 
 @bot.message_handler(commands=['help'])
@@ -30,7 +30,7 @@ def settings(msg):  # обработчик команды /help
 def bot_message(msg):  # обработчик текста
     try:  # возможна ошибка KeyError
         user = users[msg.chat.id]
-        if (time.time() - user.last_msg_time) < 0.5:  # ограничение отправки сообщений 1 в 0.5сек
+        if (time.time() - user.last_msg_time) < 0.2:  # ограничение отправки сообщений 1 в 0.2сек
             user.last_msg_time = time.time()
             bot.send_message(user.id, "😡альоо, не спамь!😡")
         else:
@@ -112,13 +112,12 @@ def events_menu(user, msg):  # Все что связано с взаимоде�
 def main_menu(user, msg):
     if msg == MAIN_MENU:  # Если было выбрано главное меню
         bot.send_message(user.id, "Ты вернулся в главное меню",
-                         reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT], True))
+                         reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT], False))
         user.menu = MAIN_MENU
     elif msg == CONTINUE_GAME or msg == START_NEW_GAME:
         game_menu(user, GAME_MENU)  # переход в игровое меню
     elif msg == SUPPORT:
-        bot.send_message(user.id, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - Gmail Лев",
-                         reply_markup=buttons_generator([CONTINUE_GAME, SUPPORT], True))
+        bot.send_message(user.id, "@Dimasik333 - Telegram Дима\nlevstepanenko@gmail.com - Gmail Лев")
     else:
         bot.send_message(user.id, 'Я не знаю что ответить 😢😢😢')
 
@@ -173,7 +172,7 @@ def inventory_menu(user, msg):
             for i in user.items.values():
                 i = i[0]
                 if ((user.inv_page - 1) * 5) + 1 <= a <= user.inv_page * 5:  # 1  страничка, 2, 3 и тд. по 5 предметов
-                    if (isinstance(i, Item)) and not (isinstance(i, Weapon)):
+                    if type(i) == HealItem or type(i) == Scroll:
                         buttons += [i.name]
                     else:
                         buttons += [""]

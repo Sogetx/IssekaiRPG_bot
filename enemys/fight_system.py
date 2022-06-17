@@ -36,7 +36,6 @@ def bot_fight(user, msg):
             enemy = user.enemy
             bot.send_message(user.id, enemy.enemy_loot(user))
             user.enemy = None
-
             if not (user.add_xp(enemy.xp)):  # если игрок неполучил новый уровень
                 return True
 
